@@ -84,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				7F21D1812192051D002AE655 /* FaceDetail.swift */,
+				7F21D183219211B9002AE655 /* FaceDetailImageView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,7 +175,6 @@
 				7F2A96542190150F0024F342 /* ViewController.swift */,
 				7F405C152191578A00068592 /* ImageViewController.swift */,
 				7F405C1721915AB100068592 /* FaceViewController.swift */,
-				7F21D183219211B9002AE655 /* FaceDetailImageView.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";

@@ -119,11 +119,13 @@ class FaceDetailImageView: UIImageView {
     }
 
     func eyeDetector() {
-        guard let currImage = self.data?.image else {
+        
+//        self.image = self.data?.face
+        
+        guard let cropedFaceImage = self.data?.face else {
             return
         }
-        OpenCVWrapper.eyeDetector(currImage)
+        self.image = OpenCVWrapper.eyeDetector(cropedFaceImage)
     }
-    
 }
 

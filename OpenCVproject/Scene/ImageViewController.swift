@@ -12,24 +12,31 @@ import Vision
 class ImageViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
-    
-    var image: UIImage!
 
-    var face: UIImage?
-    var leftEye: FaceDetail?
-    var rightEye: FaceDetail?
-    var leftCutEye: FaceDetail?
-    var rightCutEye: FaceDetail?
+    var orgImage: UIImage!
     
-    var faceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
-    var facePins = [CGPoint]()
+    var image: UIImage! {
+        didSet {
+            orgImage = image
+        }
+    }
 
-    var leftEyePins = [CGPoint]()
-    var rightEyePins = [CGPoint]()
-    var leftPupilPins = [CGPoint]()
-    var rightPupilPins = [CGPoint]()
+    private var cleanFace: UIImage?
+    private var face: UIImage?
+    private var leftEye: FaceDetail?
+    private var rightEye: FaceDetail?
+    private var leftCutEye: FaceDetail?
+    private var rightCutEye: FaceDetail?
     
-    var scale2: CGFloat = 1.0
+    private var faceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+    private var facePins = [CGPoint]()
+
+    private var leftEyePins = [CGPoint]()
+    private var rightEyePins = [CGPoint]()
+    private var leftPupilPins = [CGPoint]()
+    private var rightPupilPins = [CGPoint]()
+    
+    private var scale2: CGFloat = 1.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,7 +111,9 @@ class ImageViewController: UIViewController {
         let x = faceBound.origin.x * imageWidth
         let y = faceBound.origin.y * imageHeight
         faceRect = CGRect(x: floor(x), y: floor(y), width: floor(w), height: floor(h))
-        
+
+        cleanFace = cropedFace(image)
+
         context?.translateBy(x: 0, y: image.size.height)
         context?.scaleBy(x: 1.0, y: -1.0)
         context?.saveGState()
@@ -372,19 +381,21 @@ class ImageViewController: UIViewController {
 
     private func cropComponents() {
         let image = imageView.image!
-
+        face = cropedFace(image)
+        leftEye = crop(image, pins: leftEyePins, pupils: leftPupilPins)
+        rightEye = crop(image, pins: rightEyePins, pupils: rightPupilPins)
+        leftCutEye = crop(image, pins: leftEyePins, pupils: leftPupilPins)
+        rightCutEye = crop(image, pins: rightEyePins, pupils: rightPupilPins)
+    }
+    
+    private func cropedFace(_ image: UIImage) -> UIImage? {
         var rect = faceRect
         rect.origin.y = image.size.height - (rect.origin.y + rect.size.height)
         rect.origin.x *= image.scale
         rect.origin.y *= image.scale
         rect.size.width *= image.scale
         rect.size.height *= image.scale
-
-        face = image.crop(area: rect)
-        leftEye = crop(image, pins: leftEyePins, pupils: leftPupilPins)
-        rightEye = crop(image, pins: rightEyePins, pupils: rightPupilPins)
-        leftCutEye = crop(image, pins: leftEyePins, pupils: leftPupilPins)
-        rightCutEye = crop(image, pins: rightEyePins, pupils: rightPupilPins)
+        return image.crop(area: rect)
     }
     
     private func putPoint(_ point: CGPoint) -> CGPoint {
@@ -452,7 +463,7 @@ class ImageViewController: UIViewController {
                 let y = point.y - yMin
                 return CGPoint(x: x, y: imageHeight - y)
             }
-            return FaceDetail(image: cropedImage, polyLine: polyLine, pupils: pupilsPolyLine)
+            return FaceDetail(image: cropedImage, polyLine: polyLine, pupils: pupilsPolyLine, face: orgImage)  // cleanFace
         } else {
             return nil
         }

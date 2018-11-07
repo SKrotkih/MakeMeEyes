@@ -19,7 +19,7 @@ std::vector<cv::Point> centers;
 cv::Point lastPoint;
 cv::Point mousePoint;
 
-cv::Vec3f getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles)
+cv::Vec3f EyeDetector::getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles)
 {
     std::vector<int> sums(circles.size(), 0);
     for (int y = 0; y < eye.rows; y++)
@@ -53,7 +53,7 @@ cv::Vec3f getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles)
     return circles[smallestSumIndex];
 }
 
-cv::Rect getLeftmostEye(std::vector<cv::Rect> &eyes)
+cv::Rect EyeDetector::getLeftmostEye(std::vector<cv::Rect> &eyes)
 {
     int leftmost = 99999999;
     int leftmostIndex = -1;
@@ -68,8 +68,7 @@ cv::Rect getLeftmostEye(std::vector<cv::Rect> &eyes)
     return eyes[leftmostIndex];
 }
 
-
-cv::Point stabilize(std::vector<cv::Point> &points, int windowSize)
+cv::Point EyeDetector::stabilize(std::vector<cv::Point> &points, int windowSize)
 {
     float sumX = 0;
     float sumY = 0;
@@ -88,7 +87,7 @@ cv::Point stabilize(std::vector<cv::Point> &points, int windowSize)
     return cv::Point(sumX, sumY);
 }
 
-void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade)
+void EyeDetector::detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade)
 {
     cv::Mat grayscale;
     cv::cvtColor(frame, grayscale, CV_BGR2GRAY); // convert image to grayscale
@@ -97,25 +96,42 @@ void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeC
     faceCascade.detectMultiScale(grayscale, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(150, 150));
 
     if (faces.size() == 0) {
-        return; // none face was detected
+        printf("Error: None face was detected\n");
+        return;
     }
-    cv::Mat face = grayscale(faces[0]); // crop the face
+    cv::Rect faceRect = faces[0];
+    
+    cv::Mat face = grayscale(faceRect); // crop the face
     std::vector<cv::Rect> eyes;
     eyeCascade.detectMultiScale(face, eyes, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(30, 30)); // same thing as above
-    rectangle(frame, faces[0].tl(), faces[0].br(), cv::Scalar(255, 0, 0), 2);
+    
+    // Draw face
+    //    rectangle(frame, faceRect.tl(), faceRect.br(), cv::Scalar(255, 0, 0), 2);
+    
     if (eyes.size() != 2) {
-        return; // both eyes were not detected
+        printf("Error: Both eyes were not detected\n");
+        return;
     }
-    for (cv::Rect &eye : eyes)
-    {
-        rectangle(frame, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
-    }
-    cv::Rect eyeRect = getLeftmostEye(eyes);
-    cv::Mat eye = face(eyeRect);        // crop the leftmost eye
+    
+    // Draw recatngles around eyes
+    //    for (cv::Rect &eye : eyes)
+    //    {
+    //        rectangle(frame, faceRect.tl() + eye.tl(), faceRect.tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
+    //    }
+
+    cv::Rect leftEyeRect = eyes[0];
+    cv::Mat leftEye = face(leftEyeRect);        // crop the left cornea
+    drawCornea(frame, faceRect, leftEye, leftEyeRect);
+
+    cv::Rect rightEyeRect = eyes[1];
+    cv::Mat rightEye = face(rightEyeRect);        // crop the right cornea
+    drawCornea(frame, faceRect, rightEye, rightEyeRect);
+}
+
+void EyeDetector::drawCornea(cv::Mat &frame, cv::Rect face, cv::Mat &eye, cv::Rect &eyeRect) {
     cv::equalizeHist(eye, eye);
     std::vector<cv::Vec3f> circles;
     cv::HoughCircles(eye, circles, CV_HOUGH_GRADIENT, 1, eye.cols / 8, 250, 15, eye.rows / 8, eye.rows / 3);
-    
     if (circles.size() > 0)
     {
         cv::Vec3f eyeball = getEyeball(eye, circles);
@@ -131,43 +147,32 @@ void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeC
         }
         lastPoint = center;
         int radius = (int)eyeball[2];
-        cv::circle(frame, faces[0].tl() + eyeRect.tl() + center, radius, cv::Scalar(0, 0, 255), 2);
+        cv::circle(frame, face.tl() + eyeRect.tl() + center, radius, cv::Scalar(0, 0, 255), 2);
         cv::circle(eye, center, radius, cv::Scalar(255, 255, 255), 2);
     }
-    cv::imshow("Eye", eye);
 }
 
-int EyeDetector::eyeDetector(UIImage* image)
+UIImage* EyeDetector::eyeDetector(UIImage* image)
 {
     cv::CascadeClassifier faceCascade;
     cv::CascadeClassifier eyeCascade;
-
     NSBundle* appBundle = [NSBundle mainBundle];
-    NSString* faceCascadeName = @"haarcascade_frontalface_alt";
-    NSString* eyeCascadeName = @"haarcascade_eye_tree_eyeglasses";
-    NSString* cascadeType = @"xml";
-    
-    NSString* faceCascadePathInBundle = [appBundle pathForResource: faceCascadeName ofType: cascadeType];
+    NSString* faceCascadePathInBundle = [appBundle pathForResource: @"haarcascade_frontalface_alt" ofType: @"xml"];
     std::string faceCascadePath([faceCascadePathInBundle UTF8String]);
-    if (faceCascade.load(faceCascadePath)){
-        printf("Load complete");
-    }else{
+    if (!faceCascade.load(faceCascadePath)) {
         printf("Load error");
-        return -1;
+        return nil;
     }
-    
-    NSString* eyeCascadePathInBundle = [appBundle pathForResource: eyeCascadeName ofType: cascadeType];
+    NSString* eyeCascadePathInBundle = [appBundle pathForResource: @"haarcascade_eye_tree_eyeglasses" ofType: @"xml"];
     std::string eyeCascadePath([eyeCascadePathInBundle UTF8String]);
-    if (eyeCascade.load(eyeCascadePath)){
-        printf("Load complete");
-    }else{
+    if (!eyeCascade.load(eyeCascadePath)) {
         printf("Load error");
-        return -1;
+        return nil;
     }
     CppUtils* utils = new CppUtils;
     cv::Mat frame;
     utils->imageToMat(image, frame);
     detectEyes(frame, faceCascade, eyeCascade);
-        
-    return 0;
+    UIImage* resultImage = utils->matToImage(frame);
+    return resultImage;
 }

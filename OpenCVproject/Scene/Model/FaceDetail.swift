@@ -12,4 +12,5 @@ struct FaceDetail {
     var image: UIImage
     var polyLine: [CGPoint]
     var pupils: [CGPoint]
+    var face: UIImage?
 }

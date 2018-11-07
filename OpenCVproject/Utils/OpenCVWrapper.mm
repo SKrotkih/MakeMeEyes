@@ -187,9 +187,9 @@ using namespace cv;
     return utils->makeGray(image);
 }
 
-+ (void) eyeDetector: (UIImage*) image {
++ (UIImage *) eyeDetector: (UIImage*) image {
     EyeDetector* eyeDetector = new EyeDetector;
-    eyeDetector->eyeDetector(image);
+    return eyeDetector->eyeDetector(image);
 }
 
 @end
