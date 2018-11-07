@@ -10,14 +10,13 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    @IBOutlet weak var sourceImageView: UIImageView!
-    @IBOutlet weak var destinationImageView: UIImageView!
     @IBOutlet weak var takePhotoButton: UIButton!
+    @IBOutlet weak var lenaImageView: UIImageView!
+    @IBOutlet weak var mandrilImageView: UIImageView!
     
     // MARK: - Variables
     var image: UIImage!
     
-    lazy var mandrillImg: UIImage? = UIImage(named: "lena.png");
     //lazy var utils: CppUtils = CppUtils()
     
     // MARK: - Life
@@ -28,7 +27,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     public override func loadView() {
         super.loadView()
-        configureViews()
     }
     
     public override func viewWillLayoutSubviews() {
@@ -40,18 +38,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         print("\(OpenCVWrapper.openCVVersionString())")
         
-        sourceImageView.image = mandrillImg;
-        destinationImageView.image = OpenCVWrapper.callCPP(mandrillImg!);
+        // Test of the CPP channel
+        // lenaImageView.image = OpenCVWrapper.callCPP(lenaImageView.image!);
     }
     
-    private func configureViews() {
-        sourceImageView.contentMode = .scaleAspectFit
-        sourceImageView.isOpaque = true
-        sourceImageView.backgroundColor = UIColor.black
-        
-        destinationImageView.contentMode = .scaleAspectFit
-        destinationImageView.isOpaque = true
-        destinationImageView.backgroundColor = UIColor.black
+    
+    @IBAction func tapOnLenaPhoto(_ sender: Any) {
+        if let lenaImage = lenaImageView.image {
+            image = lenaImage
+            performSegue(withIdentifier: "showImageSegue", sender: self)
+        }
+    }
+    
+    @IBAction func tapOnMadrillPhoto(_ sender: Any) {
+        if let madrilImage = mandrilImageView.image {
+            image = madrilImage
+            performSegue(withIdentifier: "showImageSegue", sender: self)
+        }
     }
     
     @IBAction func takePhoto(_ sender: UIButton) {

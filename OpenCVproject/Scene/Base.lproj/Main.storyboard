@@ -37,24 +37,52 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eJ7-ew-cNL">
                                 <rect key="frame" x="0.0" y="114" width="375" height="553"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mJD-QJ-qsM">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="235"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7UH-DT-P7c">
-                                        <rect key="frame" x="0.0" y="235" width="375" height="318"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mif-Dk-B0t">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="276.5"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lena" translatesAutoresizingMaskIntoConstraints="NO" id="mJD-QJ-qsM">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="276.5"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="318" id="1HM-DD-ZwL"/>
+                                            <constraint firstItem="mJD-QJ-qsM" firstAttribute="leading" secondItem="Mif-Dk-B0t" secondAttribute="leading" id="HNe-Rj-w6R"/>
+                                            <constraint firstAttribute="bottom" secondItem="mJD-QJ-qsM" secondAttribute="bottom" id="Wgq-Md-Hdl"/>
+                                            <constraint firstAttribute="trailing" secondItem="mJD-QJ-qsM" secondAttribute="trailing" id="wx6-hT-hCu"/>
+                                            <constraint firstItem="mJD-QJ-qsM" firstAttribute="top" secondItem="Mif-Dk-B0t" secondAttribute="top" id="zzE-pl-472"/>
                                         </constraints>
-                                    </imageView>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="30W-Dh-zdw" appends="YES" id="6DV-8G-4BF"/>
+                                        </connections>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fee-VO-mnS">
+                                        <rect key="frame" x="0.0" y="276.5" width="375" height="276.5"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mandrill" translatesAutoresizingMaskIntoConstraints="NO" id="7UH-DT-P7c">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="276.5"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="7UH-DT-P7c" secondAttribute="bottom" id="Qjf-GK-w8b"/>
+                                            <constraint firstAttribute="trailing" secondItem="7UH-DT-P7c" secondAttribute="trailing" id="REW-aM-ZNG"/>
+                                            <constraint firstItem="7UH-DT-P7c" firstAttribute="top" secondItem="Fee-VO-mnS" secondAttribute="top" id="efg-Aj-LgJ"/>
+                                            <constraint firstItem="7UH-DT-P7c" firstAttribute="leading" secondItem="Fee-VO-mnS" secondAttribute="leading" id="s8B-f2-UGI"/>
+                                        </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="y6f-n7-Vdm" appends="YES" id="S0k-rC-vIO"/>
+                                        </connections>
+                                    </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="7UH-DT-P7c" secondAttribute="trailing" id="9Nn-eb-TNE"/>
-                                    <constraint firstItem="7UH-DT-P7c" firstAttribute="top" secondItem="mJD-QJ-qsM" secondAttribute="bottom" id="GeZ-eZ-lmd"/>
-                                    <constraint firstItem="mJD-QJ-qsM" firstAttribute="top" secondItem="eJ7-ew-cNL" secondAttribute="top" id="Inx-1J-mdE"/>
-                                    <constraint firstItem="7UH-DT-P7c" firstAttribute="leading" secondItem="eJ7-ew-cNL" secondAttribute="leading" id="SQD-ux-rhq"/>
-                                    <constraint firstAttribute="bottom" secondItem="7UH-DT-P7c" secondAttribute="bottom" id="Tgr-Eh-or1"/>
-                                    <constraint firstItem="mJD-QJ-qsM" firstAttribute="leading" secondItem="eJ7-ew-cNL" secondAttribute="leading" id="zhl-2s-lzI"/>
-                                    <constraint firstAttribute="trailing" secondItem="mJD-QJ-qsM" secondAttribute="trailing" id="zmG-oI-MPT"/>
+                                    <constraint firstItem="Mif-Dk-B0t" firstAttribute="top" secondItem="eJ7-ew-cNL" secondAttribute="top" id="0d9-uV-oVf"/>
+                                    <constraint firstItem="Fee-VO-mnS" firstAttribute="height" secondItem="Mif-Dk-B0t" secondAttribute="height" id="9jJ-Z4-Qp2"/>
+                                    <constraint firstItem="Fee-VO-mnS" firstAttribute="leading" secondItem="eJ7-ew-cNL" secondAttribute="leading" id="TDu-VH-gDK"/>
+                                    <constraint firstAttribute="trailing" secondItem="Mif-Dk-B0t" secondAttribute="trailing" id="XgG-gR-MXz"/>
+                                    <constraint firstItem="Mif-Dk-B0t" firstAttribute="leading" secondItem="eJ7-ew-cNL" secondAttribute="leading" id="f3k-Uj-JQZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Fee-VO-mnS" secondAttribute="trailing" id="gOH-CJ-wW5"/>
+                                    <constraint firstItem="Fee-VO-mnS" firstAttribute="top" secondItem="Mif-Dk-B0t" secondAttribute="bottom" id="ohg-7g-7VX"/>
+                                    <constraint firstItem="Mif-Dk-B0t" firstAttribute="height" secondItem="eJ7-ew-cNL" secondAttribute="height" multiplier="0.5" id="uBy-uD-1lZ"/>
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RZV-fD-4QN">
@@ -80,13 +108,23 @@
                     </view>
                     <navigationItem key="navigationItem" id="3ug-gb-fzH"/>
                     <connections>
-                        <outlet property="destinationImageView" destination="7UH-DT-P7c" id="wXS-Uw-Slb"/>
-                        <outlet property="sourceImageView" destination="mJD-QJ-qsM" id="HoU-oH-dj4"/>
+                        <outlet property="lenaImageView" destination="mJD-QJ-qsM" id="fAi-eB-ZSi"/>
+                        <outlet property="mandrilImageView" destination="7UH-DT-P7c" id="9Wa-Gz-rjT"/>
                         <outlet property="takePhotoButton" destination="RZV-fD-4QN" id="xGF-Id-c3q"/>
                         <segue destination="bZi-mT-3an" kind="show" identifier="showImageSegue" id="oiZ-vL-Dag"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="30W-Dh-zdw">
+                    <connections>
+                        <action selector="tapOnLenaPhoto:" destination="BYZ-38-t0r" id="p1u-O6-u3b"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="y6f-n7-Vdm">
+                    <connections>
+                        <action selector="tapOnMadrillPhoto:" destination="BYZ-38-t0r" id="UGh-82-FOh"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="140" y="133.5832083958021"/>
         </scene>
@@ -315,4 +353,8 @@
             <point key="canvasLocation" x="1732" y="141.67916041979012"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="lena" width="384" height="384"/>
+        <image name="mandrill" width="461" height="494"/>
+    </resources>
 </document>
