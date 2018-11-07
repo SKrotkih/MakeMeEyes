@@ -11,40 +11,46 @@ import UIKit
 class FaceViewController: UIViewController {
 
     @IBOutlet weak var faceImageView: UIImageView!
-    @IBOutlet weak var leftPupilImageView: UIImageView!
-    @IBOutlet weak var rightPupilImageView: UIImageView!
     
     @IBOutlet weak var leftEyeView: FaceDetailImageView!
     @IBOutlet weak var rightEyeView: FaceDetailImageView!
     
+    @IBOutlet weak var leftEyeCutView: FaceDetailImageView!
+    @IBOutlet weak var rightEyeCutView: FaceDetailImageView!
+    
     var face: UIImage?
     var leftEye: FaceDetail?
     var rightEye: FaceDetail?
-    var leftPupil: FaceDetail?
-    var rightPupil: FaceDetail?
+    var leftCutEye: FaceDetail?
+    var rightCutEye: FaceDetail?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        putImages()
-        leftEyeView.data = leftEye
-        rightEyeView.data = rightEye
+        configureView()
     }
     
-    private func putImages() {
+    private func configureView() {
         faceImageView.image = face
-        leftEyeView.image = leftEye?.image
-        rightEyeView.image = rightEye?.image
-        leftPupilImageView.image = leftPupil?.image
-        rightPupilImageView.image = rightPupil?.image
+        leftEyeView.data = leftEye
+        rightEyeView.data = rightEye
+        leftEyeCutView.data = leftCutEye
+        rightEyeCutView.data = rightCutEye
     }
-
+    
     @IBAction func runLeftEyeButtonPressed(_ sender: Any) {
-        leftEyeView.drawDetail()
+        leftEyeView.drawEdges()
     }
     
     @IBAction func runRightEyeButtonPressed(_ sender: Any) {
-        rightEyeView.drawDetail()
+        rightEyeView.drawEdges()
     }
     
+    @IBAction func runLeftCutEyeButtonPressed(_ sender: Any) {
+        leftEyeCutView.cutEdges()
+    }
+    
+    @IBAction func runRightCutEyeButtonPressed(_ sender: Any) {
+        rightEyeCutView.cutEdges()
+    }
 }

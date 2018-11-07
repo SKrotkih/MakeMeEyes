@@ -18,8 +18,8 @@ class ImageViewController: UIViewController {
     var face: UIImage?
     var leftEye: FaceDetail?
     var rightEye: FaceDetail?
-    var leftPupil: FaceDetail?
-    var rightPupil: FaceDetail?
+    var leftCutEye: FaceDetail?
+    var rightCutEye: FaceDetail?
     
     var faceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     var facePins = [CGPoint]()
@@ -36,9 +36,14 @@ class ImageViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         imageView.image = image
+        process()
     }
     
-    @IBAction func process(_ sender: UIButton) {
+    @IBAction func tapOnImage(_ sender: Any) {
+        performSegue(withIdentifier: "faceSequence", sender: self)
+    }
+    
+    private func process() {
         var orientation: CGImagePropertyOrientation
         
         // detect image orientation, we need it to be accurate for the face detection to work
@@ -79,8 +84,6 @@ class ImageViewController: UIViewController {
         for face in observations {
             addFaceLandmarksToImage(face)
         }
-        
-        performSegue(withIdentifier: "faceSequence", sender: self)
     }
     
     func addFaceLandmarksToImage(_ face: VNFaceObservation) {
@@ -360,6 +363,8 @@ class ImageViewController: UIViewController {
                 faceViewController.face = face
                 faceViewController.leftEye = leftEye
                 faceViewController.rightEye = rightEye
+                faceViewController.leftCutEye = leftCutEye
+                faceViewController.rightCutEye = rightCutEye
             }
         }
     }
@@ -377,6 +382,8 @@ class ImageViewController: UIViewController {
         face = image.crop(area: rect)
         leftEye = crop(image, pins: leftEyePins, pupils: leftPupilPins)
         rightEye = crop(image, pins: rightEyePins, pupils: rightPupilPins)
+        leftCutEye = crop(image, pins: leftEyePins, pupils: leftPupilPins)
+        rightCutEye = crop(image, pins: rightEyePins, pupils: rightPupilPins)
     }
     
     private func putPoint(_ point: CGPoint) -> CGPoint {

@@ -140,34 +140,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bzb-u1-C8Q">
-                                <rect key="frame" x="16" y="64" width="343" height="545"/>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bzb-u1-C8Q">
+                                <rect key="frame" x="16" y="64" width="343" height="587"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="SV1-WF-vXr" appends="YES" id="6Bf-pJ-ThR"/>
+                                </connections>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TyL-Tk-BKD">
-                                <rect key="frame" x="299" y="617" width="60" height="30"/>
-                                <state key="normal" title="Process!"/>
-                                <connections>
-                                    <action selector="process:" destination="bZi-mT-3an" eventType="touchUpInside" id="wVC-aD-V5H"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wsW-T6-njE">
-                                <rect key="frame" x="16" y="617" width="39" height="30"/>
-                                <state key="normal" title="Close"/>
-                                <connections>
-                                    <segue destination="cJy-ri-Ke6" kind="unwind" unwindAction="exitWithUnwindSegue:" id="pWc-Va-A1p"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Bb9-33-j9z" firstAttribute="top" secondItem="wsW-T6-njE" secondAttribute="bottom" constant="20" id="4RD-uU-gOz"/>
                             <constraint firstItem="Bzb-u1-C8Q" firstAttribute="leading" secondItem="D4P-gd-0FB" secondAttribute="leadingMargin" id="4wo-YM-DyY"/>
-                            <constraint firstItem="wsW-T6-njE" firstAttribute="leading" secondItem="D4P-gd-0FB" secondAttribute="leadingMargin" id="5KI-eD-EjM"/>
                             <constraint firstItem="Bzb-u1-C8Q" firstAttribute="trailing" secondItem="D4P-gd-0FB" secondAttribute="trailingMargin" id="A7b-dS-zgb"/>
                             <constraint firstItem="Bzb-u1-C8Q" firstAttribute="top" secondItem="fCo-La-kID" secondAttribute="bottom" id="BVx-PS-OEM"/>
-                            <constraint firstItem="Bb9-33-j9z" firstAttribute="top" secondItem="TyL-Tk-BKD" secondAttribute="bottom" constant="20" id="GCS-BG-m36"/>
-                            <constraint firstItem="TyL-Tk-BKD" firstAttribute="top" secondItem="Bzb-u1-C8Q" secondAttribute="bottom" constant="8" id="Gzh-Zh-qkj"/>
-                            <constraint firstItem="TyL-Tk-BKD" firstAttribute="trailing" secondItem="D4P-gd-0FB" secondAttribute="trailingMargin" id="yxP-bs-i3R"/>
+                            <constraint firstItem="Bb9-33-j9z" firstAttribute="top" secondItem="Bzb-u1-C8Q" secondAttribute="bottom" constant="16" id="QRn-z0-GOH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GaB-Xy-hXZ"/>
                     </view>
@@ -177,9 +162,13 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WgG-sr-Uhp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="cJy-ri-Ke6" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="SV1-WF-vXr">
+                    <connections>
+                        <action selector="tapOnImage:" destination="bZi-mT-3an" id="dNS-uw-lUb"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="974" y="142"/>
+            <point key="canvasLocation" x="973.60000000000002" y="141.67916041979012"/>
         </scene>
         <!--Face View Controller-->
         <scene sceneID="tqr-ai-MdQ">
@@ -217,14 +206,19 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UMP-0u-yGx">
-                                                        <rect key="frame" x="15" y="15" width="62" height="20.5"/>
+                                                        <rect key="frame" x="15" y="15" width="62" height="21.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
+                                                        <color key="shadowColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Amz-Pn-2Zh">
                                                         <rect key="frame" x="330" y="15" width="30" height="30"/>
-                                                        <state key="normal" title="Run"/>
+                                                        <size key="titleShadowOffset" width="0.0" height="-1"/>
+                                                        <state key="normal" title="Run">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="titleShadowColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="runLeftEyeButtonPressed:" destination="S4V-Ux-hdu" eventType="touchUpInside" id="miC-Ry-jed"/>
                                                         </connections>
@@ -251,14 +245,19 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4L9-rX-ZNH">
-                                                        <rect key="frame" x="15" y="15" width="72" height="20.5"/>
+                                                        <rect key="frame" x="15" y="15" width="72" height="21.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
+                                                        <color key="shadowColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AoS-i6-XmD">
                                                         <rect key="frame" x="330" y="15" width="30" height="30"/>
-                                                        <state key="normal" title="Run"/>
+                                                        <size key="titleShadowOffset" width="0.0" height="-1"/>
+                                                        <state key="normal" title="Run">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="titleShadowColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="runRightEyeButtonPressed:" destination="S4V-Ux-hdu" eventType="touchUpInside" id="uUy-Ta-Cpr"/>
                                                         </connections>
@@ -281,31 +280,77 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0Y-KU-lBF">
                                                 <rect key="frame" x="0.0" y="600" width="375" height="200"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wdj-pS-jrQ">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wdj-pS-jrQ" customClass="FaceDetailImageView" customModule="OpenCVproject" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                                     </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLY-ue-u9H">
+                                                        <rect key="frame" x="15" y="15" width="62" height="21.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <color key="shadowColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4w-VW-RoY">
+                                                        <rect key="frame" x="330" y="15" width="30" height="30"/>
+                                                        <size key="titleShadowOffset" width="0.0" height="-1"/>
+                                                        <state key="normal" title="Run">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="titleShadowColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="runLeftCutEyeButtonPressed:" destination="S4V-Ux-hdu" eventType="touchUpInside" id="tsc-Hd-I50"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="wdj-pS-jrQ" secondAttribute="bottom" id="Bgd-7r-8dH"/>
+                                                    <constraint firstItem="D4w-VW-RoY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dLY-ue-u9H" secondAttribute="trailing" constant="8" symbolic="YES" id="O9H-LF-uuB"/>
+                                                    <constraint firstAttribute="trailing" secondItem="D4w-VW-RoY" secondAttribute="trailing" constant="15" id="SbZ-ZN-KW0"/>
                                                     <constraint firstItem="wdj-pS-jrQ" firstAttribute="leading" secondItem="V0Y-KU-lBF" secondAttribute="leading" id="UYk-RF-DvQ"/>
                                                     <constraint firstItem="wdj-pS-jrQ" firstAttribute="top" secondItem="V0Y-KU-lBF" secondAttribute="top" id="V7v-U7-Eoy"/>
                                                     <constraint firstAttribute="trailing" secondItem="wdj-pS-jrQ" secondAttribute="trailing" id="VzS-3E-Wab"/>
+                                                    <constraint firstItem="dLY-ue-u9H" firstAttribute="leading" secondItem="V0Y-KU-lBF" secondAttribute="leading" constant="15" id="gdO-b3-GJf"/>
+                                                    <constraint firstItem="dLY-ue-u9H" firstAttribute="top" secondItem="V0Y-KU-lBF" secondAttribute="top" constant="15" id="wGl-CN-XiH"/>
+                                                    <constraint firstItem="D4w-VW-RoY" firstAttribute="top" secondItem="V0Y-KU-lBF" secondAttribute="top" constant="15" id="yhA-jC-62R"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JB8-KL-g2q">
                                                 <rect key="frame" x="0.0" y="800" width="375" height="200"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdM-yH-Yoa">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdM-yH-Yoa" customClass="FaceDetailImageView" customModule="OpenCVproject" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                                     </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BNk-Ax-exD">
+                                                        <rect key="frame" x="15" y="15" width="72" height="21.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <color key="shadowColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Guh-Px-Mf0">
+                                                        <rect key="frame" x="330" y="15" width="30" height="30"/>
+                                                        <size key="titleShadowOffset" width="0.0" height="-1"/>
+                                                        <state key="normal" title="Run">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="titleShadowColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="runRightCutEyeButtonPressed:" destination="S4V-Ux-hdu" eventType="touchUpInside" id="Sax-D1-nlO"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
+                                                    <constraint firstItem="BNk-Ax-exD" firstAttribute="top" secondItem="JB8-KL-g2q" secondAttribute="top" constant="15" id="3tR-aj-f52"/>
                                                     <constraint firstAttribute="bottom" secondItem="LdM-yH-Yoa" secondAttribute="bottom" id="9Fr-rl-QIc"/>
                                                     <constraint firstAttribute="trailing" secondItem="LdM-yH-Yoa" secondAttribute="trailing" id="Dze-Ps-DGr"/>
                                                     <constraint firstItem="LdM-yH-Yoa" firstAttribute="leading" secondItem="JB8-KL-g2q" secondAttribute="leading" id="Ejz-74-kfE"/>
+                                                    <constraint firstItem="Guh-Px-Mf0" firstAttribute="top" secondItem="JB8-KL-g2q" secondAttribute="top" constant="15" id="LZt-gE-68W"/>
+                                                    <constraint firstItem="Guh-Px-Mf0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BNk-Ax-exD" secondAttribute="trailing" constant="8" symbolic="YES" id="Pka-dj-5Zv"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Guh-Px-Mf0" secondAttribute="trailing" constant="15" id="Uvn-OA-Ab4"/>
                                                     <constraint firstItem="LdM-yH-Yoa" firstAttribute="top" secondItem="JB8-KL-g2q" secondAttribute="top" id="cmx-5A-v6S"/>
+                                                    <constraint firstItem="BNk-Ax-exD" firstAttribute="leading" secondItem="JB8-KL-g2q" secondAttribute="leading" constant="15" id="seb-9e-Tf4"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -342,10 +387,10 @@
                     </view>
                     <connections>
                         <outlet property="faceImageView" destination="j9d-DN-Oy4" id="cIr-XI-nmk"/>
+                        <outlet property="leftEyeCutView" destination="wdj-pS-jrQ" id="2Nl-t4-qHN"/>
                         <outlet property="leftEyeView" destination="nze-Uk-ytZ" id="nTI-oU-KbM"/>
-                        <outlet property="leftPupilImageView" destination="wdj-pS-jrQ" id="Edz-3N-brr"/>
+                        <outlet property="rightEyeCutView" destination="LdM-yH-Yoa" id="25o-OV-L48"/>
                         <outlet property="rightEyeView" destination="Ta7-Si-tv6" id="H86-jP-MKc"/>
-                        <outlet property="rightPupilImageView" destination="LdM-yH-Yoa" id="tSg-rl-PVN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rEX-uM-itB" userLabel="First Responder" sceneMemberID="firstResponder"/>
