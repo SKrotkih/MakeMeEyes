@@ -30,7 +30,7 @@ class ImageViewController: UIViewController {
     var rightPupilPins = [CGPoint]()
     
     var scale2: CGFloat = 1.0
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -81,6 +81,7 @@ class ImageViewController: UIViewController {
             fatalError("unexpected result type!")
         }
         
+        // All Faces
         for face in observations {
             addFaceLandmarksToImage(face)
         }
@@ -173,7 +174,7 @@ class ImageViewController: UIViewController {
         context?.setLineWidth(8.0)
         context?.drawPath(using: .stroke)
         context?.saveGState()
-        
+
         // left eye
         context?.saveGState()
         context?.setStrokeColor(UIColor.yellow.cgColor)

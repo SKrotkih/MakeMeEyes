@@ -118,5 +118,12 @@ class FaceDetailImageView: UIImageView {
         self.image = newImage
     }
 
+    func eyeDetector() {
+        guard let currImage = self.data?.image else {
+            return
+        }
+        OpenCVWrapper.eyeDetector(currImage)
+    }
+    
 }
 

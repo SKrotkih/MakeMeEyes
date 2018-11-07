@@ -47,10 +47,10 @@ class FaceViewController: UIViewController {
     }
     
     @IBAction func runLeftCutEyeButtonPressed(_ sender: Any) {
-        leftEyeCutView.cutEdges()
+        leftEyeCutView.eyeDetector() // cutEdges()
     }
     
     @IBAction func runRightCutEyeButtonPressed(_ sender: Any) {
-        rightEyeCutView.cutEdges()
+        rightEyeCutView.eyeDetector() // cutEdges()
     }
 }

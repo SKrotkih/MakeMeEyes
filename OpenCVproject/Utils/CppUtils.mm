@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <opencv2/opencv.hpp>
 
-UIImage* CppUtils::MatToUIImage(const cv::Mat& image)
+UIImage* CppUtils::matToImage(const cv::Mat& image)
 {
     NSData *data = [NSData dataWithBytes:image.data length:image.
                     elemSize()*image.total()];
@@ -49,7 +49,7 @@ UIImage* CppUtils::MatToUIImage(const cv::Mat& image)
     return finalImage;
 }
 
-void CppUtils::UIImageToMat(const UIImage* image, cv::Mat& m, bool alphaExist)
+void CppUtils::imageToMat(const UIImage* image, cv::Mat& m, bool alphaExist)
 {
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.
                                                       CGImage);
@@ -92,7 +92,7 @@ UIImage* CppUtils::makeGray(UIImage* image) {
     
     // Convert UIImage* to cv::Mat
     cv::Mat cvImage;
-    UIImageToMat(image, cvImage);
+    imageToMat(image, cvImage);
     
     if (!cvImage.empty())
     {
@@ -115,7 +115,7 @@ UIImage* CppUtils::makeGray(UIImage* image) {
         cvImage.setTo(cv::Scalar(0, 128, 255, 255), edges);
         
         // Convert cv::Mat to UIImage* and show the resulting image
-        return MatToUIImage(cvImage);
+        return matToImage(cvImage);
     }
     return nil;
 }
