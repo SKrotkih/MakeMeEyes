@@ -16,7 +16,7 @@ class FaceDetailImageView: UIImageView {
         }
     }
     
-    func drawEdges() {
+    func drawEye() {
         guard let currImage = self.data?.image else {
             return
         }
@@ -63,7 +63,7 @@ class FaceDetailImageView: UIImageView {
         self.image = newImage
     }
 
-    func cutEdges() {
+    func cutEye() {
         guard let currImage = self.data?.image else {
             return
         }
@@ -91,11 +91,12 @@ class FaceDetailImageView: UIImageView {
                 context.addLine(to: point)
             }
         }
+        // Cut eye
         context.addLine(to: polyLine[0])
         context.setFillColor(UIColor.white.cgColor)
         context.fillPath()
         
-        // Pupil
+        // Draw pupil
         for i in 0..<pupils.count {
             let point = pupils[i]
             if i == 0 {
@@ -118,14 +119,14 @@ class FaceDetailImageView: UIImageView {
         self.image = newImage
     }
 
-    func eyeDetector() {
+    func drawEyesIris() {
         
 //        self.image = self.data?.face
         
         guard let cropedFaceImage = self.data?.face else {
             return
         }
-        self.image = OpenCVWrapper.eyeDetector(cropedFaceImage)
+        self.image = OpenCVWrapper.detectEyeIris(cropedFaceImage)
     }
 }
 

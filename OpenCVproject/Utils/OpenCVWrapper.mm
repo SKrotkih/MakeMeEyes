@@ -13,7 +13,7 @@
 #import <opencv2/opencv.hpp>
 #import "OpenCVWrapper.h"
 #import "CppUtils.hpp"
-#import "EyeDetector.hpp"
+#import "EyeIrisDetector.hpp"
 
 #pragma clang pop
 #endif
@@ -187,9 +187,9 @@ using namespace cv;
     return utils->makeGray(image);
 }
 
-+ (UIImage *) eyeDetector: (UIImage*) image {
-    EyeDetector* eyeDetector = new EyeDetector;
-    return eyeDetector->eyeDetector(image);
++ (UIImage *) detectEyeIris: (UIImage*) image {
+    EyeIrisDetector* detectEyeIris = new EyeIrisDetector;
+    return detectEyeIris->detectEyeIris(image);
 }
 
 @end

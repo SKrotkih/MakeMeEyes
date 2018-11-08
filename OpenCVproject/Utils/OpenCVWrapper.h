@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) openCVVersionString;
 + (UIImage*) toGray: (UIImage*) source;
 + (UIImage*) callCPP: (UIImage*) image;
-+ (UIImage*) eyeDetector: (UIImage*) image;
++ (UIImage*) detectEyeIris: (UIImage*) image;
 
 @end
 

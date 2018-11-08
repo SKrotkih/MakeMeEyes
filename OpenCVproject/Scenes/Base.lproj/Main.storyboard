@@ -182,13 +182,13 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="IWx-BU-vJx">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="2500"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wll-PR-fWv">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j9d-DN-Oy4">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                     </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -196,14 +196,15 @@
                                                     <constraint firstItem="j9d-DN-Oy4" firstAttribute="top" secondItem="wll-PR-fWv" secondAttribute="top" id="8sL-Lk-ZNv"/>
                                                     <constraint firstAttribute="trailing" secondItem="j9d-DN-Oy4" secondAttribute="trailing" id="dau-YX-Gh9"/>
                                                     <constraint firstAttribute="bottom" secondItem="j9d-DN-Oy4" secondAttribute="bottom" id="j4A-da-Kfk"/>
+                                                    <constraint firstAttribute="height" constant="500" id="mL8-La-LEH"/>
                                                     <constraint firstItem="j9d-DN-Oy4" firstAttribute="leading" secondItem="wll-PR-fWv" secondAttribute="leading" id="zqE-dD-SYD"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mv3-Y0-PfQ">
-                                                <rect key="frame" x="0.0" y="200" width="375" height="200"/>
+                                                <rect key="frame" x="0.0" y="500" width="375" height="500"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nze-Uk-ytZ" customClass="FaceDetailImageView" customModule="OpenCVproject" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UMP-0u-yGx">
                                                         <rect key="frame" x="15" y="15" width="62" height="21.5"/>
@@ -239,10 +240,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KsT-t3-1rU">
-                                                <rect key="frame" x="0.0" y="400" width="375" height="200"/>
+                                                <rect key="frame" x="0.0" y="1000" width="375" height="500"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ta7-Si-tv6" customClass="FaceDetailImageView" customModule="OpenCVproject" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4L9-rX-ZNH">
                                                         <rect key="frame" x="15" y="15" width="72" height="21.5"/>
@@ -278,10 +279,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0Y-KU-lBF">
-                                                <rect key="frame" x="0.0" y="600" width="375" height="200"/>
+                                                <rect key="frame" x="0.0" y="1500" width="375" height="500"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wdj-pS-jrQ" customClass="FaceDetailImageView" customModule="OpenCVproject" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLY-ue-u9H">
                                                         <rect key="frame" x="15" y="15" width="62" height="21.5"/>
@@ -316,10 +317,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JB8-KL-g2q">
-                                                <rect key="frame" x="0.0" y="800" width="375" height="200"/>
+                                                <rect key="frame" x="0.0" y="2000" width="375" height="500"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdM-yH-Yoa" customClass="FaceDetailImageView" customModule="OpenCVproject" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BNk-Ax-exD">
                                                         <rect key="frame" x="15" y="15" width="72" height="21.5"/>
@@ -358,10 +359,9 @@
                                             <constraint firstAttribute="trailing" secondItem="wll-PR-fWv" secondAttribute="trailing" id="Kqj-fM-Dv7"/>
                                             <constraint firstItem="JB8-KL-g2q" firstAttribute="height" secondItem="V0Y-KU-lBF" secondAttribute="height" id="Nor-Ef-CBD"/>
                                             <constraint firstItem="wll-PR-fWv" firstAttribute="leading" secondItem="IWx-BU-vJx" secondAttribute="leading" id="O3r-qj-Sf5"/>
-                                            <constraint firstAttribute="height" constant="1000" id="RJn-86-P13"/>
+                                            <constraint firstAttribute="height" constant="2500" id="WPq-nZ-Z7U"/>
                                             <constraint firstItem="Mv3-Y0-PfQ" firstAttribute="height" secondItem="wll-PR-fWv" secondAttribute="height" id="fkY-Ez-thm"/>
                                             <constraint firstItem="KsT-t3-1rU" firstAttribute="height" secondItem="Mv3-Y0-PfQ" secondAttribute="height" id="fvs-P5-mOO"/>
-                                            <constraint firstItem="wll-PR-fWv" firstAttribute="height" secondItem="IWx-BU-vJx" secondAttribute="height" multiplier="0.2" id="gNf-fz-oOg"/>
                                             <constraint firstItem="V0Y-KU-lBF" firstAttribute="height" secondItem="KsT-t3-1rU" secondAttribute="height" id="hJG-Zf-M9t"/>
                                             <constraint firstItem="wll-PR-fWv" firstAttribute="top" secondItem="IWx-BU-vJx" secondAttribute="top" id="xIV-5V-o6A"/>
                                         </constraints>
@@ -399,7 +399,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="lena" width="384" height="384"/>
-        <image name="mandrill" width="461" height="494"/>
+        <image name="lena" width="444" height="493"/>
+        <image name="mandrill" width="384" height="384"/>
     </resources>
 </document>

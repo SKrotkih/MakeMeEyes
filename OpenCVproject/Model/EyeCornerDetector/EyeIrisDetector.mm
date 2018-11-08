@@ -5,7 +5,7 @@
 
 // https://picoledelimao.github.io/blog/2017/01/28/eyeball-tracking-for-mouse-control-in-opencv/
 
-#import "EyeDetector.hpp"
+#import "EyeIrisDetector.hpp"
 #import "CppUtils.hpp"
 
 #include <iostream>
@@ -19,7 +19,7 @@ std::vector<cv::Point> centers;
 cv::Point lastPoint;
 cv::Point mousePoint;
 
-cv::Vec3f EyeDetector::getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles)
+cv::Vec3f EyeIrisDetector::getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles)
 {
     std::vector<int> sums(circles.size(), 0);
     for (int y = 0; y < eye.rows; y++)
@@ -53,7 +53,7 @@ cv::Vec3f EyeDetector::getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles)
     return circles[smallestSumIndex];
 }
 
-cv::Rect EyeDetector::getLeftmostEye(std::vector<cv::Rect> &eyes)
+cv::Rect EyeIrisDetector::getLeftmostEye(std::vector<cv::Rect> &eyes)
 {
     int leftmost = 99999999;
     int leftmostIndex = -1;
@@ -68,7 +68,7 @@ cv::Rect EyeDetector::getLeftmostEye(std::vector<cv::Rect> &eyes)
     return eyes[leftmostIndex];
 }
 
-cv::Point EyeDetector::stabilize(std::vector<cv::Point> &points, int windowSize)
+cv::Point EyeIrisDetector::stabilize(std::vector<cv::Point> &points, int windowSize)
 {
     float sumX = 0;
     float sumY = 0;
@@ -87,7 +87,7 @@ cv::Point EyeDetector::stabilize(std::vector<cv::Point> &points, int windowSize)
     return cv::Point(sumX, sumY);
 }
 
-void EyeDetector::detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade)
+void EyeIrisDetector::detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade)
 {
     cv::Mat grayscale;
     cv::cvtColor(frame, grayscale, CV_BGR2GRAY); // convert image to grayscale
@@ -120,15 +120,15 @@ void EyeDetector::detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade,
     //    }
 
     cv::Rect leftEyeRect = eyes[0];
-    cv::Mat leftEye = face(leftEyeRect);        // crop the left cornea
-    drawCornea(frame, faceRect, leftEye, leftEyeRect);
+    cv::Mat leftEye = face(leftEyeRect);        // crop the left iris
+    drawIris(frame, faceRect, leftEye, leftEyeRect);
 
     cv::Rect rightEyeRect = eyes[1];
-    cv::Mat rightEye = face(rightEyeRect);        // crop the right cornea
-    drawCornea(frame, faceRect, rightEye, rightEyeRect);
+    cv::Mat rightEye = face(rightEyeRect);        // crop the right iris
+    drawIris(frame, faceRect, rightEye, rightEyeRect);
 }
 
-void EyeDetector::drawCornea(cv::Mat &frame, cv::Rect face, cv::Mat &eye, cv::Rect &eyeRect) {
+void EyeIrisDetector::drawIris(cv::Mat &frame, cv::Rect face, cv::Mat &eye, cv::Rect &eyeRect) {
     cv::equalizeHist(eye, eye);
     std::vector<cv::Vec3f> circles;
     cv::HoughCircles(eye, circles, CV_HOUGH_GRADIENT, 1, eye.cols / 8, 250, 15, eye.rows / 8, eye.rows / 3);
@@ -152,7 +152,7 @@ void EyeDetector::drawCornea(cv::Mat &frame, cv::Rect face, cv::Mat &eye, cv::Re
     }
 }
 
-UIImage* EyeDetector::eyeDetector(UIImage* image)
+UIImage* EyeIrisDetector::detectEyeIris(UIImage* image)
 {
     cv::CascadeClassifier faceCascade;
     cv::CascadeClassifier eyeCascade;
