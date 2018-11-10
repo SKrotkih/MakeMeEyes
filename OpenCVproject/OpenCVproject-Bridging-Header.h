@@ -3,5 +3,5 @@
 //
 
 #import "OpenCVWrapper.h"
+#import "CvVideoCameraWrapper.h"
 #import "CppUtils.hpp"
-

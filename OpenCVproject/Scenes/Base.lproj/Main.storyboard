@@ -19,12 +19,51 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="a5B-xW-F3M"/>
+                        <segue destination="DcM-fu-vqt" kind="relationship" relationship="rootViewController" id="JDh-Jq-d1D"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3t2-Qt-pPL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-606" y="134"/>
+            <point key="canvasLocation" x="-703" y="134"/>
+        </scene>
+        <!--Video-->
+        <scene sceneID="Nu4-xC-vlM">
+            <objects>
+                <viewController id="DcM-fu-vqt" customClass="VideoViewController" customModule="OpenCVproject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="O8V-1J-hcy">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xQW-Ro-PYT">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xQW-Ro-PYT" firstAttribute="top" secondItem="RdT-fd-l8B" secondAttribute="top" id="CBo-UW-BYg"/>
+                            <constraint firstItem="RdT-fd-l8B" firstAttribute="bottom" secondItem="xQW-Ro-PYT" secondAttribute="bottom" id="DDV-aL-lAl"/>
+                            <constraint firstItem="RdT-fd-l8B" firstAttribute="trailing" secondItem="xQW-Ro-PYT" secondAttribute="trailing" id="Kwu-gM-kq2"/>
+                            <constraint firstItem="xQW-Ro-PYT" firstAttribute="leading" secondItem="RdT-fd-l8B" secondAttribute="leading" id="Tlv-dE-Wev"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="RdT-fd-l8B"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video" id="9OF-km-1yd">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Photo" id="Mgd-U8-iGO">
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="nq2-69-w1f"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Start" id="PzU-3b-NF5"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="xQW-Ro-PYT" id="etw-l1-sjl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YZ5-bh-rij" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="41" y="134"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -126,7 +165,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="140" y="133.5832083958021"/>
+            <point key="canvasLocation" x="41" y="851"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="vWk-30-75H">
@@ -168,7 +207,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="973.60000000000002" y="141.67916041979012"/>
+            <point key="canvasLocation" x="670" y="851"/>
         </scene>
         <!--Face View Controller-->
         <scene sceneID="tqr-ai-MdQ">
@@ -395,7 +434,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rEX-uM-itB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1732" y="141.67916041979012"/>
+            <point key="canvasLocation" x="1305" y="851"/>
         </scene>
     </scenes>
     <resources>

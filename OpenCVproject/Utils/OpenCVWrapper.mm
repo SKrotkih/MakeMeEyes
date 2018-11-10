@@ -10,7 +10,6 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdocumentation"
 
-#import <opencv2/opencv.hpp>
 #import "OpenCVWrapper.h"
 #import "CppUtils.hpp"
 #import "EyeIrisDetector.hpp"

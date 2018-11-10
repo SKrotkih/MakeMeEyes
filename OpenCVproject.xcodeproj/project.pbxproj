@@ -14,7 +14,6 @@
 		7F2A96582190150F0024F342 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F2A96562190150F0024F342 /* Main.storyboard */; };
 		7F2A965A219015110024F342 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F2A9659219015110024F342 /* Assets.xcassets */; };
 		7F2A965D219015110024F342 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F2A965B219015110024F342 /* LaunchScreen.storyboard */; };
-		7F2A9666219015870024F342 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2A9665219015870024F342 /* opencv2.framework */; };
 		7F2A9668219015B40024F342 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2A9667219015B40024F342 /* AssetsLibrary.framework */; };
 		7F2A966A219015C80024F342 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2A9669219015C80024F342 /* CoreGraphics.framework */; };
 		7F2A966C219015D60024F342 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2A966B219015D60024F342 /* CoreMedia.framework */; };
@@ -29,6 +28,14 @@
 		7F405C162191578A00068592 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F405C152191578A00068592 /* ImageViewController.swift */; };
 		7F405C1821915AB100068592 /* FaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F405C1721915AB100068592 /* FaceViewController.swift */; };
 		7F405C1A21916B7F00068592 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F405C1921916B7F00068592 /* UIImage+Ext.swift */; };
+		7FAEE1522196900E00E2305E /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEE1512196900E00E2305E /* VideoViewController.swift */; };
+		7FAEE15D2196BBC600E2305E /* CvVideoCameraWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */; };
+		7FECD6B62196C7810069CE31 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2A9665219015870024F342 /* opencv2.framework */; };
+		7FECD6B82196C92E0069CE31 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6B72196C92E0069CE31 /* AVFoundation.framework */; };
+		7FECD6BA2196C93D0069CE31 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6B92196C93D0069CE31 /* CoreImage.framework */; };
+		7FECD6BC2196C94C0069CE31 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6BB2196C94C0069CE31 /* CoreVideo.framework */; };
+		7FECD6BE2196C9580069CE31 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6BD2196C9570069CE31 /* QuartzCore.framework */; };
+		7FECD6C02196CA510069CE31 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7FECD6BF2196CA510069CE31 /* haarcascade_frontalface_alt2.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +68,14 @@
 		7F405C152191578A00068592 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		7F405C1721915AB100068592 /* FaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceViewController.swift; sourceTree = "<group>"; };
 		7F405C1921916B7F00068592 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
+		7FAEE1512196900E00E2305E /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		7FAEE15B2196BBC600E2305E /* CvVideoCameraWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CvVideoCameraWrapper.h; sourceTree = "<group>"; };
+		7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CvVideoCameraWrapper.mm; sourceTree = "<group>"; };
+		7FECD6B72196C92E0069CE31 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		7FECD6B92196C93D0069CE31 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		7FECD6BB2196C94C0069CE31 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		7FECD6BD2196C9570069CE31 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7FECD6BF2196CA510069CE31 /* haarcascade_frontalface_alt2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt2.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,12 +83,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FECD6BE2196C9580069CE31 /* QuartzCore.framework in Frameworks */,
+				7FECD6BC2196C94C0069CE31 /* CoreVideo.framework in Frameworks */,
+				7FECD6BA2196C93D0069CE31 /* CoreImage.framework in Frameworks */,
+				7FECD6B82196C92E0069CE31 /* AVFoundation.framework in Frameworks */,
+				7FECD6B62196C7810069CE31 /* opencv2.framework in Frameworks */,
 				7F2A9670219015EE0024F342 /* Accelerate.framework in Frameworks */,
 				7F2A966E219015E40024F342 /* CoreFoundation.framework in Frameworks */,
 				7F2A966C219015D60024F342 /* CoreMedia.framework in Frameworks */,
 				7F2A966A219015C80024F342 /* CoreGraphics.framework in Frameworks */,
 				7F2A9668219015B40024F342 /* AssetsLibrary.framework in Frameworks */,
-				7F2A9666219015870024F342 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,10 +102,9 @@
 		7F21D1802192047D002AE655 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7F8C36AD2193EFDE003E4730 /* EyeIrisDetector */,
 				7F31DA8A2192F648005AB194 /* Useful */,
-				7F8C36AD2193EFDE003E4730 /* EyeCornerDetector */,
-				7F21D1812192051D002AE655 /* FaceDetail.swift */,
-				7F21D183219211B9002AE655 /* FaceDetailImageView.swift */,
+				7F31DA902193147C005AB194 /* Resources */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -127,6 +145,10 @@
 		7F2A9664219015870024F342 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FECD6BD2196C9570069CE31 /* QuartzCore.framework */,
+				7FECD6BB2196C94C0069CE31 /* CoreVideo.framework */,
+				7FECD6B92196C93D0069CE31 /* CoreImage.framework */,
+				7FECD6B72196C92E0069CE31 /* AVFoundation.framework */,
 				7F2A966F219015EE0024F342 /* Accelerate.framework */,
 				7F2A966D219015E40024F342 /* CoreFoundation.framework */,
 				7F2A966B219015D60024F342 /* CoreMedia.framework */,
@@ -150,6 +172,7 @@
 			children = (
 				7F31DA91219314F0005AB194 /* haarcascade_eye_tree_eyeglasses.xml */,
 				7F31DA92219314F0005AB194 /* haarcascade_frontalface_alt.xml */,
+				7FECD6BF2196CA510069CE31 /* haarcascade_frontalface_alt2.xml */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -159,6 +182,8 @@
 			children = (
 				7F2A9672219016B00024F342 /* OpenCVWrapper.h */,
 				7F2A9673219016B00024F342 /* OpenCVWrapper.mm */,
+				7FAEE15B2196BBC600E2305E /* CvVideoCameraWrapper.h */,
+				7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */,
 				7F405C1921916B7F00068592 /* UIImage+Ext.swift */,
 				7F405C102191353400068592 /* CppUtils.hpp */,
 				7F405C112191353400068592 /* CppUtils.mm */,
@@ -170,9 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				7F2A96562190150F0024F342 /* Main.storyboard */,
-				7F8C36AE2193F06E003E4730 /* Main */,
-				7F8C36AF2193F084003E4730 /* PhotoImage */,
-				7F8C36B02193F0AC003E4730 /* FaceDetailsTableView */,
+				7FAEE15021968FE700E2305E /* Video */,
+				7FAEE14F21968FC400E2305E /* Phto */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -185,14 +209,13 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		7F8C36AD2193EFDE003E4730 /* EyeCornerDetector */ = {
+		7F8C36AD2193EFDE003E4730 /* EyeIrisDetector */ = {
 			isa = PBXGroup;
 			children = (
 				7F31DA8F21930D7E005AB194 /* EyeIrisDetector.hpp */,
 				7F31DA8D21930B08005AB194 /* EyeIrisDetector.mm */,
-				7F31DA902193147C005AB194 /* Resources */,
 			);
-			path = EyeCornerDetector;
+			path = EyeIrisDetector;
 			sourceTree = "<group>";
 		};
 		7F8C36AE2193F06E003E4730 /* Main */ = {
@@ -215,8 +238,36 @@
 			isa = PBXGroup;
 			children = (
 				7F405C1721915AB100068592 /* FaceViewController.swift */,
+				7FAEE1572196957500E2305E /* FaceDetailsViewModel */,
 			);
 			path = FaceDetailsTableView;
+			sourceTree = "<group>";
+		};
+		7FAEE14F21968FC400E2305E /* Phto */ = {
+			isa = PBXGroup;
+			children = (
+				7F8C36AE2193F06E003E4730 /* Main */,
+				7F8C36AF2193F084003E4730 /* PhotoImage */,
+				7F8C36B02193F0AC003E4730 /* FaceDetailsTableView */,
+			);
+			path = Phto;
+			sourceTree = "<group>";
+		};
+		7FAEE15021968FE700E2305E /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				7FAEE1512196900E00E2305E /* VideoViewController.swift */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		7FAEE1572196957500E2305E /* FaceDetailsViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7F21D1812192051D002AE655 /* FaceDetail.swift */,
+				7F21D183219211B9002AE655 /* FaceDetailImageView.swift */,
+			);
+			path = FaceDetailsViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +329,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FECD6C02196CA510069CE31 /* haarcascade_frontalface_alt2.xml in Resources */,
 				7F31DA94219314F0005AB194 /* haarcascade_frontalface_alt.xml in Resources */,
 				7F2A965D219015110024F342 /* LaunchScreen.storyboard in Resources */,
 				7F2A965A219015110024F342 /* Assets.xcassets in Resources */,
@@ -295,6 +347,7 @@
 			files = (
 				7F2A96552190150F0024F342 /* ViewController.swift in Sources */,
 				7F405C1A21916B7F00068592 /* UIImage+Ext.swift in Sources */,
+				7FAEE1522196900E00E2305E /* VideoViewController.swift in Sources */,
 				7F21D1822192051D002AE655 /* FaceDetail.swift in Sources */,
 				7F31DA8E21930B08005AB194 /* EyeIrisDetector.mm in Sources */,
 				7F405C1821915AB100068592 /* FaceViewController.swift in Sources */,
@@ -302,6 +355,7 @@
 				7F21D184219211B9002AE655 /* FaceDetailImageView.swift in Sources */,
 				7F2A96532190150F0024F342 /* AppDelegate.swift in Sources */,
 				7F405C122191353500068592 /* CppUtils.mm in Sources */,
+				7FAEE15D2196BBC600E2305E /* CvVideoCameraWrapper.mm in Sources */,
 				7F405C162191578A00068592 /* ImageViewController.swift in Sources */,
 				7F2A9674219016B00024F342 /* OpenCVWrapper.mm in Sources */,
 			);
@@ -463,6 +517,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.skdevappleid.OpenCVproject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "OpenCVproject/OpenCVproject-Bridging-Header.h";
@@ -490,6 +545,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.skdevappleid.OpenCVproject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "OpenCVproject/OpenCVproject-Bridging-Header.h";
