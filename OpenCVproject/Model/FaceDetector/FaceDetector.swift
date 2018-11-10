@@ -9,19 +9,13 @@
 import UIKit
 import Vision
 
-class ImageViewController: UIViewController {
-
-    @IBOutlet weak var imageView: UIImageView!
-
-    var orgImage: UIImage!
+@objc class FaceDetector: NSObject {
     
-    // Source photo from camera or library
-    var image: UIImage! {
-        didSet {
-            orgImage = image
-        }
-    }
-
+    @objc open weak var imageView: UIImageView?
+    
+    weak var inputImage: UIImage!
+    var outputImage: UIImage!
+    
     private var cleanFace: UIImage?
     private var face: UIImage?
     private var leftEye: FaceDetail?
@@ -31,44 +25,24 @@ class ImageViewController: UIViewController {
     
     private var faceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     private var facePins = [CGPoint]()
-
+    
     private var leftEyePins = [CGPoint]()
     private var rightEyePins = [CGPoint]()
     private var leftPupilPins = [CGPoint]()
     private var rightPupilPins = [CGPoint]()
     
     private var scale2: CGFloat = 1.0
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        imageView.image = image
-        process()
-    }
     
-    @IBAction func tapOnImage(_ sender: Any) {
-        performSegue(withIdentifier: "faceSequence", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "faceSequence" {
-            if let faceViewController = segue.destination as? FaceViewController {
-                cropComponents()
-                faceViewController.face = face
-                faceViewController.leftEye = leftEye
-                faceViewController.rightEye = rightEye
-                faceViewController.leftCutEye = leftCutEye
-                faceViewController.rightCutEye = rightCutEye
-            }
-        }
-    }
-
-    private func process() {
+    @objc func runRecognize(_ _image: UIImage) {
+        
+        self.inputImage = _image
+        self.outputImage = self.imageView?.image
+        
+        
         var orientation: CGImagePropertyOrientation
         
         // detect image orientation, we need it to be accurate for the face detection to work
-        switch image.imageOrientation {
+        switch inputImage.imageOrientation {
         case .up:
             orientation = .up
         case .right:
@@ -89,7 +63,7 @@ class ImageViewController: UIViewController {
         
         // vision
         let faceLandmarksRequest = VNDetectFaceLandmarksRequest(completionHandler: self.handleFaceFeatures)
-        let requestHandler = VNImageRequestHandler(cgImage: image.cgImage!, orientation: orientation ,options: [:])
+        let requestHandler = VNImageRequestHandler(cgImage: inputImage.cgImage!, orientation: orientation ,options: [:])
         do {
             try requestHandler.perform([faceLandmarksRequest])
         } catch {
@@ -97,7 +71,7 @@ class ImageViewController: UIViewController {
         }
     }
     
-    func handleFaceFeatures(request: VNRequest, errror: Error?) {
+    private func handleFaceFeatures(request: VNRequest, errror: Error?) {
         guard let observations = request.results as? [VNFaceObservation] else {
             fatalError("unexpected result type!")
         }
@@ -108,15 +82,15 @@ class ImageViewController: UIViewController {
         }
     }
     
-    func addFaceLandmarksToImage(_ face: VNFaceObservation) {
-        UIGraphicsBeginImageContextWithOptions(image.size, true, 0.0)
+    private func addFaceLandmarksToImage(_ face: VNFaceObservation) {
+        UIGraphicsBeginImageContextWithOptions(outputImage.size, true, 0.0)
         let context = UIGraphicsGetCurrentContext()
         
         // draw the image
-        let imageWidth = image.size.width
-        let imageHeight = image.size.height
+        let imageWidth = outputImage.size.width
+        let imageHeight = outputImage.size.height
         let imageRect = CGRect(x: 0, y: 0, width: imageWidth, height: imageHeight)
-        image.draw(in: imageRect)
+        outputImage.draw(in: imageRect)
         
         // draw the face rect
         let faceBound = face.boundingBox
@@ -125,10 +99,8 @@ class ImageViewController: UIViewController {
         let x = faceBound.origin.x * imageWidth
         let y = faceBound.origin.y * imageHeight
         faceRect = CGRect(x: floor(x), y: floor(y), width: floor(w), height: floor(h))
-
-        cleanFace = cropedFace(image)
-
-        context?.translateBy(x: 0, y: image.size.height)
+        
+        context?.translateBy(x: 0, y: outputImage.size.height)
         context?.scaleBy(x: 1.0, y: -1.0)
         context?.saveGState()
         context?.setStrokeColor(UIColor.red.cgColor)
@@ -136,11 +108,11 @@ class ImageViewController: UIViewController {
         context?.addRect(faceRect)
         context?.drawPath(using: .stroke)
         context?.restoreGState()
-
-        scale2 = image.scale
+        
+        scale2 = outputImage.scale
         
         // face contour
-
+        
         context?.saveGState()
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.faceContour {
@@ -197,41 +169,38 @@ class ImageViewController: UIViewController {
         context?.setLineWidth(8.0)
         context?.drawPath(using: .stroke)
         context?.saveGState()
-
+        
         // left eye
         context?.saveGState()
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.leftEye {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                leftEyePins.append(point)
-                //let p2 = putPoint(point)
-                //                if i == 0 {
-                //                    context?.move(to: p2)
-                //                } else {
-                //                    context?.addLine(to: p2)
-                //                }
+                let p2 = putPoint(point)
+                if i == 0 {
+                    context?.move(to: p2)
+                } else {
+                    context?.addLine(to: p2)
+                }
             }
         }
         context?.closePath()
         context?.setLineWidth(8.0)
         context?.drawPath(using: .stroke)
         context?.saveGState()
-
+        
         // right eye
         context?.saveGState()
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.rightEye {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                rightEyePins.append(point)
-                
-                // let p2 = putPoint(point)
-                // if i == 0 {
-                //     context?.move(to: p2)
-                // } else {
-                //     context?.addLine(to: p2)
-                // }
+                 let p2 = putPoint(point)
+                 if i == 0 {
+                     context?.move(to: p2)
+                 } else {
+                     context?.addLine(to: p2)
+                 }
             }
         }
         context?.closePath()
@@ -245,35 +214,31 @@ class ImageViewController: UIViewController {
         if let landmark = face.landmarks?.leftPupil {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                leftPupilPins.append(point)
-
-//                let p2 = putPoint(point)
-//                if i == 0 {
-//                    context?.move(to: p2)
-//                } else {
-//                    context?.addLine(to: p2)
-//                }
+                let p2 = putPoint(point)
+                if i == 0 {
+                    context?.move(to: p2)
+                } else {
+                    context?.addLine(to: p2)
+                }
             }
         }
         context?.closePath()
         context?.setLineWidth(8.0)
         context?.drawPath(using: .stroke)
         context?.saveGState()
-    
+        
         // right pupil
         context?.saveGState()
         context?.setStrokeColor(UIColor.yellow.cgColor)
         if let landmark = face.landmarks?.rightPupil {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                rightPupilPins.append(point)
-
-//                let p2 = putPoint(point)
-//                if i == 0 {
-//                    context?.move(to: p2)
-//                } else {
-//                    context?.addLine(to: p2)
-//                }
+                let p2 = putPoint(point)
+                if i == 0 {
+                    context?.move(to: p2)
+                } else {
+                    context?.addLine(to: p2)
+                }
             }
         }
         context?.closePath()
@@ -377,26 +342,9 @@ class ImageViewController: UIViewController {
         
         // end drawing context
         UIGraphicsEndImageContext()
-        imageView.image = finalImage
-    }
-
-    private func cropComponents() {
-        let image = imageView.image!
-        face = cropedFace(image)
-        leftEye = crop(image, pins: leftEyePins, pupils: leftPupilPins)
-        rightEye = crop(image, pins: rightEyePins, pupils: rightPupilPins)
-        leftCutEye = crop(image, pins: leftEyePins, pupils: leftPupilPins)
-        rightCutEye = crop(image, pins: rightEyePins, pupils: rightPupilPins)
-    }
-    
-    private func cropedFace(_ image: UIImage) -> UIImage? {
-        var rect = faceRect
-        rect.origin.y = image.size.height - (rect.origin.y + rect.size.height)
-        rect.origin.x *= image.scale
-        rect.origin.y *= image.scale
-        rect.size.width *= image.scale
-        rect.size.height *= image.scale
-        return image.crop(area: rect)
+        DispatchQueue.main.async {
+            self.imageView?.image = finalImage
+        }
     }
     
     private func putPoint(_ point: CGPoint) -> CGPoint {
@@ -407,66 +355,5 @@ class ImageViewController: UIViewController {
         let x0 = x + CGFloat(point.x) * w
         let y0 = y + CGFloat(point.y) * h
         return CGPoint(x: x0, y: y0)
-    }
-    
-    private func crop(_ image: UIImage, pins: [CGPoint], pupils: [CGPoint]) -> FaceDetail? {
-        let w = faceRect.width
-        let h = faceRect.height
-        let x = faceRect.minX
-        let y = faceRect.minY
-        
-        var xMin: CGFloat = 100000000.0
-        var xMax: CGFloat = 0.0
-        var yMin: CGFloat = 100000000.0
-        var yMax: CGFloat = 0.0
-        
-        var pts = [CGPoint]()
-        pins.forEach { (point) in
-            var x0 = point.x
-            var y0 = point.y
-            x0 = x + x0 * w
-            y0 = y + y0 * h
-            pts.append(CGPoint(x: x0, y: y0))
-            xMin = min(x0, xMin)
-            xMax = max(x0, xMax)
-            yMin = min(y0, yMin)
-            yMax = max(y0, yMax)
-        }
-        var rect = CGRect(x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin)
-        
-        rect.origin.y = image.size.height - (rect.origin.y + rect.size.height)
-        rect.origin.x *= image.scale
-        rect.origin.y *= image.scale
-        rect.size.width *= image.scale
-        rect.size.height *= image.scale
-        
-        if let cropedImage = image.crop(area: rect) {
-            
-            print("\(cropedImage)")
-            
-            let imageHeight = cropedImage.size.height
-            let polyLine: [CGPoint] = pts.map { (point) -> CGPoint in
-                let x = point.x - xMin
-                let y = point.y - yMin
-                return CGPoint(x: x, y: imageHeight - y)
-            }
-            
-            var pts = [CGPoint]()
-            pupils.forEach { (point) in
-                var x0 = point.x
-                var y0 = point.y
-                x0 = x + x0 * w
-                y0 = y + y0 * h
-                pts.append(CGPoint(x: x0, y: y0))
-            }
-            let pupilsPolyLine: [CGPoint] = pts.map { (point) -> CGPoint in
-                let x = point.x - xMin
-                let y = point.y - yMin
-                return CGPoint(x: x, y: imageHeight - y)
-            }
-            return FaceDetail(image: cropedImage, polyLine: polyLine, pupils: pupilsPolyLine, face: orgImage)  // cleanFace
-        } else {
-            return nil
-        }
     }
 }

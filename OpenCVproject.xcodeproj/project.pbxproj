@@ -36,6 +36,11 @@
 		7FECD6BC2196C94C0069CE31 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6BB2196C94C0069CE31 /* CoreVideo.framework */; };
 		7FECD6BE2196C9580069CE31 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6BD2196C9570069CE31 /* QuartzCore.framework */; };
 		7FECD6C02196CA510069CE31 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7FECD6BF2196CA510069CE31 /* haarcascade_frontalface_alt2.xml */; };
+		7FF65951219719D5008CFCA9 /* FaceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF65950219719D5008CFCA9 /* FaceDetector.swift */; };
+		7FF6595321974115008CFCA9 /* haarcascade_frontalface_default.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7FF6595221974115008CFCA9 /* haarcascade_frontalface_default.xml */; };
+		7FF6595521974214008CFCA9 /* haarcascade_eye.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7FF6595421974214008CFCA9 /* haarcascade_eye.xml */; };
+		7FF659582197689C008CFCA9 /* haarcascade_lefteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7FF659562197689C008CFCA9 /* haarcascade_lefteye_2splits.xml */; };
+		7FF659592197689C008CFCA9 /* haarcascade_righteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7FF659572197689C008CFCA9 /* haarcascade_righteye_2splits.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +81,11 @@
 		7FECD6BB2196C94C0069CE31 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		7FECD6BD2196C9570069CE31 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7FECD6BF2196CA510069CE31 /* haarcascade_frontalface_alt2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt2.xml; sourceTree = "<group>"; };
+		7FF65950219719D5008CFCA9 /* FaceDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceDetector.swift; sourceTree = "<group>"; };
+		7FF6595221974115008CFCA9 /* haarcascade_frontalface_default.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_default.xml; sourceTree = "<group>"; };
+		7FF6595421974214008CFCA9 /* haarcascade_eye.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_eye.xml; sourceTree = "<group>"; };
+		7FF659562197689C008CFCA9 /* haarcascade_lefteye_2splits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_lefteye_2splits.xml; sourceTree = "<group>"; };
+		7FF659572197689C008CFCA9 /* haarcascade_righteye_2splits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_righteye_2splits.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +112,7 @@
 		7F21D1802192047D002AE655 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7FF6594F219719D5008CFCA9 /* FaceDetector */,
 				7F8C36AD2193EFDE003E4730 /* EyeIrisDetector */,
 				7F31DA8A2192F648005AB194 /* Useful */,
 				7F31DA902193147C005AB194 /* Resources */,
@@ -171,6 +182,10 @@
 			isa = PBXGroup;
 			children = (
 				7F31DA91219314F0005AB194 /* haarcascade_eye_tree_eyeglasses.xml */,
+				7FF6595221974115008CFCA9 /* haarcascade_frontalface_default.xml */,
+				7FF6595421974214008CFCA9 /* haarcascade_eye.xml */,
+				7FF659562197689C008CFCA9 /* haarcascade_lefteye_2splits.xml */,
+				7FF659572197689C008CFCA9 /* haarcascade_righteye_2splits.xml */,
 				7F31DA92219314F0005AB194 /* haarcascade_frontalface_alt.xml */,
 				7FECD6BF2196CA510069CE31 /* haarcascade_frontalface_alt2.xml */,
 			);
@@ -182,8 +197,6 @@
 			children = (
 				7F2A9672219016B00024F342 /* OpenCVWrapper.h */,
 				7F2A9673219016B00024F342 /* OpenCVWrapper.mm */,
-				7FAEE15B2196BBC600E2305E /* CvVideoCameraWrapper.h */,
-				7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */,
 				7F405C1921916B7F00068592 /* UIImage+Ext.swift */,
 				7F405C102191353400068592 /* CppUtils.hpp */,
 				7F405C112191353400068592 /* CppUtils.mm */,
@@ -257,6 +270,8 @@
 			isa = PBXGroup;
 			children = (
 				7FAEE1512196900E00E2305E /* VideoViewController.swift */,
+				7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */,
+				7FAEE15B2196BBC600E2305E /* CvVideoCameraWrapper.h */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -268,6 +283,14 @@
 				7F21D183219211B9002AE655 /* FaceDetailImageView.swift */,
 			);
 			path = FaceDetailsViewModel;
+			sourceTree = "<group>";
+		};
+		7FF6594F219719D5008CFCA9 /* FaceDetector */ = {
+			isa = PBXGroup;
+			children = (
+				7FF65950219719D5008CFCA9 /* FaceDetector.swift */,
+			);
+			path = FaceDetector;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -329,9 +352,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FF659582197689C008CFCA9 /* haarcascade_lefteye_2splits.xml in Resources */,
 				7FECD6C02196CA510069CE31 /* haarcascade_frontalface_alt2.xml in Resources */,
+				7FF659592197689C008CFCA9 /* haarcascade_righteye_2splits.xml in Resources */,
 				7F31DA94219314F0005AB194 /* haarcascade_frontalface_alt.xml in Resources */,
+				7FF6595321974115008CFCA9 /* haarcascade_frontalface_default.xml in Resources */,
 				7F2A965D219015110024F342 /* LaunchScreen.storyboard in Resources */,
+				7FF6595521974214008CFCA9 /* haarcascade_eye.xml in Resources */,
 				7F2A965A219015110024F342 /* Assets.xcassets in Resources */,
 				7F2A96582190150F0024F342 /* Main.storyboard in Resources */,
 				7F31DA93219314F0005AB194 /* haarcascade_eye_tree_eyeglasses.xml in Resources */,
@@ -353,6 +380,7 @@
 				7F405C1821915AB100068592 /* FaceViewController.swift in Sources */,
 				7F31DA8C2192F68D005AB194 /* KFaceCropper.swift in Sources */,
 				7F21D184219211B9002AE655 /* FaceDetailImageView.swift in Sources */,
+				7FF65951219719D5008CFCA9 /* FaceDetector.swift in Sources */,
 				7F2A96532190150F0024F342 /* AppDelegate.swift in Sources */,
 				7F405C122191353500068592 /* CppUtils.mm in Sources */,
 				7FAEE15D2196BBC600E2305E /* CvVideoCameraWrapper.mm in Sources */,

@@ -17,7 +17,8 @@
 
 cv::CascadeClassifier* faceCascade;
 cv::CascadeClassifier* eyeCascade;
-cv::CascadeClassifier* faceCascade2;
+cv::CascadeClassifier* rightEyeCascade;
+cv::CascadeClassifier* leftEyeCascade;
 
 cv::Vec3f EyeIrisDetector::getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles)
 {
@@ -87,47 +88,78 @@ cv::Point EyeIrisDetector::stabilize(std::vector<cv::Point> &points, int windowS
     return cv::Point(sumX, sumY);
 }
 
-void EyeIrisDetector::detectEyes(cv::Mat &frame)
+void EyeIrisDetector::detectFace(cv::Mat &frame)
 {
+    const int HaarOptions = CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_DO_ROUGH_SEARCH;
+    
     cv::Mat grayscale;
-    cv::cvtColor(frame, grayscale, CV_BGR2GRAY); // convert image to grayscale
-    cv::equalizeHist(grayscale, grayscale); // enhance image contrast
+    cv::cvtColor(frame, grayscale, CV_BGR2GRAY);    // convert image to grayscale
+    cv::equalizeHist(grayscale, grayscale);         // enhance image contrast
     std::vector<cv::Rect> faces;
     
     // Face detector
-    faceCascade->detectMultiScale(grayscale, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(150, 150));
+    
+//    Where the parameters are:
+//
+//    1. image : Matrix of the type CV_8U containing an image where objects are detected.
+//    2. scaleFactor : Parameter specifying how much the image size is reduced at each image scale.
+//    ImageScale.png
+//    Picture source: Viola-Jones Face Detection
+//    This scale factor is used to create scale pyramid as shown in the picture. Suppose, the scale factor is 1.03, it means we're using a small step for resizing, i.e. reduce size by 3 %, we increase the chance of a matching size with the model for detection is found, while it's expensive.
+//    3. minNeighbors : Parameter specifying how many neighbors each candidate rectangle should have to retain it. This parameter will affect the quality of the detected faces: higher value results in less detections but with higher quality. We're using 5 in the code.
+//    4. flags : Parameter with the same meaning for an old cascade as in the function cvHaarDetectObjects. It is not used for a new cascade.
+//        5. minSize : Minimum possible object size. Objects smaller than that are ignored.
+//        6. maxSize : Maximum possible object size. Objects larger than that are ignored.
+    getFaceCascade()->detectMultiScale(grayscale, faces, 1.1, 2, HaarOptions, cv::Size(60, 60));
 
     if (faces.size() == 0) {
         printf("Error: None face was detected\n");
         return;
     }
-    // Take first face
-    cv::Rect faceRect = faces[0];
+    
+    for (int i = 0; i < faces.size(); i++) {
+        cv::Rect faceRect = faces[i];
+        drawFace(frame, faceRect, grayscale);
+    }
+}
 
+void EyeIrisDetector::drawFace(cv::Mat &frame, cv::Rect &faceRect, cv::Mat &grayscale) {
+    
+    const int HaarOptions = 0 | CV_HAAR_SCALE_IMAGE;
+    
     // Draw the face in rectangle
-    //    rectangle(frame, faceRect.tl(), faceRect.br(), cv::Scalar(255, 0, 0), 2);
-
+    rectangle(frame, faceRect.tl(), faceRect.br(), cv::Scalar(255, 0, 0), 2);
+    
     cv::Mat face = grayscale(faceRect); // crop the face
     std::vector<cv::Rect> eyes;
     
     // Eyes detrector
-    eyeCascade->detectMultiScale(face, eyes, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(30, 30)); // same thing as above
+    getEyeCascade()->detectMultiScale(face, eyes, 1.1, 2, HaarOptions, cv::Size(30, 30)); // same thing as above
     
-    if (eyes.size() != 2) {
+    if (eyes.size() < 2) {
         printf("Error: Both eyes were not detected\n");
         return;
     }
     
     // Draw recatngles around eyes
-    //    for (cv::Rect &eye : eyes)
-    //    {
-    //        rectangle(frame, faceRect.tl() + eye.tl(), faceRect.tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
-    //    }
+    for (cv::Rect &eye : eyes)
+    {
+        rectangle(frame, faceRect.tl() + eye.tl(), faceRect.tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
+    }
 
+    // Left Eye
+//    std::vector<cv::Rect> leftEyes;
+//    getLeftEyeCascade()->detectMultiScale(face, leftEyes, 1.1, 2, HaarOptions, cv::Size(30, 30));
+//    if (leftEyes.size() > 0) {
+//        rectangle(frame, faceRect.tl() + leftEyes[0].tl(), faceRect.tl() + leftEyes[0].br(), cv::Scalar(0, 255, 0), 2);
+//    } else {
+//        //printf("RRRRRR =%lu", leftEyes.size());
+//    }
+    
     cv::Rect leftEyeRect = eyes[0];
-    cv::Mat leftEye = face(leftEyeRect);        // crop the left iris
+    cv::Mat leftEye = face(leftEyeRect);          // crop the left iris
     drawIris(frame, faceRect, leftEye, leftEyeRect, leftcenters);
-
+    
     cv::Rect rightEyeRect = eyes[1];
     cv::Mat rightEye = face(rightEyeRect);        // crop the right iris
     drawIris(frame, faceRect, rightEye, rightEyeRect, rightcenters);
@@ -141,8 +173,10 @@ void EyeIrisDetector::drawIris(cv::Mat &frame, cv::Rect face, cv::Mat &eye, cv::
     {
         cv::Vec3f eyeball = getEyeball(eye, circles);
         cv::Point center(eyeball[0], eyeball[1]);
+        
         centers.push_back(center);
         center = stabilize(centers, 5);
+        
         int radius = (int)eyeball[2];
         cv::Scalar color1 = cv::Scalar(0, 0, 255);
         cv::Scalar color2 = cv::Scalar(255, 255, 255);
@@ -154,67 +188,54 @@ void EyeIrisDetector::drawIris(cv::Mat &frame, cv::Rect face, cv::Mat &eye, cv::
     }
 }
 
+cv::CascadeClassifier* EyeIrisDetector::getFaceCascade() {
+    if (faceCascade == nil) {
+        faceCascade = getCascade(@"haarcascade_frontalface_default"); // @"haarcascade_frontalface_alt"
+    }
+    return faceCascade;
+}
+
+cv::CascadeClassifier* EyeIrisDetector::getEyeCascade() {
+    if (eyeCascade == nil) {
+        eyeCascade = getCascade(@"haarcascade_eye");
+    }
+    return eyeCascade;
+}
+
+cv::CascadeClassifier* EyeIrisDetector::getLeftEyeCascade() {
+    if (leftEyeCascade == nil) {
+        leftEyeCascade = getCascade(@"haarcascade_lefteye_2splits");
+    }
+    return leftEyeCascade;
+}
+
+cv::CascadeClassifier* EyeIrisDetector::getRightEyeCascade() {
+    if (rightEyeCascade == nil) {
+        rightEyeCascade = getCascade(@"haarcascade_righteye_2splits");
+    }
+    return rightEyeCascade;
+}
+
+cv::CascadeClassifier* EyeIrisDetector::getCascade(NSString* model) {
+    NSBundle* appBundle = [NSBundle mainBundle];
+    NSString* cascadePathInBundle = [appBundle pathForResource: model ofType: @"xml"];
+    std::string cascadePath([cascadePathInBundle UTF8String]);
+    cv::CascadeClassifier* cascade = new cv::CascadeClassifier();
+    if (!cascade->load(cascadePath)) {
+        printf("Load error");
+        return nil;
+    }
+    return cascade;
+}
+
 UIImage* EyeIrisDetector::detectEyeIris(UIImage* image)
 {
-    if (faceCascade == nil) {
-        NSBundle* appBundle = [NSBundle mainBundle];
-        NSString* faceCascadePathInBundle = [appBundle pathForResource: @"haarcascade_frontalface_alt" ofType: @"xml"];
-        std::string faceCascadePath([faceCascadePathInBundle UTF8String]);
-        faceCascade = new cv::CascadeClassifier();
-        if (!faceCascade->load(faceCascadePath)) {
-            printf("Load error");
-            return nil;
-        }
-    }
-    if (eyeCascade == nil) {
-        NSBundle* appBundle = [NSBundle mainBundle];
-        NSString* eyeCascadePathInBundle = [appBundle pathForResource: @"haarcascade_eye_tree_eyeglasses" ofType: @"xml"];
-        std::string eyeCascadePath([eyeCascadePathInBundle UTF8String]);
-        eyeCascade = new cv::CascadeClassifier();
-        if (!eyeCascade->load(eyeCascadePath)) {
-            printf("Load error");
-            return nil;
-        }
-    }
     CppUtils* utils = new CppUtils;
     cv::Mat frame;
     utils->imageToMat(image, frame);
     for (int i = 0; i < 15; i++) {
-        detectEyes(frame);
+        detectFace(frame);
     }
     UIImage* resultImage = utils->matToImage(frame);
     return resultImage;
-}
-
-void EyeIrisDetector::detectFace(cv::Mat frame) {
-    
-    const int HaarOptions = CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_DO_ROUGH_SEARCH;
-    
-    if (faceCascade2 == nil) {
-        NSBundle* appBundle = [NSBundle mainBundle];
-        NSString* faceCascadePathInBundle = [appBundle pathForResource: @"haarcascade_frontalface_alt2" ofType: @"xml"];
-        std::string faceCascadePath([faceCascadePathInBundle UTF8String]);
-        faceCascade2 = new cv::CascadeClassifier();
-        if (!faceCascade2->load(faceCascadePath)) {
-            printf("Load error");
-        }
-    }
-    
-    cv::Mat grayscaleFrame;
-    cvtColor(frame, grayscaleFrame, CV_BGR2GRAY);
-    cv::equalizeHist(grayscaleFrame, grayscaleFrame);
-    
-    std::vector<cv::Rect> faces;
-    faceCascade2->detectMultiScale(grayscaleFrame, faces, 1.1, 2, HaarOptions, cv::Size(60, 60));
-    
-    for (int i = 0; i < faces.size(); i++)
-    {
-        cv::Point pt1(faces[i].x + faces[i].width, faces[i].y + faces[i].height);
-        cv::Point pt2(faces[i].x, faces[i].y);
-        
-        cv::rectangle(frame, pt1, pt2, cvScalar(0, 255, 0, 0), 1, 8 ,0);
-    }
-//    CppUtils* utils = new CppUtils;
-//    UIImage* resultImage = utils->matToImage(frame);
-//    return resultImage;
 }
