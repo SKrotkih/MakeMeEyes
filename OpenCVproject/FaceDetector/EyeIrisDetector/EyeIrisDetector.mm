@@ -110,7 +110,10 @@ void EyeIrisDetector::detectFace(cv::Mat &frame)
 //    4. flags : Parameter with the same meaning for an old cascade as in the function cvHaarDetectObjects. It is not used for a new cascade.
 //        5. minSize : Minimum possible object size. Objects smaller than that are ignored.
 //        6. maxSize : Maximum possible object size. Objects larger than that are ignored.
-    getFaceCascade()->detectMultiScale(grayscale, faces, 1.1, 2, HaarOptions, cv::Size(60, 60));
+    // 1.1 2
+    // 1.3 5
+    // haarcascade_frontalface_default
+    getFaceCascade()->detectMultiScale(grayscale, faces, 1.3, 5, HaarOptions, cv::Size(60, 60));
 
     if (faces.size() == 0) {
         printf("Error: None face was detected\n");
@@ -190,28 +193,28 @@ void EyeIrisDetector::drawIris(cv::Mat &frame, cv::Rect face, cv::Mat &eye, cv::
 
 cv::CascadeClassifier* EyeIrisDetector::getFaceCascade() {
     if (faceCascade == nil) {
-        faceCascade = getCascade(@"haarcascade_frontalface_default"); // @"haarcascade_frontalface_alt"
+        faceCascade = getCascade(@"/classifiers/haarcascade_frontalface_default"); // @"haarcascade_frontalface_alt"
     }
     return faceCascade;
 }
 
 cv::CascadeClassifier* EyeIrisDetector::getEyeCascade() {
     if (eyeCascade == nil) {
-        eyeCascade = getCascade(@"haarcascade_eye");
+        eyeCascade = getCascade(@"/classifiers/haarcascade_eye");
     }
     return eyeCascade;
 }
 
 cv::CascadeClassifier* EyeIrisDetector::getLeftEyeCascade() {
     if (leftEyeCascade == nil) {
-        leftEyeCascade = getCascade(@"haarcascade_lefteye_2splits");
+        leftEyeCascade = getCascade(@"/classifiers/haarcascade_lefteye_2splits");
     }
     return leftEyeCascade;
 }
 
 cv::CascadeClassifier* EyeIrisDetector::getRightEyeCascade() {
     if (rightEyeCascade == nil) {
-        rightEyeCascade = getCascade(@"haarcascade_righteye_2splits");
+        rightEyeCascade = getCascade(@"/classifiers/haarcascade_righteye_2splits");
     }
     return rightEyeCascade;
 }
