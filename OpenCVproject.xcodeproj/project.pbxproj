@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F14A0D52197FBF7001A57CF /* ShapeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F14A0D42197FBF7001A57CF /* ShapeType.swift */; };
 		7F21D1822192051D002AE655 /* FaceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F21D1812192051D002AE655 /* FaceDetail.swift */; };
 		7F21D184219211B9002AE655 /* FaceDetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F21D183219211B9002AE655 /* FaceDetailImageView.swift */; };
 		7F2A96532190150F0024F342 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2A96522190150F0024F342 /* AppDelegate.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F14A0D42197FBF7001A57CF /* ShapeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeType.swift; sourceTree = "<group>"; };
 		7F21D1812192051D002AE655 /* FaceDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetail.swift; sourceTree = "<group>"; };
 		7F21D183219211B9002AE655 /* FaceDetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetailImageView.swift; sourceTree = "<group>"; };
 		7F2A964F2190150F0024F342 /* OpenCVproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenCVproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +111,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F14A0D32197FBCA001A57CF /* SceneKit */ = {
+			isa = PBXGroup;
+			children = (
+				7F14A0D42197FBF7001A57CF /* ShapeType.swift */,
+			);
+			path = SceneKit;
+			sourceTree = "<group>";
+		};
 		7F21D1802192047D002AE655 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +282,7 @@
 				7FAEE1512196900E00E2305E /* VideoViewController.swift */,
 				7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */,
 				7FAEE15B2196BBC600E2305E /* CvVideoCameraWrapper.h */,
+				7F14A0D32197FBCA001A57CF /* SceneKit */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -379,6 +390,7 @@
 				7F31DA8E21930B08005AB194 /* EyeIrisDetector.mm in Sources */,
 				7F405C1821915AB100068592 /* FaceViewController.swift in Sources */,
 				7F31DA8C2192F68D005AB194 /* KFaceCropper.swift in Sources */,
+				7F14A0D52197FBF7001A57CF /* ShapeType.swift in Sources */,
 				7F21D184219211B9002AE655 /* FaceDetailImageView.swift in Sources */,
 				7FF65951219719D5008CFCA9 /* FaceDetector.swift in Sources */,
 				7F2A96532190150F0024F342 /* AppDelegate.swift in Sources */,

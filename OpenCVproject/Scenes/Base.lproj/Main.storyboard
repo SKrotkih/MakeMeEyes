@@ -34,7 +34,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xQW-Ro-PYT">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xQW-Ro-PYT">
                                 <rect key="frame" x="-85.5" y="64" width="546" height="603"/>
                             </imageView>
                         </subviews>
@@ -54,7 +54,11 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="nq2-69-w1f"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Start" id="PzU-3b-NF5"/>
+                            <barButtonItem title="Scene" id="PzU-3b-NF5">
+                                <connections>
+                                    <action selector="addSceneButtonPressed:" destination="DcM-fu-vqt" id="88J-R2-yv5"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
