@@ -7,14 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EyeIrisDetector.hpp"
-
 
 @class VideoViewController;
 
 @interface CvVideoCameraWrapper: NSObject
 
-- (id) initWithController: (VideoViewController*) viewController andImageView: (UIImageView*) imageView;
+- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView;
 - (void) startCamera;
 - (void) stopCamera;
 

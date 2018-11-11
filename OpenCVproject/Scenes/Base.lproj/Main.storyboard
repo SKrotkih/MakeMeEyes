@@ -35,14 +35,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xQW-Ro-PYT">
-                                <rect key="frame" x="-85.5" y="64" width="546" height="603"/>
+                                <rect key="frame" x="-62.5" y="64" width="500" height="603"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="xQW-Ro-PYT" firstAttribute="top" secondItem="RdT-fd-l8B" secondAttribute="top" id="CBo-UW-BYg"/>
                             <constraint firstItem="RdT-fd-l8B" firstAttribute="bottom" secondItem="xQW-Ro-PYT" secondAttribute="bottom" id="DDV-aL-lAl"/>
-                            <constraint firstItem="xQW-Ro-PYT" firstAttribute="width" secondItem="O8V-1J-hcy" secondAttribute="height" multiplier="288/352" id="bNO-Bm-y2h"/>
+                            <constraint firstItem="xQW-Ro-PYT" firstAttribute="width" secondItem="O8V-1J-hcy" secondAttribute="height" multiplier="480/640" id="bNO-Bm-y2h"/>
                             <constraint firstItem="xQW-Ro-PYT" firstAttribute="centerX" secondItem="RdT-fd-l8B" secondAttribute="centerX" id="m7T-92-sC2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RdT-fd-l8B"/>

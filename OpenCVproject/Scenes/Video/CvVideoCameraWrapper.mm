@@ -13,6 +13,14 @@
 #import <opencv2/objdetect/objdetect.hpp>
 #import <opencv2/imgproc/imgproc_c.h>
 
+///// opencv
+#import <opencv2/opencv.hpp>
+///// C++
+#include <iostream>
+///// user
+#include "FaceARDetectIOS.h"
+//
+
 using namespace cv;
 
 @interface CvVideoCameraWrapper () <CvVideoCameraDelegate> {
@@ -24,24 +32,25 @@ using namespace cv;
     VideoViewController* viewController;
     UIImageView* imageView;
     CvVideoCamera* videoCamera;
-    FaceDetector* faceDetector;
+    FaceARDetectIOS* facear;
+    int frame_count;
 }
 
-- (id) initWithController: (VideoViewController*) viewController andImageView: (UIImageView*) imageView
+- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView
 {
-    viewController = viewController;
-    imageView = imageView;
-    faceDetector = [[FaceDetector alloc] init];
-    faceDetector.imageView = imageView;
+    viewController = _viewController;
+    imageView = _imageView;
     
-    // Assuming camera input is 352x288 (set using AVCaptureSessionPreset)
+    facear =[[FaceARDetectIOS alloc] init];
+    
+    // Assuming camera input is 640x480 (set using AVCaptureSessionPreset)
     // float cam_width = 288; float cam_height = 352;
     //float cam_width = 480; float cam_height = 640;
     //float cam_width = 720; float cam_height = 1280;
 
     videoCamera = [[CvVideoCamera alloc] initWithParentView: imageView];
     videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
-    videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset352x288;
+    videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
     videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
     videoCamera.defaultFPS = 30;
     videoCamera.grayscaleMode = NO;
@@ -53,17 +62,31 @@ using namespace cv;
 
 #ifdef __cplusplus
 
-// CvVideoCameraDelegate protocol
+// MARK: - CvVideoCameraDelegate protocol
 
-- (void) processImage: (Mat&) frame
+- (void) processImage: (cv::Mat &) image
 {
-
-    EyeIrisDetector* detectEyeIris = new EyeIrisDetector;
-    detectEyeIris->detectFace(frame);
-    
-//    CppUtils* utils = new CppUtils;
-//    UIImage* image = utils->matToImage(frame);
-//    [faceDetector runRecognize: image];
+    cv::Mat targetImage(image.cols,image.rows,CV_8UC3);
+    cv::cvtColor(image, targetImage, cv::COLOR_BGRA2BGR);
+    if(targetImage.empty()){
+        std::cout << "targetImage empty" << std::endl;
+    }
+    else
+    {
+        float fx, fy, cx, cy;
+        cx = 1.0*targetImage.cols / 2.0;
+        cy = 1.0*targetImage.rows / 2.0;
+        
+        fx = 500 * (targetImage.cols / 640.0);
+        fy = 500 * (targetImage.rows / 480.0);
+        
+        fx = (fx + fy) / 2.0;
+        fy = fx;
+        
+        [facear run_FaceAR: targetImage frame__:frame_count fx__:fx fy__:fy cx__:cx cy__:cy];
+        frame_count = frame_count + 1;
+    }
+    cv::cvtColor(targetImage, image, cv::COLOR_BGRA2RGB);
 }
 
 #endif
