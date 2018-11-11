@@ -57,6 +57,10 @@ class VideoViewController: UIViewController {
         _sceneView.autoenablesDefaultLighting = true
         
         imageView.addSubview(_sceneView)
+        
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        swipeLeftGesture.direction = .left
+        _sceneView.addGestureRecognizer(swipeLeftGesture)
     }
     
     func setupScene() {
@@ -81,4 +85,14 @@ class VideoViewController: UIViewController {
         let geometryNode = SCNNode(geometry: geometry)
         _scnScene.rootNode.addChildNode(geometryNode)
     }
+    
+    @objc private func handleSwipe(_ gestureRecognize: UISwipeGestureRecognizer) {
+        if (gestureRecognize.direction == .left) {
+            _sceneView.removeFromSuperview()
+            _sceneView = nil
+        }
+        else if (gestureRecognize.direction == .right) {
+        }
+    }
+
 }
