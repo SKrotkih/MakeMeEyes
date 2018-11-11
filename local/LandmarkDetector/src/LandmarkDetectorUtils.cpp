@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2016, Carnegie Mellon University and University of Cambridge,
 // all rights reserved.
 //
@@ -69,7 +69,9 @@
 
 namespace LandmarkDetector
 {
-
+    
+    std::vector<cv::Point> eyeCenters;
+    
 //// Useful utility for creating directories for storing the output files
 //void create_directory_from_file(string output_path)
 //{
@@ -1026,13 +1028,15 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
                 int thickness = (int)std::ceil(3.0* ((double)img.cols) / 640.0);
                 int thickness_2 = (int)std::ceil(1.0* ((double)img.cols) / 640.0);
 
-                cv::circle(img, featurePoint, 1, cv::Scalar(0,255,0), thickness);
-                cv::circle(img, featurePoint, 1, cv::Scalar(255,0,0), thickness_2);
+                // S.K.
+                // cv::circle(img, featurePoint, 1, cv::Scalar(0,255,0), thickness);
+                // cv::circle(img, featurePoint, 1, cv::Scalar(255,0,0), thickness_2);
             }
         }
     }
     else if(n == 28) // drawing eyes
     {
+        std::vector<cv::Point> iris;
         for( int i = 0; i < n; ++i)
         {
             cv::Point featurePoint((int)shape2D.at<double>(i), (int)shape2D.at<double>(i +n));
@@ -1050,16 +1054,21 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
                 next_point = 20;
 
             cv::Point nextFeaturePoint((int)shape2D.at<double>(next_point), (int)shape2D.at<double>(next_point+n));
-            if( i < 8 || i > 19)
-                cv::line(img, featurePoint, nextFeaturePoint, cv::Scalar(255, 0, 0), thickness_2);
-            else
+            if( i < 8 || i > 19) {
+                // Eye's Iris
+                if (i > 19) {
+                    cv::line(img, featurePoint, nextFeaturePoint, cv::Scalar(255, 0, 0), thickness_2);
+                    iris.push_back(featurePoint);
+                }
+            } else {
+                // Eye border
                 cv::line(img, featurePoint, nextFeaturePoint, cv::Scalar(0, 0, 255), thickness_2);
 
-            //cv::circle(img, featurePoint, 1, Scalar(0,255,0), thickness);
-            //cv::circle(img, featurePoint, 1, Scalar(0,0,255), thickness_2);
-
-
+                // cv::circle(img, featurePoint, 1, cv::Scalar(0,255,0), thickness);
+                // cv::circle(img, featurePoint, 1, cv::Scalar(0,0,255), thickness_2);
+            }
         }
+        LandmarkDetector::drawPupils(img, iris);
     }
     else if(n == 6)
     {
@@ -1071,8 +1080,8 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
             int thickness = 1.0;
             int thickness_2 = 1.0;
 
-            //cv::circle(img, featurePoint, 1, Scalar(0,255,0), thickness);
-            //cv::circle(img, featurePoint, 1, Scalar(0,0,255), thickness_2);
+            // cv::circle(img, featurePoint, 1, cv::Scalar(0,255,0), thickness);
+            // cv::circle(img, featurePoint, 1, cv::Scalar(0,0,255), thickness_2);
 
             int next_point = i + 1;
             if(i == 5)
@@ -1084,6 +1093,31 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
     }
 }
 
+    void drawPupils(cv::Mat img, std::vector<cv::Point>& iris) {
+        int xMin = 999999999, yMin = 999999999;
+        int xMax = 0, yMax = 0;
+        for (int i = 0; i < iris.size(); i++) {
+            xMin = MIN(xMin, iris[i].x);
+            yMin = MIN(yMin, iris[i].y);
+            xMax = MAX(xMax, iris[i].x);
+            yMax = MAX(yMax, iris[i].y);
+        }
+        cv::Point ayeCenter(xMin + int((xMax - xMin) / 2), yMin + int((yMax - yMin) / 2));
+        if (eyeCenters.size() %2 == 0) {
+            eyeCenters.clear();
+        }
+        eyeCenters.push_back(ayeCenter);
+        if (eyeCenters.size() == 2) {
+            // draw Pupils (left, right)
+            cv::circle(img, eyeCenters[0], 2, cv::Scalar(0,0,0), 1.0);
+            cv::circle(img, eyeCenters[1], 2, cv::Scalar(0,0,0), 1.0);
+        }
+    }
+    
+    std::vector<cv::Point> getPupilsCoordinate() {
+        return eyeCenters;
+    }
+    
 // Drawing landmarks on a face image
 void Draw(cv::Mat img, const cv::Mat_<double>& shape2D)
 {

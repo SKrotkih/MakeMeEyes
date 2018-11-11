@@ -42,12 +42,18 @@ using namespace cv;
     imageView = _imageView;
     
     facear =[[FaceARDetectIOS alloc] init];
-    
+
+    [self setupVideoCamera];
+
+    return self;
+}
+
+- (void) setupVideoCamera {
     // Assuming camera input is 640x480 (set using AVCaptureSessionPreset)
     // float cam_width = 288; float cam_height = 352;
     //float cam_width = 480; float cam_height = 640;
     //float cam_width = 720; float cam_height = 1280;
-
+    
     videoCamera = [[CvVideoCamera alloc] initWithParentView: imageView];
     videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
     videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
@@ -56,8 +62,6 @@ using namespace cv;
     videoCamera.grayscaleMode = NO;
     videoCamera.rotateVideo = NO;
     videoCamera.delegate = self;
-    
-    return self;
 }
 
 #ifdef __cplusplus
@@ -85,11 +89,25 @@ using namespace cv;
         
         [facear run_FaceAR: targetImage frame__:frame_count fx__:fx fy__:fy cx__:cx cy__:cy];
         frame_count = frame_count + 1;
+        
+        [self drawMask];
     }
     cv::cvtColor(targetImage, image, cv::COLOR_BGRA2RGB);
 }
 
 #endif
+
+- (void) drawMask {
+    std::vector<cv::Point> pupils = facear.eyePupils;
+    if (pupils.size() == 2) {
+        cv::Point leftPupil = pupils[0];
+        cv::Point rightPupil = pupils[1];
+        [viewController updatePupilsCoordinate: leftPupil.x
+                                        _leftY: leftPupil.y
+                                       _rightX: rightPupil.x
+                                       _rightY: rightPupil.y];
+    }
+}
 
 #pragma mark - UI Actions
 

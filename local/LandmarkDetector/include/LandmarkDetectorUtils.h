@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2016, Carnegie Mellon University and University of Cambridge,
 // all rights reserved.
 //
@@ -121,7 +121,10 @@ namespace LandmarkDetector
 	void Draw(cv::Mat img, const cv::Mat_<double>& shape2D);
 	void Draw(cv::Mat img, const CLNF& clnf_model);
 
-
+    void drawPupils(cv::Mat img, std::vector<cv::Point>& iris);
+    
+    std::vector<cv::Point> getPupilsCoordinate();
+    
 	//===========================================================================
 	// Angle representation conversion helpers
 	//===========================================================================
@@ -166,7 +169,6 @@ namespace LandmarkDetector
 
 	// Skipping comments (lines starting with # symbol)
 	void SkipComments(std::ifstream& stream);
-
 }
 #endif
 

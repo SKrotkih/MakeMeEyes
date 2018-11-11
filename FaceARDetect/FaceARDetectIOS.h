@@ -23,6 +23,8 @@
 
 @interface FaceARDetectIOS : NSObject
 
+@property(nonatomic) std::vector<cv::Point> eyePupils;
+
 //bool inits_FaceAR();
 //-(instancetype) inits_FaceAR;
 //-(id) init;
