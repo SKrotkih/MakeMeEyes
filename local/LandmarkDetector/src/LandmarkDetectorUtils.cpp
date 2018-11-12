@@ -1037,13 +1037,13 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
     else if(n == 28) // drawing eyes
     {
         std::vector<cv::Point> iris;
+        std::vector<cv::Point> irisborder;
+        std::vector<cv::Point> irisbordernext;
+        std::vector<cv::Point> eyeborder;
+        std::vector<cv::Point> eyebordernext;
         for( int i = 0; i < n; ++i)
         {
             cv::Point featurePoint((int)shape2D.at<double>(i), (int)shape2D.at<double>(i +n));
-
-            // A rough heuristic for drawn point size
-            int thickness = 1.0;
-            int thickness_2 = 1.0;
 
             int next_point = i + 1;
             if(i == 7)
@@ -1056,18 +1056,19 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
             cv::Point nextFeaturePoint((int)shape2D.at<double>(next_point), (int)shape2D.at<double>(next_point+n));
             if( i < 8 || i > 19) {
                 // Eye's Iris
+                irisborder.push_back(featurePoint);
+                irisbordernext.push_back(nextFeaturePoint);
                 if (i > 19) {
-                    cv::line(img, featurePoint, nextFeaturePoint, cv::Scalar(255, 0, 0), thickness_2);
                     iris.push_back(featurePoint);
                 }
             } else {
                 // Eye border
-                cv::line(img, featurePoint, nextFeaturePoint, cv::Scalar(0, 0, 255), thickness_2);
-
-                // cv::circle(img, featurePoint, 1, cv::Scalar(0,255,0), thickness);
-                // cv::circle(img, featurePoint, 1, cv::Scalar(0,0,255), thickness_2);
+                eyeborder.push_back(featurePoint);
+                eyebordernext.push_back(nextFeaturePoint);
             }
         }
+        LandmarkDetector::drawEyeBorder(img, eyeborder, eyebordernext);
+        LandmarkDetector::drawIris(img, irisborder, irisbordernext);
         LandmarkDetector::drawPupils(img, iris);
     }
     else if(n == 6)
@@ -1077,7 +1078,7 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
             cv::Point featurePoint((int)shape2D.at<double>(i), (int)shape2D.at<double>(i +n));
 
             // A rough heuristic for drawn point size
-            int thickness = 1.0;
+//            int thickness = 1.0;
             int thickness_2 = 1.0;
 
             // cv::circle(img, featurePoint, 1, cv::Scalar(0,255,0), thickness);
@@ -1093,25 +1094,35 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
     }
 }
 
-    void drawPupils(cv::Mat img, std::vector<cv::Point>& iris) {
-        int xMin = 999999999, yMin = 999999999;
-        int xMax = 0, yMax = 0;
-        for (int i = 0; i < iris.size(); i++) {
-            xMin = MIN(xMin, iris[i].x);
-            yMin = MIN(yMin, iris[i].y);
-            xMax = MAX(xMax, iris[i].x);
-            yMax = MAX(yMax, iris[i].y);
+    void drawEyeBorder(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
+
+        int thickness_2 = 1.0;
+        for (int i = 0; i < eyeborder.size(); i++) {
+            cv::line(img, eyeborder[i], eyebordernext[i], cv::Scalar(0, 0, 255), thickness_2);
         }
-        cv::Point ayeCenter(xMin + int((xMax - xMin) / 2), yMin + int((yMax - yMin) / 2));
+        cv::fillConvexPoly(img, eyeborder, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
+        cv::fillConvexPoly(img, eyebordernext, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
+    }
+    
+    void drawIris(cv::Mat img, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext) {
+        int thickness_2 = 1.0;
+        for (int i = 0; i < irisborder.size(); i++) {
+            cv::line(img, irisborder[i], irisbordernext[i], cv::Scalar(255, 0, 0), thickness_2);
+        }
+        cv::fillConvexPoly(img, irisborder, cv::Scalar(0, 255, 0), cv::LINE_AA, 0);
+        cv::fillConvexPoly(img, irisbordernext, cv::Scalar(0, 255, 0), cv::LINE_AA, 0);
+        
+
+    }
+    
+    void drawPupils(cv::Mat img, std::vector<cv::Point>& iris) {
+        cv::Rect rect = cv::boundingRect(iris);
+        cv::Point ayeCenter(rect.tl().x + (rect.width / 2), rect.tl().y + (rect.height / 2));
         if (eyeCenters.size() %2 == 0) {
             eyeCenters.clear();
         }
         eyeCenters.push_back(ayeCenter);
-        if (eyeCenters.size() == 2) {
-            // draw Pupils (left, right)
-            cv::circle(img, eyeCenters[0], 2, cv::Scalar(0,0,0), 1.0);
-            cv::circle(img, eyeCenters[1], 2, cv::Scalar(0,0,0), 1.0);
-        }
+        cv::fillConvexPoly(img, iris, cv::Scalar(0, 0, 0), cv::LINE_AA, 0);
     }
     
     std::vector<cv::Point> getPupilsCoordinate() {
