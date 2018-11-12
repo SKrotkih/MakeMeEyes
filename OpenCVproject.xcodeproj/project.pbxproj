@@ -148,9 +148,9 @@
 		7F14A0D32197FBCA001A57CF /* SceneKit */ = {
 			isa = PBXGroup;
 			children = (
+				7F4C39A9219932CA00C61A7F /* SceneInteractor.swift */,
 				7F14A0D42197FBF7001A57CF /* ShapeType.swift */,
 				7F4C39A721992DC600C61A7F /* shape.scn */,
-				7F4C39A9219932CA00C61A7F /* SceneInteractor.swift */,
 			);
 			path = SceneKit;
 			sourceTree = "<group>";

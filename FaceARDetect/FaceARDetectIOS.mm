@@ -15,6 +15,7 @@ LandmarkDetector::CLNF clnf_model;
 @implementation FaceARDetectIOS
 
 @synthesize eyePupils;
+@synthesize needShowBox;
 
 //bool inits_FaceAR();
 -(id) init
@@ -31,12 +32,12 @@ LandmarkDetector::CLNF clnf_model;
     clnf_model.model_location_clnf = [location UTF8String] + std::string("/model/main_clnf_general.txt");
     clnf_model.face_detector_location_clnf = [location UTF8String] + std::string("/classifiers/haarcascade_frontalface_alt.xml");
     clnf_model.inits();
-
+    needShowBox = false;
     return self;
 }
 
 // Visualising the results
-void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, const LandmarkDetector::CLNF& face_model, const LandmarkDetector::FaceModelParameters& det_parameters, int frame_count, double fx, double fy, double cx, double cy)
+void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, const LandmarkDetector::CLNF& face_model, const LandmarkDetector::FaceModelParameters& det_parameters, int frame_count, double fx, double fy, double cx, double cy, bool needShowBox)
 //-(BOOL) visualise_tracking:(cv::Mat)captured_image depth_image_:(cv::Mat)depth_image face_model_:(const LandmarkDetector::CLNF)face_model det_parameters_:(const LandmarkDetector::FaceModelParameters)det_parameters frame_count_:(int)frame_count fx_:(double)fx fy_:(double)fy cx_:(double)cx cy_:(double)cy
 {
     
@@ -66,7 +67,9 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
         
         // Draw it in reddish if uncertain, blueish if certain
         // S.K.
-        //LandmarkDetector::DrawBox(captured_image, pose_estimate_to_draw, cv::Scalar((1 - vis_certainty)*255.0, 0, vis_certainty * 255), thickness, fx, fy, cx, cy);
+        if (needShowBox) {
+            LandmarkDetector::DrawBox(captured_image, pose_estimate_to_draw, cv::Scalar((1 - vis_certainty)*255.0, 0, vis_certainty * 255), thickness, fx, fy, cx, cy);
+        }
     }
 }
 
@@ -95,7 +98,7 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
     // Drawing the facial landmarks on the face and the bounding box around it if tracking is successful and initialised
     double detection_certainty = clnf_model.detection_certainty;
     
-    visualise_tracking(captured_image, depth_image, clnf_model, det_parameters, frame_count, fx, fy, cx, cy);
+    visualise_tracking(captured_image, depth_image, clnf_model, det_parameters, frame_count, fx, fy, cx, cy, self.needShowBox);
     
     //////////////////////////////////////////////////////////////////////
     /// gaze EstimateGaze
@@ -131,5 +134,9 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
     return true;
 }
 
+- (void) showBox
+{
+    needShowBox = needShowBox ? false : true;
+}
 
 @end

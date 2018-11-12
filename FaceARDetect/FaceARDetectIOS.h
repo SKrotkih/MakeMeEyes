@@ -24,6 +24,7 @@
 @interface FaceARDetectIOS : NSObject
 
 @property(nonatomic) std::vector<cv::Point> eyePupils;
+@property(nonatomic) BOOL needShowBox;
 
 //bool inits_FaceAR();
 //-(instancetype) inits_FaceAR;
@@ -40,5 +41,8 @@
 
 //bool clear_FaceAR();
 -(BOOL) clear_FaceAR;
+
+// Switch On/Off box around face
+- (void) showBox;
 
 @end

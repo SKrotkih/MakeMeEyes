@@ -13,6 +13,7 @@
 @interface CvVideoCameraWrapper: NSObject
 
 - (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView;
+- (void) showBox;
 - (void) startCamera;
 - (void) stopCamera;
 

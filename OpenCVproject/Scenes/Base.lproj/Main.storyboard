@@ -59,6 +59,11 @@
                                     <action selector="addSceneButtonPressed:" destination="DcM-fu-vqt" id="88J-R2-yv5"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem title="Face" id="9cm-jh-Dbb">
+                                <connections>
+                                    <action selector="addFaceButtonPressed:" destination="DcM-fu-vqt" id="oXI-R1-g8H"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>

@@ -38,6 +38,10 @@ import SceneKit
         sceneInteractor.addScene()
     }
     
+    @IBAction func addFaceButtonPressed(_ sender: Any) {
+        videoCameraWrapper.showBox()
+    }
+    
     @objc func updatePupilsCoordinate(_ leftX: Int, _leftY: Int, _rightX: Int, _rightY: Int) {
         self.sceneInteractor.updatePupilsCoordinate(leftX, _leftY: _leftY, _rightX: _rightX, _rightY: _rightY)
     }

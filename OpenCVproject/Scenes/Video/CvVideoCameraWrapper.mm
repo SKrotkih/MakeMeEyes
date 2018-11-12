@@ -109,6 +109,10 @@ using namespace cv;
     }
 }
 
+- (void) showBox {
+    [facear showBox];
+}
+
 #pragma mark - UI Actions
 
 - (void) startCamera
