@@ -69,7 +69,7 @@
 
 namespace LandmarkDetector
 {
-    
+  
     std::vector<cv::Point> eyeCenters;
     
 //// Useful utility for creating directories for storing the output files
@@ -1067,9 +1067,9 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
                 eyebordernext.push_back(nextFeaturePoint);
             }
         }
-        LandmarkDetector::drawEyeBorder(img, eyeborder, eyebordernext);
-        LandmarkDetector::drawIris(img, irisborder, irisbordernext);
-        LandmarkDetector::drawPupils(img, iris);
+        LandmarkDetector::drawEye(img, eyeborder, eyebordernext,
+                                  irisborder, irisbordernext,
+                                  iris);
     }
     else if(n == 6)
     {
@@ -1094,14 +1094,78 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
     }
 }
 
-    void drawEyeBorder(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
+    // ================
+    // Draw Eye
+    void drawEye(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext, std::vector<cv::Point>& iris) {
+        LandmarkDetector::drawEyeBorder(img, eyeborder, eyebordernext);
+        LandmarkDetector::drawIris(img, irisborder, irisbordernext);
+        LandmarkDetector::drawPupil(img, iris);
+        std::vector<cv::Point> eyeFullPoints = eyeborder;
+        eyeFullPoints.reserve(eyeborder.size() * 2 + irisborder.size() * 2 + iris.size());
+        eyeFullPoints.insert(eyeFullPoints.end(), eyeborder.begin(), eyeborder.end());
+        eyeFullPoints.insert(eyeFullPoints.end(), eyebordernext.begin(), eyebordernext.end());
+        eyeFullPoints.insert(eyeFullPoints.end(), irisborder.begin(), irisborder.end());
+        eyeFullPoints.insert(eyeFullPoints.end(), irisbordernext.begin(), irisbordernext.end());
+        eyeFullPoints.insert(eyeFullPoints.end(), iris.begin(), iris.end());
+        cv::Rect eyeFullRect = cv::boundingRect(eyeFullPoints);
+        cv::rectangle(img, eyeFullRect, cv::Scalar(255, 0, 0), 1.0);
+        
+        std::vector<cv::Point> eyePoints = eyeborder;
+        eyePoints.insert(eyePoints.end(), eyeborder.begin(), eyeborder.end());
+        eyePoints.insert(eyePoints.end(), eyebordernext.begin(), eyebordernext.end());
+        cv::Rect eyeRect = cv::boundingRect(eyePoints);
+        cv::rectangle(img, eyeRect, cv::Scalar(255, 0, 255), 1.0);
+        
+        std::vector<cv::Point> upperPoly;
+        std::vector<cv::Point> bottomPoly;
 
+        cv::Point p0 = eyeFullRect.tl();
+        upperPoly.push_back(p0);
+        upperPoly.push_back(eyeborder[0]);
+        for (int i = 0; i < eyeborder.size(); i++) {
+            cv::Point pCurr = eyeborder[i];
+            cv::Point pNext = eyebordernext[i];
+            if (pNext.x > pCurr.x) {
+                upperPoly.push_back(pNext);
+            } else {
+                cv::Point yr = pCurr;
+                cv::Point tr = cv::Point(eyeFullRect.br().x, eyeFullRect.tl().y);
+                upperPoly.push_back(tr);
+                upperPoly.push_back(eyeFullRect.tl());
+                cv::fillConvexPoly(img, upperPoly, cv::Scalar(0, 255, 255), cv::LINE_AA, 0);
+                
+                //                        cv::Rect rect = cv::boundingRect(upperPoly);
+                //                        printf("%d", rect.tl().x);
+                //                        printf("%d", eyeFullRect.tl().x);
+                
+                for (int j = i; j < eyeborder.size(); j++) {
+                    cv::Point pCurr = eyeborder[j];
+//                    cv::Point pNext = eyebordernext[j];
+                    bottomPoly.push_back(pCurr);
+                    //bottomPoly.push_back(pNext);
+                }
+                cv::Point pend = eyebordernext[eyebordernext.size() - 1];
+                bottomPoly.push_back(pend);
+                cv::Point pbr = eyeFullRect.br();
+                cv::Point pbl = cv::Point(p0.x, pbr.y);
+                bottomPoly.push_back(pbl);
+                bottomPoly.push_back(pbr);
+                bottomPoly.push_back(yr);
+                cv::fillConvexPoly(img, bottomPoly, cv::Scalar(0, 255, 255), cv::LINE_AA, 0);
+                break;
+            }
+        }
+    }
+    
+    void drawEyeBorder(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
         int thickness_2 = 1.0;
         for (int i = 0; i < eyeborder.size(); i++) {
+            // Draw border line
             cv::line(img, eyeborder[i], eyebordernext[i], cv::Scalar(0, 0, 255), thickness_2);
         }
+        // Fill inside eye area by white color
         cv::fillConvexPoly(img, eyeborder, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
-        cv::fillConvexPoly(img, eyebordernext, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
+        //cv::fillConvexPoly(img, eyebordernext, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
     }
     
     void drawIris(cv::Mat img, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext) {
@@ -1111,11 +1175,9 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
         }
         cv::fillConvexPoly(img, irisborder, cv::Scalar(0, 255, 0), cv::LINE_AA, 0);
         cv::fillConvexPoly(img, irisbordernext, cv::Scalar(0, 255, 0), cv::LINE_AA, 0);
-        
-
     }
     
-    void drawPupils(cv::Mat img, std::vector<cv::Point>& iris) {
+    void drawPupil(cv::Mat img, std::vector<cv::Point>& iris) {
         cv::Rect rect = cv::boundingRect(iris);
         cv::Point ayeCenter(rect.tl().x + (rect.width / 2), rect.tl().y + (rect.height / 2));
         if (eyeCenters.size() %2 == 0) {

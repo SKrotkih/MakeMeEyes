@@ -7,6 +7,8 @@
 //
 
 #import "CvVideoCameraWrapper.h"
+#import "FaceDetectWrapper.h"
+
 #import "OpenCVproject-Swift.h"
 #import "CppUtils.hpp"
 #import <opencv2/videoio/cap_ios.h>
@@ -32,19 +34,16 @@ using namespace cv;
     VideoViewController* viewController;
     UIImageView* imageView;
     CvVideoCamera* videoCamera;
-    FaceARDetectIOS* facear;
-    int frame_count;
+    FaceDetectWrapper* faceDetector;
 }
 
 - (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView
 {
     viewController = _viewController;
     imageView = _imageView;
+    faceDetector = [[FaceDetectWrapper alloc] init];
     
-    facear =[[FaceARDetectIOS alloc] init];
-
     [self setupVideoCamera];
-
     return self;
 }
 
@@ -70,38 +69,16 @@ using namespace cv;
 
 - (void) processImage: (cv::Mat &) image
 {
-    cv::Mat targetImage(image.cols,image.rows,CV_8UC3);
-    cv::cvtColor(image, targetImage, cv::COLOR_BGRA2BGR);
-    if(targetImage.empty()){
-        std::cout << "targetImage empty" << std::endl;
-    }
-    else
-    {
-        float fx, fy, cx, cy;
-        cx = 1.0*targetImage.cols / 2.0;
-        cy = 1.0*targetImage.rows / 2.0;
-        
-        fx = 500 * (targetImage.cols / 640.0);
-        fy = 500 * (targetImage.rows / 480.0);
-        
-        fx = (fx + fy) / 2.0;
-        fy = fx;
-        
-        [facear run_FaceAR: targetImage frame__:frame_count fx__:fx fy__:fy cx__:cx cy__:cy];
-        frame_count = frame_count + 1;
-        
-        [self drawMask];
-    }
-    cv::cvtColor(targetImage, image, cv::COLOR_BGRA2RGB);
+    [faceDetector detectFacesOnImage: image];
+    [self drawMask];
 }
 
 #endif
 
 - (void) drawMask {
-    std::vector<cv::Point> pupils = facear.eyePupils;
-    if (pupils.size() == 2) {
-        cv::Point leftPupil = pupils[0];
-        cv::Point rightPupil = pupils[1];
+    cv::Point leftPupil;
+    cv::Point rightPupil;
+    if ([faceDetector getPupilsCoordinate: leftPupil rightPupil: rightPupil]) {
         [viewController updatePupilsCoordinate: leftPupil.x
                                         _leftY: leftPupil.y
                                        _rightX: rightPupil.x
@@ -110,7 +87,7 @@ using namespace cv;
 }
 
 - (void) showBox {
-    [facear showBox];
+    [faceDetector showBox];
 }
 
 #pragma mark - UI Actions
