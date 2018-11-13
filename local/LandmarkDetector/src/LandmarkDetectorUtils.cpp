@@ -1118,63 +1118,60 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
         
         std::vector<cv::Point> upperPoly;
         std::vector<cv::Point> bottomPoly;
+        
 
-        cv::Point p0 = eyeFullRect.tl();
-        upperPoly.push_back(p0);
-        upperPoly.push_back(eyeborder[0]);
         for (int i = 0; i < eyeborder.size(); i++) {
             cv::Point pCurr = eyeborder[i];
             cv::Point pNext = eyebordernext[i];
-            if (pNext.x > pCurr.x) {
-                upperPoly.push_back(pNext);
-            } else {
-                cv::Point yr = pCurr;
+            upperPoly.push_back(pCurr);
+            if (pNext.x < pCurr.x) {
                 cv::Point tr = cv::Point(eyeFullRect.br().x, eyeFullRect.tl().y);
                 upperPoly.push_back(tr);
                 upperPoly.push_back(eyeFullRect.tl());
-                cv::fillConvexPoly(img, upperPoly, cv::Scalar(0, 255, 255), cv::LINE_AA, 0);
-                
-                //                        cv::Rect rect = cv::boundingRect(upperPoly);
-                //                        printf("%d", rect.tl().x);
-                //                        printf("%d", eyeFullRect.tl().x);
-                
+                upperPoly.push_back(eyeborder[0]);
+                // Fill top polygon
+                std::vector<std::vector<cv::Point>> tpoly;
+                tpoly.push_back(upperPoly);
+                cv::fillPoly(img, tpoly, cv::Scalar(0, 0, 255), cv::LINE_8, 0);
+
+                cv::Point yr = pCurr;
                 for (int j = i; j < eyeborder.size(); j++) {
-                    cv::Point pCurr = eyeborder[j];
-//                    cv::Point pNext = eyebordernext[j];
-                    bottomPoly.push_back(pCurr);
-                    //bottomPoly.push_back(pNext);
+                    bottomPoly.push_back(eyeborder[j]);
                 }
                 cv::Point pend = eyebordernext[eyebordernext.size() - 1];
                 bottomPoly.push_back(pend);
                 cv::Point pbr = eyeFullRect.br();
-                cv::Point pbl = cv::Point(p0.x, pbr.y);
+                cv::Point pbl = cv::Point(eyeFullRect.tl().x, pbr.y);
                 bottomPoly.push_back(pbl);
                 bottomPoly.push_back(pbr);
                 bottomPoly.push_back(yr);
-                cv::fillConvexPoly(img, bottomPoly, cv::Scalar(0, 255, 255), cv::LINE_AA, 0);
+                // Fill bottom polygon
+                std::vector<std::vector<cv::Point>> bpoly;
+                bpoly.push_back(bottomPoly);
+                cv::fillPoly(img, bpoly, cv::Scalar(0, 0, 255), cv::LINE_8, 0);
                 break;
             }
         }
     }
     
     void drawEyeBorder(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
-        int thickness_2 = 1.0;
-        for (int i = 0; i < eyeborder.size(); i++) {
-            // Draw border line
-            cv::line(img, eyeborder[i], eyebordernext[i], cv::Scalar(0, 0, 255), thickness_2);
-        }
+//        int thickness_2 = 1.0;
+//        for (int i = 0; i < eyeborder.size(); i++) {
+//            // Draw border line
+//            cv::line(img, eyeborder[i], eyebordernext[i], cv::Scalar(255, 0, 0), 1.0);
+//        }
         // Fill inside eye area by white color
         cv::fillConvexPoly(img, eyeborder, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
-        //cv::fillConvexPoly(img, eyebordernext, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
     }
     
     void drawIris(cv::Mat img, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext) {
-        int thickness_2 = 1.0;
-        for (int i = 0; i < irisborder.size(); i++) {
-            cv::line(img, irisborder[i], irisbordernext[i], cv::Scalar(255, 0, 0), thickness_2);
-        }
-        cv::fillConvexPoly(img, irisborder, cv::Scalar(0, 255, 0), cv::LINE_AA, 0);
-        cv::fillConvexPoly(img, irisbordernext, cv::Scalar(0, 255, 0), cv::LINE_AA, 0);
+//        for (int i = 0; i < irisborder.size(); i++) {
+//            cv::line(img, irisborder[i], irisbordernext[i], cv::Scalar(255, 0, 0), 1.0);
+//        }
+        std::vector<std::vector<cv::Point>> poly;
+        poly.push_back(irisborder);
+        cv::fillPoly(img, poly, cv::Scalar(0, 255, 0), cv::LINE_AA, 0);
+//        cv::fillConvexPoly(img, irisbordernext, cv::Scalar(0, 255, 0), cv::LINE_AA, 0);
     }
     
     void drawPupil(cv::Mat img, std::vector<cv::Point>& iris) {

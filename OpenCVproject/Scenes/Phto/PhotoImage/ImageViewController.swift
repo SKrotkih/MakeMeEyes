@@ -55,6 +55,7 @@ class ImageViewController: UIViewController {
         if segue.identifier == "faceSequence" {
             if let faceViewController = segue.destination as? FaceViewController {
                 cropComponents()
+                faceViewController.orgImage = cleanFace;
                 faceViewController.face = face
                 faceViewController.leftEye = leftEye
                 faceViewController.rightEye = rightEye

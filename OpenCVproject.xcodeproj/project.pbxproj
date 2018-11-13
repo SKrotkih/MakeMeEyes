@@ -46,6 +46,7 @@
 		7F4C39A821992DC600C61A7F /* shape.scn in Resources */ = {isa = PBXBuildFile; fileRef = 7F4C39A721992DC600C61A7F /* shape.scn */; };
 		7F4C39AA219932CA00C61A7F /* SceneInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C39A9219932CA00C61A7F /* SceneInteractor.swift */; };
 		7F4D02A2219AF59200B9A4EC /* FaceDetectWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F4D02A0219AF59200B9A4EC /* FaceDetectWrapper.mm */; };
+		7F4D02A5219B01C800B9A4EC /* FaceDetectWrapper2.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F4D02A4219B01C800B9A4EC /* FaceDetectWrapper2.mm */; };
 		7FAEE1522196900E00E2305E /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEE1512196900E00E2305E /* VideoViewController.swift */; };
 		7FAEE15D2196BBC600E2305E /* CvVideoCameraWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */; };
 		7FECD6B62196C7810069CE31 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2A9665219015870024F342 /* opencv2.framework */; };
@@ -118,6 +119,8 @@
 		7F4C39A9219932CA00C61A7F /* SceneInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneInteractor.swift; sourceTree = "<group>"; };
 		7F4D02A0219AF59200B9A4EC /* FaceDetectWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceDetectWrapper.mm; sourceTree = "<group>"; };
 		7F4D02A1219AF59200B9A4EC /* FaceDetectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceDetectWrapper.h; sourceTree = "<group>"; };
+		7F4D02A3219B01C700B9A4EC /* FaceDetectWrapper2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceDetectWrapper2.h; sourceTree = "<group>"; };
+		7F4D02A4219B01C800B9A4EC /* FaceDetectWrapper2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceDetectWrapper2.mm; sourceTree = "<group>"; };
 		7FAEE1512196900E00E2305E /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		7FAEE15B2196BBC600E2305E /* CvVideoCameraWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CvVideoCameraWrapper.h; sourceTree = "<group>"; };
 		7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CvVideoCameraWrapper.mm; sourceTree = "<group>"; };
@@ -163,6 +166,8 @@
 			children = (
 				7F4D02A1219AF59200B9A4EC /* FaceDetectWrapper.h */,
 				7F4D02A0219AF59200B9A4EC /* FaceDetectWrapper.mm */,
+				7F4D02A3219B01C700B9A4EC /* FaceDetectWrapper2.h */,
+				7F4D02A4219B01C800B9A4EC /* FaceDetectWrapper2.mm */,
 				7F14A0D821984804001A57CF /* FaceARDetectIOS.mm */,
 				7F14A0D921984804001A57CF /* FaceARDetectIOS.h */,
 			);
@@ -492,6 +497,7 @@
 				7FAEE1522196900E00E2305E /* VideoViewController.swift in Sources */,
 				7F14A0FE21984804001A57CF /* PAW.cpp in Sources */,
 				7F21D1822192051D002AE655 /* FaceDetail.swift in Sources */,
+				7F4D02A5219B01C800B9A4EC /* FaceDetectWrapper2.mm in Sources */,
 				7F405C1821915AB100068592 /* FaceViewController.swift in Sources */,
 				7F14A25721984E23001A57CF /* FaceDetector.swift in Sources */,
 				7F14A10221984804001A57CF /* stdafx.cpp in Sources */,

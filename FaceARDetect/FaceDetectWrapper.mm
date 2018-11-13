@@ -38,6 +38,14 @@ using namespace cv;
 
 #ifdef __cplusplus
 
+- (void) detectFacesOnUIImage: (UIImage*) image
+{
+    CppUtils* utils = new CppUtils;
+    cv::Mat frame;
+    utils->imageToMat(image, frame);
+    [self detectFacesOnImage: frame];
+}
+
 - (void) detectFacesOnImage: (cv::Mat &) image
 {
     cv::Mat targetImage(image.cols, image.rows, CV_8UC3);
@@ -48,8 +56,8 @@ using namespace cv;
     else
     {
         float fx, fy, cx, cy;
-        cx = 1.0*targetImage.cols / 2.0;
-        cy = 1.0*targetImage.rows / 2.0;
+        cx = 1.0 * targetImage.cols / 2.0;
+        cy = 1.0 * targetImage.rows / 2.0;
         
         fx = 500 * (targetImage.cols / 640.0);
         fy = 500 * (targetImage.rows / 480.0);
@@ -57,7 +65,12 @@ using namespace cv;
         fx = (fx + fy) / 2.0;
         fy = fx;
         
-        [facear run_FaceAR: targetImage frame__:frame_count fx__:fx fy__:fy cx__:cx cy__:cy];
+        [facear run_FaceAR: targetImage
+                   frame__: frame_count
+                      fx__: fx
+                      fy__: fy
+                      cx__: cx
+                      cy__: cy];
         frame_count = frame_count + 1;
     }
     cv::cvtColor(targetImage, image, cv::COLOR_BGRA2RGB);
@@ -78,7 +91,5 @@ using namespace cv;
     }
     return false;
 }
-
-
 
 @end
