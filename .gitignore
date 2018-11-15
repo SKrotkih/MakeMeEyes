@@ -21,8 +21,8 @@ DerivedData
 .idea/
 
 # CocoaPods
-/interpreters.travel/Pods/
-/interpreters.travel/Podfile.lock
+/Pods/
+Podfile.lock
 
 @Frameworks
 opencv2.framework
