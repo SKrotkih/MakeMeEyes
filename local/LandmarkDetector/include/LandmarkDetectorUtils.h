@@ -125,9 +125,12 @@ namespace LandmarkDetector
     // Draw Eye
     // ========
     void drawEye(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext, std::vector<cv::Point>& iris);
+    void drawEye2(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext, std::vector<cv::Point>& iris);
+    bool CrossLine(cv::Point p1, cv::Point p2, cv::Point p3, cv::Point p4, cv::Point& px);
     void drawPupil(cv::Mat img, std::vector<cv::Point>& iris);
     void drawIris(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext);
     void drawEyeBorder(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext);
+    void cutEye(cv::Mat &img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext);
     // ========
     
     std::vector<cv::Point> getPupilsCoordinate();

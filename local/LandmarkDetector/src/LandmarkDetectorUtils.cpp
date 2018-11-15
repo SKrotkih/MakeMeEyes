@@ -1067,9 +1067,15 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
                 eyebordernext.push_back(nextFeaturePoint);
             }
         }
-        LandmarkDetector::drawEye(img, eyeborder, eyebordernext,
-                                  irisborder, irisbordernext,
-                                  iris);
+        LandmarkDetector::drawEyeBorder(img, eyeborder, eyebordernext);
+        LandmarkDetector::drawIris(img, irisborder, irisbordernext);
+        LandmarkDetector::drawPupil(img, iris);
+
+        LandmarkDetector::cutEye(img, eyeborder, eyebordernext);
+        
+//        LandmarkDetector::drawEye(img, eyeborder, eyebordernext,
+//                                  irisborder, irisbordernext,
+//                                  iris);
     }
     else if(n == 6)
     {
@@ -1097,9 +1103,6 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
     // ================
     // Draw Eye
     void drawEye(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext, std::vector<cv::Point>& iris) {
-        LandmarkDetector::drawEyeBorder(img, eyeborder, eyebordernext);
-        LandmarkDetector::drawIris(img, irisborder, irisbordernext);
-        LandmarkDetector::drawPupil(img, iris);
         std::vector<cv::Point> eyeFullPoints = eyeborder;
         eyeFullPoints.reserve(eyeborder.size() * 2 + irisborder.size() * 2 + iris.size());
         eyeFullPoints.insert(eyeFullPoints.end(), eyeborder.begin(), eyeborder.end());
@@ -1118,7 +1121,6 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
         
         std::vector<cv::Point> upperPoly;
         std::vector<cv::Point> bottomPoly;
-        
 
         for (int i = 0; i < eyeborder.size(); i++) {
             cv::Point pCurr = eyeborder[i];
@@ -1154,6 +1156,170 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
         }
     }
     
+    void cutEye(cv::Mat &img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
+        
+        // Contours which we need to mask
+        std::vector<std::vector<cv::Point> > contours;
+        contours.push_back(eyeborder);
+        contours.push_back(eyebordernext);
+        
+        cv::Mat cloneimg = img.clone();
+        
+        cv::Mat mask(cloneimg.size(), CV_8UC1);
+        mask = 0;
+        drawContours(mask, contours, 0, cv::Scalar(255), -1);  // Pixels of value 0xFF are true
+
+        
+        cv::Mat masked(cloneimg.size(), CV_8UC3, cv::Scalar(255,255,255));
+        cloneimg.copyTo(masked, mask);
+
+        
+        cv::Mat multiplyFull;
+        cv::multiply(img, masked, multiplyFull);
+        multiplyFull.copyTo(img);
+
+//                img.setTo(cv::Scalar::all(0), mask);
+//                cv::add(cloneimg, multiplyFull, img, mask);
+
+        //cv::multiply(cloneimg, multiplyFull, img);
+        
+        //multiplyFull.copyTo(img);
+//        img.setTo(cv::Scalar::all(0), mask);
+//        cv::add(cloneimg, multiplyFull, img, mask);
+
+// Example:
+//        cv::Mat multiplyFull;
+//        cv::multiply(input1, input2, multiplyFull);
+//
+//        // clear data in output
+//        output.setTo(cv::Scalar::all(0), mask);
+//
+//        // set in output only multiplication given by mask
+//        cv::add(output, multiplyFull, output, mask);
+        
+
+//        In OpenCV, a mask image is of type uint8_t. Pixels of value 0xFF are true and pixels of value 0 are false.
+//
+//        A mask can be applied on an image of the same dimensions, but of any type.
+//        By applying a mask M on an image I, the pixels of I whose corresponding pixel in M are true
+//        are copied into a new image. The rest of the pixels in the new image are set to 0.
+//
+//        Applying a mask in OpenCV is easy:
+//
+//        cv::Mat in_mat;   // Already created
+//        cv::Mat mask_mat; // Already created
+//        cv::Mat out_mat;  // New and empty
+//
+//        in_mat.copyTo(out_mat, mask_mat);
+//        Note that the input and output image should not be the same! OpenCV does not throw an error, but the behavior is undefined.
+        
+        // Other sample:
+//        Simplest way, with 'Mat img' (image to be masked, input) and 'Mat masked' (masked image, output):
+//
+//        img.copyTo(masked, mask)
+//        where 'Mat mask' is a matrix not necessarily binary (copyTo considers elements with zero value). Masked can be of any size and type; it is reallocated if needed.
+        
+        
+        
+    }
+    
+    void drawEye2(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext, std::vector<cv::Point>& iris) {
+        LandmarkDetector::drawEyeBorder(img, eyeborder, eyebordernext);
+        std::vector<cv::Point> irisResults;
+        
+        int xMin = 9999999;
+        int indMin = 0;
+        for (int i = 0; i < irisborder.size(); i++) {
+            if (xMin > irisborder[i].x) {
+                xMin = irisborder[i].x;
+                indMin = i;
+            }
+        }
+        
+        std::vector<cv::Point> irisFrom;
+        std::vector<cv::Point> irisTo;
+        for (int i = indMin; i < irisborder.size(); i++) {
+            cv::Point from = irisborder[i];
+            irisFrom.push_back(from);
+            cv::Point to = irisbordernext[i];
+            irisTo.push_back(to);
+        }
+        for (int i = 0; i < indMin; i++) {
+            cv::Point from = irisborder[i];
+            irisFrom.push_back(from);
+            cv::Point to = irisbordernext[i];
+            irisTo.push_back(to);
+        }
+        
+        int i = 0;
+        cv::Point px;
+        while (i < irisFrom.size()) {
+            cv::Point p1 = irisFrom[i];
+            cv::Point p2 = irisTo[i];
+            bool cross1 = false;
+            for (int j = 0; j < eyeborder.size(); j++) {
+                cv::Point p3 = eyeborder[j];
+                cv::Point p4 = eyebordernext[j];
+                if (CrossLine(p1, p2, p3, p4, px)) {
+                    cross1 = true;
+                    irisResults.push_back(px);  // 1-st cross
+                    irisResults.push_back(p2);
+                    for (int k = i + 1; k < irisFrom.size(); k++) {
+                        cv::Point p1 = irisFrom[k];
+                        cv::Point p2 = irisTo[k];
+                        bool cross2 = false;
+                        for (int l = 0; l < eyeborder.size(); l++) {
+                            cv::Point p3 = eyeborder[l];
+                            cv::Point p4 = eyebordernext[l];
+                            if (CrossLine(p1, p2, p3, p4, px)) {
+                                cross2 = true;
+                                irisResults.push_back(p1); // 2-nd cross
+                                irisResults.push_back(px);
+                                irisResults.push_back(p4);
+                                for (int m = l + 1; m < eyeborder.size(); m++) {
+                                    cv::Point p1 = eyeborder[m];
+                                    cv::Point p2 = eyebordernext[m];
+                                    bool sross3 = false;
+                                    for (int n = 0; n < irisFrom.size(); n++) {
+                                        cv::Point p3 = irisFrom[m];
+                                        cv::Point p4 = irisTo[m];
+                                        if (CrossLine(p1, p2, p3, p4, px)) {
+                                            sross3 = true;
+                                            irisResults.push_back(p1);
+                                            irisResults.push_back(px);
+                                            break;
+                                        }
+                                    }
+                                    if (!sross3) {
+                                        irisResults.push_back(p2);
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        if (!cross2) {
+                            irisResults.push_back(p2);
+                        }
+                    }
+                }
+            }
+            if (!cross1) {
+                irisResults.push_back(p1);
+                irisResults.push_back(p2);
+            }
+            
+            i++;
+        }
+
+        // std::vector<std::vector<cv::Point>> poly;
+        // poly.push_back(irisResults);
+        // cv::fillPoly(img, poly, cv::Scalar(0, 0, 255), cv::LINE_8, 0);
+        for (int i = 0; i < irisResults.size() - 1; i++) {
+            cv::line(img, irisResults[i], irisResults[i + 1], cv::Scalar(255, 0, 0), 1.0);
+        }
+
+    }
+    
     void drawEyeBorder(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
 //        int thickness_2 = 1.0;
 //        for (int i = 0; i < eyeborder.size(); i++) {
@@ -1170,8 +1336,8 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
 //        }
         std::vector<std::vector<cv::Point>> poly;
         poly.push_back(irisborder);
+        poly.push_back(irisbordernext);
         cv::fillPoly(img, poly, cv::Scalar(0, 255, 0), cv::LINE_AA, 0);
-//        cv::fillConvexPoly(img, irisbordernext, cv::Scalar(0, 255, 0), cv::LINE_AA, 0);
     }
     
     void drawPupil(cv::Mat img, std::vector<cv::Point>& iris) {
@@ -1186,6 +1352,29 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
     
     std::vector<cv::Point> getPupilsCoordinate() {
         return eyeCenters;
+    }
+    
+    bool CrossLine(cv::Point p1, cv::Point p2, cv::Point p3, cv::Point p4, cv::Point& px) {
+        long dx1 = long(p2.x - p1.x);
+        long dy1 = long(p2.y - p1.y);
+        long dx2 = long(p4.x - p3.x);
+        long dy2 = long(p4.y - p3.y);
+        long pxx;
+        long pxy;
+        pxx = dy1 * dx2 - dy2 * dx1;
+        if(!pxx || !dx2) {
+            return false;
+        }
+        pxy = p3.x * p4.y - p3.y * p4.x;
+        pxx = ((p1.x * p2.y - p1.y * p2.x) * dx2 - pxy * dx1) / pxx;
+        pxy = (dy2 * pxx - pxy) / dx2;
+        bool retVal = ((p1.x <= pxx && p2.x >= pxx) || (p2.x <= pxx && p1.x >= pxx)) &&
+        ((p3.x <= pxx && p4.x >= pxx) || (p4.x <= pxx && p3.x >= pxx));
+        if (retVal) {
+            px.x = int(pxx);
+            px.y = int(pxy);
+        }
+        return retVal;
     }
     
 // Drawing landmarks on a face image
