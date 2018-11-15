@@ -73,6 +73,9 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
     }
 }
 
+- (void) setNeedShowEyes: (BOOL) newValue {
+    LandmarkDetector::setNeedDrawEyes(newValue);
+}
 
 //bool run_FaceAR(cv::Mat &captured_image, int frame_count, float fx, float fy, float cx, float cy);
 -(BOOL) run_FaceAR:(cv::Mat)captured_image frame__:(int)frame_count fx__:(double)fx fy__:(double)fy cx__:(double)cx cy__:(double)cy

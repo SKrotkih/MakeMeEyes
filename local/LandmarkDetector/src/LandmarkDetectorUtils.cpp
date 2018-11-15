@@ -72,6 +72,7 @@ namespace LandmarkDetector
   
     std::vector<cv::Point> eyeCenters;
     cv::Mat cloneimg;
+    bool needDrawEyes = true;
     
 //// Useful utility for creating directories for storing the output files
 //void create_directory_from_file(string output_path)
@@ -1071,10 +1072,13 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
                 eyebordernext.push_back(nextFeaturePoint);
             }
         }
-        LandmarkDetector::drawEyeBorder(img, eyeborder, eyebordernext);
-        LandmarkDetector::drawIris(img, irisborder, irisbordernext);
-        LandmarkDetector::drawPupil(img, iris);
-        LandmarkDetector::cutEye(img, eyeborder, eyebordernext);
+
+        if (needDrawEyes) {
+            LandmarkDetector::drawEyeBorder(img, eyeborder, eyebordernext);
+            LandmarkDetector::drawIris(img, irisborder, irisbordernext);
+            LandmarkDetector::drawPupil(img, iris);
+            LandmarkDetector::cutEye(img, eyeborder, eyebordernext);
+        }
     }
     else if(n == 6)
     {
@@ -1099,8 +1103,11 @@ void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& vis
     }
 }
 
+    void setNeedDrawEyes(bool newValue) {
+        needDrawEyes = newValue;
+    }
+    
     void cutEye(cv::Mat &img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
-        
         std::vector<std::vector<cv::Point> > contours;
         contours.push_back(eyeborder);
         contours.push_back(eyebordernext);

@@ -64,6 +64,11 @@
                                     <action selector="addFaceButtonPressed:" destination="DcM-fu-vqt" id="oXI-R1-g8H"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem title="Eyes" id="ndE-c5-3yi">
+                                <connections>
+                                    <action selector="needDrawEyesButtonPressed:" destination="DcM-fu-vqt" id="3OD-dt-04I"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>

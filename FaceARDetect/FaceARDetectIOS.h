@@ -45,4 +45,6 @@
 // Switch On/Off box around face
 - (void) showBox;
 
+- (void) setNeedShowEyes: (BOOL) newValue;
+
 @end

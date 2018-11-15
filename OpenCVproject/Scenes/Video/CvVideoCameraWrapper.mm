@@ -90,6 +90,10 @@ using namespace cv;
     [faceDetector showBox];
 }
 
+- (void) setNeedDrawEyes: (BOOL) newValue {
+    [faceDetector setNeedDrawEyes: newValue];
+}
+
 #pragma mark - UI Actions
 
 - (void) startCamera

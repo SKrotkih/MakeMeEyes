@@ -92,4 +92,8 @@ using namespace cv;
     return false;
 }
 
+- (void) setNeedDrawEyes: (BOOL) newValue {
+    [facear setNeedShowEyes: newValue];
+}
+
 @end

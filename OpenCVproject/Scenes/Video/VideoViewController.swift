@@ -15,6 +15,7 @@ import SceneKit
 
     private var videoCameraWrapper : CvVideoCameraWrapper!
     private var sceneInteractor: SceneInteractor!
+    private var needDrawEyes: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,11 @@ import SceneKit
     
     @IBAction func addFaceButtonPressed(_ sender: Any) {
         videoCameraWrapper.showBox()
+    }
+
+    @IBAction func needDrawEyesButtonPressed(_ sender: Any) {
+        needDrawEyes = !needDrawEyes
+        videoCameraWrapper.setNeedDrawEyes(needDrawEyes)
     }
     
     @objc func updatePupilsCoordinate(_ leftX: Int, _leftY: Int, _rightX: Int, _rightY: Int) {
