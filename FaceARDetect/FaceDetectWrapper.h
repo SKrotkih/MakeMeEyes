@@ -1,6 +1,6 @@
 //
 //  FaceDetectWrapper.h
-//  OpenCVproject
+//  MasterFace
 //
 
 #import <UIKit/UIKit.h>

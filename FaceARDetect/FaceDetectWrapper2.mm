@@ -1,11 +1,11 @@
 //
 //  CvVideoCameraWrapper.m
-//  OpenCVproject
+//  MasterFace
 //
 
 #import "FaceDetectWrapper2.h"
 #import "FaceDetectWrapper.h"
-#import "OpenCVproject-Swift.h"
+#import "MasterFace-Swift.h"
 #import "CppUtils.hpp"
 
 @implementation FaceDetectWrapper2
