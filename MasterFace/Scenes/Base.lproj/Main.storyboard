@@ -39,7 +39,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="STZ-tk-Hh6">
                                 <rect key="frame" x="168" y="559" width="200" height="40"/>
                                 <subviews>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="WLA-ub-NmE">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="1" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="WLA-ub-NmE">
                                         <rect key="frame" x="6" y="5" width="188" height="30"/>
                                         <connections>
                                             <action selector="didChangeSliderPupilPercentValue:" destination="DcM-fu-vqt" eventType="valueChanged" id="GE1-Fg-dqY"/>
