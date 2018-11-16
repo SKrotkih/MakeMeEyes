@@ -22,11 +22,6 @@ namespace LandmarkDetector
         //            // Draw border line
         //            cv::line(img, eyeborder[i], eyebordernext[i], cv::Scalar(255, 0, 0), 1.0);
         //        }
-        cv::Rect rect = cv::boundingRect(eyeborder);
-        
-        //        eyeLenseImage   S.K.
-        
-        
         // Fill inside eye area by white color
         cv::fillConvexPoly(img, eyeborder, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
     }
@@ -49,8 +44,8 @@ namespace LandmarkDetector
         contours.push_back(eyebordernext);
         cv::Mat mask(cloneimg.size(), CV_8UC1);
         mask = 0;
-        drawContours(mask, contours, 0, cv::Scalar(255,255,255), cv::FILLED);  // Pixels of value 0xFF are true
-        cv::Mat masked(cloneimg.size(), CV_8UC3, cv::Scalar(0,0,0));
+        drawContours(mask, contours, 0, cv::Scalar(255, 255, 255), cv::FILLED);  // Pixels of value 0xFF are true
+        cv::Mat masked(cloneimg.size(), CV_8UC3, cv::Scalar(0, 0, 0));
         img.copyTo(masked, mask);
         cv::Mat maskedGray;
         cv::cvtColor(masked, maskedGray, cv::COLOR_BGR2GRAY);
@@ -86,6 +81,20 @@ namespace LandmarkDetector
         return eyeCenters;
     }
 
+    void drawLense(cv::Mat& img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
+        cv::Rect eyeRect = cv::boundingRect(eyeborder);
+        int sizeRect = MAX(eyeRect.width, eyeRect.height);
+        cv::Rect rect = cv::Rect(eyeRect.x, eyeRect.y - double(sizeRect) / 2.0, sizeRect, sizeRect);
+        cv::Mat fgImg;
+        double fx = double(sizeRect) / double(eyeLenseImage.cols);
+        cv::resize(eyeLenseImage, fgImg, cv::Size(), fx, fx);
+        cv::Mat roi(img, rect);
+        // fgImg.copyTo(roi);
+        cv::Mat color(roi.size(), CV_8UC3, cv::Scalar(0, 0, 0));
+        double alpha = 0.75;
+        cv::addWeighted(color, alpha, roi, 1.0 - alpha , 0.0, roi);
+    }
+    
     void drawEyes(cv::Mat img,
                   std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext,
                   std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext,
@@ -94,8 +103,8 @@ namespace LandmarkDetector
             drawEyeBorder(img, eyeborder, eyebordernext);
             drawIris(img, irisborder, irisbordernext);
             drawPupil(img, iris);
+            drawLense(img, eyeborder, eyebordernext);
             cutEye(img, eyeborder, eyebordernext);
         }
     }
-    
 }
