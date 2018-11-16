@@ -55,6 +55,12 @@ import SceneKit
     @IBAction func didChangeSliderTransparetValue(_ sender: Any) {
         let slider = sender as! UISlider
         let value = slider.value
-        videoCameraWrapper.setLenseTransparent(Double(value))
+        videoCameraWrapper.setLenseColorAlpha(Double(value))
+    }
+    
+    @IBAction func didChangeSliderPupilPercentValue(_ sender: Any) {
+        let slider = sender as! UISlider
+        let value = slider.value
+        videoCameraWrapper.setPupilPercent(Double(value))
     }
 }

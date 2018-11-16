@@ -94,8 +94,12 @@ using namespace cv;
     [faceDetector setNeedDrawEyes: newValue];
 }
 
-- (void) setLenseTransparent: (double) alpha {
-    [faceDetector setLenseTransparent: alpha];
+- (void) setLenseColorAlpha: (double) alpha {
+    [faceDetector setLenseColorAlpha: alpha];
+}
+
+- (void) setPupilPercent: (double) percent {
+    [faceDetector setPupilPercent: percent];
 }
 
 #pragma mark - UI Actions

@@ -82,8 +82,12 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
     LandmarkDetector::setEyeLenseImage(frame);
 }
 
-- (void) setLenseTransparent: (double) alpha {
-    LandmarkDetector::setLenseTransparent(alpha);
+- (void) setLenseColorAlpha: (double) alpha {
+    LandmarkDetector::setLenseColorAlpha(alpha);
+}
+
+- (void) setPupilPercent: (double) percent {
+    LandmarkDetector::setPupilPercent(percent);
 }
 
 //bool run_FaceAR(cv::Mat &captured_image, int frame_count, float fx, float fy, float cx, float cy);

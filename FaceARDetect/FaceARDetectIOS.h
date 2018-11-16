@@ -49,6 +49,8 @@
 
 - (void) setEyeLenseImage: (cv::Mat) frame;
 
-- (void) setLenseTransparent: (double) alpha;
+- (void) setLenseColorAlpha: (double) alpha;
+
+- (void) setPupilPercent: (double) percent;
 
 @end

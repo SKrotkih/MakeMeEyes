@@ -15,7 +15,8 @@ namespace LandmarkDetector
     cv::Mat cloneimg;
     bool needDrawEyes = true;
     cv::Mat eyeLenseImage;
-    double lenseTransparency = 0.05;
+    double lenseColorAlpha = 0.05;
+    double pupilPercent = 100.0;
     
     void drawEyeBorder(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
         //        int thickness_2 = 1.0;
@@ -39,8 +40,12 @@ namespace LandmarkDetector
         eyeLenseImage = image.clone();
     }
 
-    void setLenseTransparent(double alpha) {
-        lenseTransparency = alpha;
+    void setLenseColorAlpha(double alpha) {
+        lenseColorAlpha = alpha;
+    }
+    
+    void setPupilPercent(double percent) {
+        pupilPercent = percent;
     }
     
     void cutEye(cv::Mat &img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
@@ -87,6 +92,9 @@ namespace LandmarkDetector
     }
 
     void drawLense(cv::Mat& img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
+        if (lenseColorAlpha < 0.1) {
+            return;
+        }
         cv::Rect eyeRect = cv::boundingRect(eyeborder);
         int sizeRect = MAX(eyeRect.width, eyeRect.height);
         cv::Rect rect = cv::Rect(eyeRect.x, eyeRect.y - double(sizeRect) / 2.0, sizeRect, sizeRect);
@@ -99,7 +107,7 @@ namespace LandmarkDetector
         // fgImg.copyTo(roi);  // It doesn't work!
 
         cv::Mat color(roi.size(), CV_8UC3, cv::Scalar(255, 255, 255));
-        cv::addWeighted(color, lenseTransparency, roi, 1.0 - lenseTransparency, 0.0, roi);
+        cv::addWeighted(color, lenseColorAlpha, roi, 1.0 - lenseColorAlpha, 0.0, roi);
     }
     
     void drawEyes(cv::Mat img,
