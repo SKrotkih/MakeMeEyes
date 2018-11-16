@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -29,7 +28,7 @@
         <!--Video-->
         <scene sceneID="Nu4-xC-vlM">
             <objects>
-                <viewController id="DcM-fu-vqt" customClass="VideoViewController" customModule="OpenCVproject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="DcM-fu-vqt" customClass="VideoViewController" customModule="MasterFace" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="O8V-1J-hcy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -37,13 +36,35 @@
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xQW-Ro-PYT">
                                 <rect key="frame" x="-62.5" y="64" width="500" height="603"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ki6-NA-cd9">
+                                <rect key="frame" x="168" y="607" width="200" height="40"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="iol-GY-kto">
+                                        <rect key="frame" x="6" y="5" width="188" height="30"/>
+                                        <connections>
+                                            <action selector="didChangeSliderTransparetValue:" destination="DcM-fu-vqt" eventType="valueChanged" id="gGg-hQ-QqT"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.19761344178082191" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="iol-GY-kto" firstAttribute="leading" secondItem="ki6-NA-cd9" secondAttribute="leading" constant="8" id="3Bd-Db-Q5t"/>
+                                    <constraint firstAttribute="width" constant="200" id="972-1n-gu8"/>
+                                    <constraint firstAttribute="trailing" secondItem="iol-GY-kto" secondAttribute="trailing" constant="8" id="BPt-LC-n4A"/>
+                                    <constraint firstItem="iol-GY-kto" firstAttribute="top" secondItem="ki6-NA-cd9" secondAttribute="top" constant="5" id="DXp-LU-7ci"/>
+                                    <constraint firstAttribute="height" constant="40" id="dOa-0r-eAy"/>
+                                    <constraint firstAttribute="bottom" secondItem="iol-GY-kto" secondAttribute="bottom" constant="6" id="iCk-Ah-BOB"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="xQW-Ro-PYT" firstAttribute="top" secondItem="RdT-fd-l8B" secondAttribute="top" id="CBo-UW-BYg"/>
                             <constraint firstItem="RdT-fd-l8B" firstAttribute="bottom" secondItem="xQW-Ro-PYT" secondAttribute="bottom" id="DDV-aL-lAl"/>
+                            <constraint firstItem="RdT-fd-l8B" firstAttribute="bottom" secondItem="ki6-NA-cd9" secondAttribute="bottom" constant="20" id="H6g-Ta-T8K"/>
                             <constraint firstItem="xQW-Ro-PYT" firstAttribute="width" secondItem="O8V-1J-hcy" secondAttribute="height" multiplier="480/640" id="bNO-Bm-y2h"/>
                             <constraint firstItem="xQW-Ro-PYT" firstAttribute="centerX" secondItem="RdT-fd-l8B" secondAttribute="centerX" id="m7T-92-sC2"/>
+                            <constraint firstItem="RdT-fd-l8B" firstAttribute="trailing" secondItem="ki6-NA-cd9" secondAttribute="trailing" constant="7" id="tPZ-2Q-Pfm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RdT-fd-l8B"/>
                     </view>
@@ -82,7 +103,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="OpenCVproject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MasterFace" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -184,7 +205,7 @@
         <!--Image View Controller-->
         <scene sceneID="vWk-30-75H">
             <objects>
-                <viewController id="bZi-mT-3an" customClass="ImageViewController" customModule="OpenCVproject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bZi-mT-3an" customClass="ImageViewController" customModule="MasterFace" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fCo-La-kID"/>
                         <viewControllerLayoutGuide type="bottom" id="Bb9-33-j9z"/>
@@ -226,7 +247,7 @@
         <!--Face View Controller-->
         <scene sceneID="tqr-ai-MdQ">
             <objects>
-                <viewController id="S4V-Ux-hdu" customClass="FaceViewController" customModule="OpenCVproject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="S4V-Ux-hdu" customClass="FaceViewController" customModule="MasterFace" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cVa-KP-TeK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -256,7 +277,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mv3-Y0-PfQ">
                                                 <rect key="frame" x="0.0" y="500" width="375" height="500"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nze-Uk-ytZ" customClass="FaceDetailImageView" customModule="OpenCVproject" customModuleProvider="target">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nze-Uk-ytZ" customClass="FaceDetailImageView" customModule="MasterFace" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UMP-0u-yGx">
@@ -295,7 +316,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KsT-t3-1rU">
                                                 <rect key="frame" x="0.0" y="1000" width="375" height="500"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ta7-Si-tv6" customClass="FaceDetailImageView" customModule="OpenCVproject" customModuleProvider="target">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ta7-Si-tv6" customClass="FaceDetailImageView" customModule="MasterFace" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4L9-rX-ZNH">
@@ -334,7 +355,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0Y-KU-lBF">
                                                 <rect key="frame" x="0.0" y="1500" width="375" height="500"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wdj-pS-jrQ" customClass="FaceDetailImageView" customModule="OpenCVproject" customModuleProvider="target">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wdj-pS-jrQ" customClass="FaceDetailImageView" customModule="MasterFace" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLY-ue-u9H">
@@ -372,7 +393,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JB8-KL-g2q">
                                                 <rect key="frame" x="0.0" y="2000" width="375" height="500"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdM-yH-Yoa" customClass="FaceDetailImageView" customModule="OpenCVproject" customModuleProvider="target">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdM-yH-Yoa" customClass="FaceDetailImageView" customModule="MasterFace" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BNk-Ax-exD">

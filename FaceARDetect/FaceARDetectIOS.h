@@ -49,4 +49,6 @@
 
 - (void) setEyeLenseImage: (cv::Mat) frame;
 
+- (void) setLenseTransparent: (double) alpha;
+
 @end

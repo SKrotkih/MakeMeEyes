@@ -25,6 +25,7 @@ namespace LandmarkDetector
     std::vector<cv::Point> getPupilsCoordinate();
     void setNeedDrawEyes(bool newValue);
     void setEyeLenseImage(cv::Mat image);
+    void setLenseTransparent(double alpha);
     void setCloneImg(cv::Mat img);
 }
 #endif

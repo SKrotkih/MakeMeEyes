@@ -94,6 +94,10 @@ using namespace cv;
     [faceDetector setNeedDrawEyes: newValue];
 }
 
+- (void) setLenseTransparent: (double) alpha {
+    [faceDetector setLenseTransparent: alpha];
+}
+
 #pragma mark - UI Actions
 
 - (void) startCamera

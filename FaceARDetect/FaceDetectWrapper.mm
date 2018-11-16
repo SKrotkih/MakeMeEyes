@@ -107,4 +107,8 @@ using namespace cv;
     [facear setEyeLenseImage: frame];
 }
 
+- (void) setLenseTransparent: (double) alpha {
+    [facear setLenseTransparent: alpha];
+}
+
 @end

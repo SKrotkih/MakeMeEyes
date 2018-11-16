@@ -12,5 +12,6 @@
 - (void) showBox;
 - (void) setNeedDrawEyes: (BOOL) newValue;
 - (bool) getPupilsCoordinate: (cv::Point&) _leftPupil rightPupil: (cv::Point&) _rightPupil;
+- (void) setLenseTransparent: (double) alpha;
 
 @end

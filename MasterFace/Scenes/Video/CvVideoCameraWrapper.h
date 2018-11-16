@@ -15,6 +15,7 @@
 - (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView;
 - (void) showBox;
 - (void) setNeedDrawEyes: (BOOL) newValue;
+- (void) setLenseTransparent: (double) alpha;
 - (void) startCamera;
 - (void) stopCamera;
 
