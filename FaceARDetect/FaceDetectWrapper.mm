@@ -50,6 +50,9 @@ using namespace cv;
 
 - (void) detectFacesOnImage: (cv::Mat &) image
 {
+    double rowsScreen = 352.0;  // 352.0   640.0
+    double colsScreen = 288.0;  // 288.0   480.0
+    
     cv::Mat targetImage(image.cols, image.rows, CV_8UC3);
     cv::cvtColor(image, targetImage, cv::COLOR_BGRA2BGR);
     if(targetImage.empty()) {
@@ -61,8 +64,8 @@ using namespace cv;
         cx = 1.0 * targetImage.cols / 2.0;
         cy = 1.0 * targetImage.rows / 2.0;
         
-        fx = 500 * (targetImage.cols / 640.0);
-        fy = 500 * (targetImage.rows / 480.0);
+        fx = 500 * (targetImage.cols / rowsScreen);
+        fy = 500 * (targetImage.rows / colsScreen);
         
         fx = (fx + fy) / 2.0;
         fy = fx;

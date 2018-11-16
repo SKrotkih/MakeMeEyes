@@ -108,7 +108,8 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
     
     // The actual facial landmark detection / tracking
     bool detection_success = LandmarkDetector::DetectLandmarksInVideo(grayscale_image, depth_image, clnf_model, det_parameters);
-    //            bool detection_success = LandmarkDetector::DetectLandmarksInImage(grayscale_image, depth_image, clnf_model, det_parameters);
+    
+  //bool detection_success = LandmarkDetector::DetectLandmarksInImage(grayscale_image, depth_image, clnf_model, det_parameters);
     
     // Visualising the results
     // Drawing the facial landmarks on the face and the bounding box around it if tracking is successful and initialised
