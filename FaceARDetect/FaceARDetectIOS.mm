@@ -7,6 +7,7 @@
 //
 
 #import "FaceARDetectIOS.h"
+#include "LandmarkDetectorUtilsExt.h"
 
 LandmarkDetector::FaceModelParameters det_parameters;
 // The modules that are being used for tracking
@@ -75,6 +76,10 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
 
 - (void) setNeedShowEyes: (BOOL) newValue {
     LandmarkDetector::setNeedDrawEyes(newValue);
+}
+
+- (void) setEyeLenseImage: (cv::Mat) frame {
+    LandmarkDetector::setEyeLenseImage(frame);
 }
 
 //bool run_FaceAR(cv::Mat &captured_image, int frame_count, float fx, float fy, float cx, float cy);

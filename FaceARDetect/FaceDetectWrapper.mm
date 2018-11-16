@@ -32,7 +32,9 @@ using namespace cv;
 
 - (id) init
 {
-    facear =[[FaceARDetectIOS alloc] init];
+    facear = [[FaceARDetectIOS alloc] init];
+    [self setUpEyeLenseImage];
+    
     return self;
 }
 
@@ -94,6 +96,15 @@ using namespace cv;
 
 - (void) setNeedDrawEyes: (BOOL) newValue {
     [facear setNeedShowEyes: newValue];
+}
+
+- (void) setUpEyeLenseImage {
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource: @"lense_white" ofType: @"png"];
+    UIImage *image = [UIImage imageWithContentsOfFile: imagePath];
+    cv::Mat frame;
+    CppUtils* utils = new CppUtils;
+    utils->imageToMat(image, frame);
+    [facear setEyeLenseImage: frame];
 }
 
 @end

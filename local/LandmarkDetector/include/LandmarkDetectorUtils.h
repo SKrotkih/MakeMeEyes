@@ -120,18 +120,6 @@ namespace LandmarkDetector
 	void Draw(cv::Mat img, const cv::Mat_<double>& shape2D, const cv::Mat_<int>& visibilities);
 	void Draw(cv::Mat img, const cv::Mat_<double>& shape2D);
 	void Draw(cv::Mat img, const CLNF& clnf_model);
-
-    // ========
-    // Draw Eye
-    // ========
-    void cutEye(cv::Mat &img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext);
-    void drawEyeBorder(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext);
-    void drawIris(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext);
-    void drawPupil(cv::Mat img, std::vector<cv::Point>& iris);
-    // ========
-    
-    std::vector<cv::Point> getPupilsCoordinate();
-    void setNeedDrawEyes(bool newValue);
     
 	//===========================================================================
 	// Angle representation conversion helpers

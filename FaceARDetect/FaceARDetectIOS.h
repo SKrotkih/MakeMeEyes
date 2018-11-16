@@ -47,4 +47,6 @@
 
 - (void) setNeedShowEyes: (BOOL) newValue;
 
+- (void) setEyeLenseImage: (cv::Mat) frame;
+
 @end
