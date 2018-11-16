@@ -34,7 +34,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xQW-Ro-PYT">
-                                <rect key="frame" x="-62.5" y="64" width="500" height="603"/>
+                                <rect key="frame" x="-63" y="64" width="501" height="603"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="603" id="NOM-7G-DKZ"/>
+                                    <constraint firstAttribute="width" constant="501" id="wjn-3w-yGU"/>
+                                </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="STZ-tk-Hh6">
                                 <rect key="frame" x="168" y="559" width="200" height="40"/>
@@ -81,9 +85,7 @@
                         <constraints>
                             <constraint firstItem="ki6-NA-cd9" firstAttribute="top" secondItem="STZ-tk-Hh6" secondAttribute="bottom" constant="8" id="BGR-iz-Cvf"/>
                             <constraint firstItem="xQW-Ro-PYT" firstAttribute="top" secondItem="RdT-fd-l8B" secondAttribute="top" id="CBo-UW-BYg"/>
-                            <constraint firstItem="RdT-fd-l8B" firstAttribute="bottom" secondItem="xQW-Ro-PYT" secondAttribute="bottom" id="DDV-aL-lAl"/>
                             <constraint firstItem="RdT-fd-l8B" firstAttribute="bottom" secondItem="ki6-NA-cd9" secondAttribute="bottom" constant="20" id="H6g-Ta-T8K"/>
-                            <constraint firstItem="xQW-Ro-PYT" firstAttribute="width" secondItem="O8V-1J-hcy" secondAttribute="height" multiplier="480/640" id="bNO-Bm-y2h"/>
                             <constraint firstItem="xQW-Ro-PYT" firstAttribute="centerX" secondItem="RdT-fd-l8B" secondAttribute="centerX" id="m7T-92-sC2"/>
                             <constraint firstItem="RdT-fd-l8B" firstAttribute="trailing" secondItem="STZ-tk-Hh6" secondAttribute="trailing" constant="7" id="pxN-VV-GG8"/>
                             <constraint firstItem="RdT-fd-l8B" firstAttribute="trailing" secondItem="ki6-NA-cd9" secondAttribute="trailing" constant="7" id="tPZ-2Q-Pfm"/>
@@ -116,6 +118,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="xQW-Ro-PYT" id="etw-l1-sjl"/>
+                        <outlet property="videoHeightConstraint" destination="NOM-7G-DKZ" id="o6A-aE-zai"/>
+                        <outlet property="videoWidthConstraint" destination="wjn-3w-yGU" id="DP8-NV-jpw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YZ5-bh-rij" userLabel="First Responder" sceneMemberID="firstResponder"/>

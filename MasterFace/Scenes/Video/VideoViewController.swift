@@ -12,7 +12,9 @@ import SceneKit
 @objc class VideoViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
-
+    @IBOutlet weak var videoHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var videoWidthConstraint: NSLayoutConstraint!
+    
     private var videoCameraWrapper : CvVideoCameraWrapper!
     private var sceneInteractor: SceneInteractor!
     private var needDrawEyes: Bool = true
@@ -25,6 +27,15 @@ import SceneKit
         self.sceneInteractor = SceneInteractor(parentView: self.imageView)
     }
 
+    override func updateViewConstraints() {
+        super.updateViewConstraints()
+        let h = self.view.frame.height
+        let w = h * 480.0 / 640.0
+        videoHeightConstraint.constant = h;
+        videoWidthConstraint.constant = w;
+        
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         videoCameraWrapper.startCamera()
