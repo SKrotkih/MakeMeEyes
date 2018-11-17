@@ -35,13 +35,17 @@ using namespace cv;
     UIImageView* imageView;
     CvVideoCamera* videoCamera;
     FaceDetectWrapper* faceDetector;
+    CppUtils* utils;
 }
+
+@synthesize foregroundImageView;
 
 - (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView
 {
     viewController = _viewController;
     imageView = _imageView;
     faceDetector = [[FaceDetectWrapper alloc] init];
+    utils = new CppUtils();
     
     [self setupVideoCamera];
     return self;
@@ -57,7 +61,7 @@ using namespace cv;
     videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
     videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset352x288;  // AVCaptureSessionPreset640x480;
     videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
-    videoCamera.defaultFPS = 30;
+    videoCamera.defaultFPS = 25;   // S.K. 30
     videoCamera.grayscaleMode = NO;
     videoCamera.rotateVideo = NO;
     videoCamera.delegate = self;
@@ -69,7 +73,12 @@ using namespace cv;
 
 - (void) processImage: (cv::Mat &) image
 {
-    [faceDetector detectFacesOnImage: image];
+    if ([faceDetector detectFacesOnImage: image]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIImage* image_ = self->utils->matToImage(image);
+            self.foregroundImageView.image = image_;
+        });
+    }
     [self drawMask];
 }
 

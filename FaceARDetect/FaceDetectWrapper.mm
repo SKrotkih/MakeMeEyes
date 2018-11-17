@@ -48,10 +48,14 @@ using namespace cv;
     [self detectFacesOnImage: frame];
 }
 
-- (void) detectFacesOnImage: (cv::Mat &) image
+- (BOOL) detectFacesOnImage: (cv::Mat &) image
 {
-    double rowsScreen = 352.0;  // 352.0   640.0
-    double colsScreen = 288.0;  // 288.0   480.0
+    frame_count = frame_count + 1;
+    if (frame_count%2 != 0) {
+        return false;
+    }
+    double rowsScreen = 352.0;  // S.K. 352.0   640.0
+    double colsScreen = 288.0;  //      288.0   480.0
     
     cv::Mat targetImage(image.cols, image.rows, CV_8UC3);
     cv::cvtColor(image, targetImage, cv::COLOR_BGRA2BGR);
@@ -76,9 +80,9 @@ using namespace cv;
                       fy__: fy
                       cx__: cx
                       cy__: cy];
-        frame_count = frame_count + 1;
     }
     cv::cvtColor(targetImage, image, cv::COLOR_BGRA2RGB);
+    return true;
 }
 
 #endif

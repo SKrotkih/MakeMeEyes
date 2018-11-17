@@ -12,6 +12,7 @@ import SceneKit
 @objc class VideoViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var foregroundImageView: UIImageView!
     @IBOutlet weak var videoHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var videoWidthConstraint: NSLayoutConstraint!
     
@@ -23,7 +24,7 @@ import SceneKit
         super.viewDidLoad()
 
         self.videoCameraWrapper = CvVideoCameraWrapper(controller: self, andImageView: imageView)
-        
+        self.videoCameraWrapper.foregroundImageView = self.foregroundImageView;
         self.sceneInteractor = SceneInteractor(parentView: self.imageView)
     }
 

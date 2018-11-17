@@ -40,6 +40,9 @@
                                     <constraint firstAttribute="width" constant="501" id="wjn-3w-yGU"/>
                                 </constraints>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KMv-EA-oEi">
+                                <rect key="frame" x="-63" y="64" width="501" height="603"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="STZ-tk-Hh6">
                                 <rect key="frame" x="168" y="559" width="200" height="40"/>
                                 <subviews>
@@ -85,10 +88,14 @@
                         <constraints>
                             <constraint firstItem="ki6-NA-cd9" firstAttribute="top" secondItem="STZ-tk-Hh6" secondAttribute="bottom" constant="8" id="BGR-iz-Cvf"/>
                             <constraint firstItem="xQW-Ro-PYT" firstAttribute="top" secondItem="RdT-fd-l8B" secondAttribute="top" id="CBo-UW-BYg"/>
+                            <constraint firstItem="KMv-EA-oEi" firstAttribute="leading" secondItem="xQW-Ro-PYT" secondAttribute="leading" id="DkS-Pm-jqf"/>
                             <constraint firstItem="RdT-fd-l8B" firstAttribute="bottom" secondItem="ki6-NA-cd9" secondAttribute="bottom" constant="20" id="H6g-Ta-T8K"/>
+                            <constraint firstItem="KMv-EA-oEi" firstAttribute="height" secondItem="xQW-Ro-PYT" secondAttribute="height" id="Ij7-Bh-o5e"/>
+                            <constraint firstItem="KMv-EA-oEi" firstAttribute="top" secondItem="xQW-Ro-PYT" secondAttribute="top" id="V7N-3h-HLr"/>
                             <constraint firstItem="xQW-Ro-PYT" firstAttribute="centerX" secondItem="RdT-fd-l8B" secondAttribute="centerX" id="m7T-92-sC2"/>
                             <constraint firstItem="RdT-fd-l8B" firstAttribute="trailing" secondItem="STZ-tk-Hh6" secondAttribute="trailing" constant="7" id="pxN-VV-GG8"/>
                             <constraint firstItem="RdT-fd-l8B" firstAttribute="trailing" secondItem="ki6-NA-cd9" secondAttribute="trailing" constant="7" id="tPZ-2Q-Pfm"/>
+                            <constraint firstItem="KMv-EA-oEi" firstAttribute="width" secondItem="xQW-Ro-PYT" secondAttribute="width" id="zYg-ni-i2f"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RdT-fd-l8B"/>
                     </view>
@@ -117,6 +124,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="foregroundImageView" destination="KMv-EA-oEi" id="Zhn-kU-9fe"/>
                         <outlet property="imageView" destination="xQW-Ro-PYT" id="etw-l1-sjl"/>
                         <outlet property="videoHeightConstraint" destination="NOM-7G-DKZ" id="o6A-aE-zai"/>
                         <outlet property="videoWidthConstraint" destination="wjn-3w-yGU" id="DP8-NV-jpw"/>
