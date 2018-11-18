@@ -62,7 +62,7 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
         vis_certainty = (vis_certainty + 1) / (visualisation_boundary + 1);
         
         // A rough heuristic for box around the face width
-        int thickness = (int)std::ceil(2.0* ((double)captured_image.cols) / 640.0);
+        int thickness = (int)std::ceil(2.0* ((double)captured_image.cols) / 352.0);
         
         cv::Vec6d pose_estimate_to_draw = LandmarkDetector::GetCorrectedPoseWorld(face_model, fx, fy, cx, cy);
         

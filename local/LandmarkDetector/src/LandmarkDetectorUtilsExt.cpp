@@ -20,39 +20,57 @@ namespace LandmarkDetector
     double pupilPercent = 10.0;
     Curves::BezierCurve* bezierCurve = new Curves::BezierCurve;
     
-    void drawAntiAliasingPoly(cv::Mat img, vector<cv::Point>& polyline, const cv::Scalar& color) {
+    void drawAntiAliasingPoly(cv::Mat img, vector<cv::Point>& polyline, std::vector<cv::Point>& border, int offset) {
         if (polyline.size() == 0) {
             return;
         }
         polyline.push_back(polyline[0]);
         cv::Rect eyeRect = cv::boundingRect(polyline);
-        int y0 = polyline[0].y;
-        for (int i = 0; i < polyline.size(); i++) {
-            if (polyline[i].x == eyeRect.tl().x) {
-                y0 = polyline[i].y;
-            }
-        }
         std::vector<cv::Point> topborder;
         std::vector<cv::Point> bottomborder;
-        for (int i = 0; i < polyline.size(); i++) {
+        int y0 = polyline[0].y;
+        int x0 = 0;
+        int i = 0;
+        while (i < polyline.size()) {
             cv::Point pt = polyline[i];
-            if (pt.y >= y0) {
+            if (pt.x == eyeRect.tl().x) {
                 topborder.push_back(pt);
-            } else {
-                bottomborder.push_back(pt);
+                y0 = polyline[i].y;
+                x0 = polyline[i].x;
+                i++;
+                while (i < polyline.size()) {
+                    cv::Point pt = polyline[i];
+                    if (pt.x >= x0) {
+                        if (offset < 0) {
+                            pt.y -= 1;
+                        }
+                        topborder.push_back(pt);
+                    } else {
+                        cv::Point pt = polyline[i - 1];
+                        bottomborder.push_back(pt);
+                        while (i < polyline.size()) {
+                            cv::Point pt = polyline[i];
+                            if (offset < 0) {
+                                pt.y += 1;
+                            }
+                            bottomborder.push_back(pt);
+                            i++;
+                        }
+                        break;
+                    }
+                    x0 = pt.x;
+                    i++;
+                }
+                break;
             }
+            i++;
         }
-        std::vector<cv::Point> border;
         bezierCurve->bezier2D(topborder, eyeRect.width, border);
-        std::vector<cv::Point> bbezie;
-        bezierCurve->bezier2D(bottomborder, eyeRect.width, bbezie);
-        for (int i = 0; i < bbezie.size(); i++) {
-            border.push_back(bbezie[i]);
+        std::vector<cv::Point> bottom;
+        bezierCurve->bezier2D(bottomborder, eyeRect.width, bottom);
+        for (int i = 0; i < bottom.size(); i++) {
+            border.push_back(bottom[i]);
         }
-        for (int i = 0; i < border.size() - 1; i++) {
-            cv::line(img, border[i], border[i + 1], color, 1.0, cv::LINE_AA);
-        }
-        cv::fillConvexPoly(img, border, color, cv::LINE_AA, 0);
     }
     
     void setCloneImg(cv::Mat img) {
@@ -76,9 +94,10 @@ namespace LandmarkDetector
     }
     
     void cutEye(cv::Mat &img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
+        std::vector<cv::Point> border;
+        drawAntiAliasingPoly(img, eyeborder, border, -1);
         vector<vector<cv::Point> > contours;
-        contours.push_back(eyeborder);
-        contours.push_back(eyebordernext);
+        contours.push_back(border);
         cv::Mat mask(cloneimg.size(), CV_8UC1);
         mask = 0;
         drawContours(mask, contours, 0, cv::Scalar(255, 255, 255), cv::FILLED);  // Pixels of value 0xFF are true
@@ -112,7 +131,14 @@ namespace LandmarkDetector
     }
 
     void drawEyeBorder(cv::Mat img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
-        drawAntiAliasingPoly(img, eyeborder, cv::Scalar(254, 254, 254));
+        std::vector<cv::Point> border;
+        drawAntiAliasingPoly(img, eyeborder, border, 0);
+        for (int i = 0; i < border.size() - 1; i++) {
+            cv::line(img, border[i], border[i + 1], cv::Scalar(254, 254, 254), 1.0, cv::LINE_AA);
+        }
+        cv::fillConvexPoly(img, border, cv::Scalar(254, 254, 254), cv::LINE_AA, 0);
+
+        //cv::fillConvexPoly(img, eyeborder, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
     }
 
     void drawIris(cv::Mat img, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {

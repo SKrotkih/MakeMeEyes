@@ -108,22 +108,21 @@ double BezierCurve::Bernstein(int n, int i, double t)
 void BezierCurve::bezier2D(vector<cv::Point>& src, int cpts, vector<cv::Point>& dst)
 {
     int npts = int(src.size());
-    double step = (double)1.0 / (cpts - 1);
+    double step = double(1.0) / (cpts - 1);
     double t = 0.0;
-    for (int i1 = 0; i1 != cpts; i1++)
+    for (int i1 = 0; i1 < cpts; i1++)
     {
         if ((1.0 - t) < 5e-6) {
             t = 1.0;
         }
         double x1 = 0.0;
         double y1 = 0.0;
-        for (int i = 0; i != npts; i++)
+        for (int i = 0; i < npts; i++)
         {
+            cv::Point pt = src[i];
             double basis = Bernstein(npts - 1, i, t);
-            double x0 = src[i].x;
-            double y0 = src[i].y;
-            x1 += basis * x0;
-            y1 += basis * y0;
+            x1 += basis * pt.x;
+            y1 += basis * pt.y;
         }
         cv::Point pt = cv::Point(std::round(x1), std::round(y1));
         dst.push_back(pt);
