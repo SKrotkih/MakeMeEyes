@@ -23,10 +23,10 @@ namespace Curves
     private:
         double factorial(int n);
         // create lookup table for fast factorial calculation
-        void CreateFactorialTable();
+        void createFactorialTable();
         double Ni(int n, int i);
-        // Calculate Bernstein basis
-        double Bernstein(int n, int i, double t);
+        // Calculate bernstein basis
+        double bernstein(int n, int i, double t);
     };
 }
 

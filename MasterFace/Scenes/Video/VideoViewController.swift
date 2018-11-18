@@ -25,7 +25,7 @@ import SceneKit
 
         self.videoCameraWrapper = CvVideoCameraWrapper(controller: self, andImageView: imageView)
         self.videoCameraWrapper.foregroundImageView = self.foregroundImageView;
-        self.sceneInteractor = SceneInteractor(parentView: self.imageView)
+        self.sceneInteractor = SceneInteractor(parentView: self.foregroundImageView)
     }
 
     override func updateViewConstraints() {

@@ -5,24 +5,23 @@
 #include "stdafx.h"
 #include "BezierCurve.h"
 
-
 using namespace std;
 using namespace Curves;
 
 BezierCurve::BezierCurve()
 {
-    CreateFactorialTable();
+    createFactorialTable();
 }
 
 // just check if n is appropriate, then return the result
 double BezierCurve::factorial(int n)
 {
     if (n < 0) {
-        printf("n is less than 0");
+        assert("n is less than 0");
         return 0.0;
     }
     if (n > 32) {
-        printf("n is greater than 32");
+        assert("n is greater than 32");
         return 0.0;
     }
     
@@ -30,7 +29,7 @@ double BezierCurve::factorial(int n)
 }
 
 // create lookup table for fast factorial calculation
-void BezierCurve::CreateFactorialTable()
+void BezierCurve::createFactorialTable()
 {
     // fill untill n=32. The rest is too high to represent
     vector<double> a{
@@ -80,8 +79,8 @@ double BezierCurve::Ni(int n, int i)
     return ni;
 }
 
-// Calculate Bernstein basis
-double BezierCurve::Bernstein(int n, int i, double t)
+// Calculate bernstein basis
+double BezierCurve::bernstein(int n, int i, double t)
 {
     double basis;
     double ti; /* t^i */
@@ -99,7 +98,7 @@ double BezierCurve::Bernstein(int n, int i, double t)
     else
         tni = cv::pow((1 - t), (n - i));
     
-    //Bernstein basis
+    //bernstein basis
     basis = Ni(n, i) * ti * tni;
     return basis;
 }
@@ -120,7 +119,7 @@ void BezierCurve::bezier2D(vector<cv::Point>& src, int cpts, vector<cv::Point>& 
         for (int i = 0; i < npts; i++)
         {
             cv::Point pt = src[i];
-            double basis = Bernstein(npts - 1, i, t);
+            double basis = bernstein(npts - 1, i, t);
             x1 += basis * pt.x;
             y1 += basis * pt.y;
         }
