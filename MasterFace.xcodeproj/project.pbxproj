@@ -27,6 +27,7 @@
 		7F14A25821984E23001A57CF /* KFaceCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F14A23721984E22001A57CF /* KFaceCropper.swift */; };
 		7F21D1822192051D002AE655 /* FaceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F21D1812192051D002AE655 /* FaceDetail.swift */; };
 		7F21D184219211B9002AE655 /* FaceDetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F21D183219211B9002AE655 /* FaceDetailImageView.swift */; };
+		7F28863B21A17B4D00A05E39 /* BezierCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F28863921A17B4D00A05E39 /* BezierCurve.cpp */; };
 		7F29855C219D9EF300875198 /* pipil.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F29855A219D9EF300875198 /* pipil.png */; };
 		7F29855F219D9F0900875198 /* lense_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F29855E219D9F0900875198 /* lense_white.png */; };
 		7F298564219DD38000875198 /* classifiers in Resources */ = {isa = PBXBuildFile; fileRef = 7F298563219DD38000875198 /* classifiers */; };
@@ -96,6 +97,8 @@
 		7F14A23721984E22001A57CF /* KFaceCropper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFaceCropper.swift; sourceTree = "<group>"; };
 		7F21D1812192051D002AE655 /* FaceDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetail.swift; sourceTree = "<group>"; };
 		7F21D183219211B9002AE655 /* FaceDetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetailImageView.swift; sourceTree = "<group>"; };
+		7F28863921A17B4D00A05E39 /* BezierCurve.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BezierCurve.cpp; sourceTree = "<group>"; };
+		7F28863A21A17B4D00A05E39 /* BezierCurve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezierCurve.h; sourceTree = "<group>"; };
 		7F29855A219D9EF300875198 /* pipil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pipil.png; sourceTree = "<group>"; };
 		7F29855E219D9F0900875198 /* lense_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lense_white.png; sourceTree = "<group>"; };
 		7F298563219DD38000875198 /* classifiers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = classifiers; path = MasterFace/model/classifiers; sourceTree = "<group>"; };
@@ -238,6 +241,8 @@
 			children = (
 				7F14A0EA21984804001A57CF /* LandmarkDetectorUtils.cpp */,
 				7F2AFCDF219E54E100F8976C /* LandmarkDetectorUtilsExt.cpp */,
+				7F28863921A17B4D00A05E39 /* BezierCurve.cpp */,
+				7F28863A21A17B4D00A05E39 /* BezierCurve.h */,
 				7F14A0EB21984804001A57CF /* Patch_experts.cpp */,
 				7F14A0EC21984804001A57CF /* LandmarkDetectorModel.cpp */,
 				7F14A0ED21984804001A57CF /* CCNF_patch_expert.cpp */,
@@ -569,6 +574,7 @@
 				7F21D1822192051D002AE655 /* FaceDetail.swift in Sources */,
 				7F4D02A5219B01C800B9A4EC /* FaceDetectWrapper2.mm in Sources */,
 				7F405C1821915AB100068592 /* FaceViewController.swift in Sources */,
+				7F28863B21A17B4D00A05E39 /* BezierCurve.cpp in Sources */,
 				7F14A25721984E23001A57CF /* FaceDetector.swift in Sources */,
 				7F14A10221984804001A57CF /* stdafx.cpp in Sources */,
 				7F14A0D52197FBF7001A57CF /* ShapeType.swift in Sources */,

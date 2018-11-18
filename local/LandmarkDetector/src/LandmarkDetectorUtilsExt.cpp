@@ -1,31 +1,77 @@
 #include "stdafx.h"
 
 #include "LandmarkDetectorUtilsExt.h"
+#include "BezierCurve.h"
 
 // OpenCV includes
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/calib3d.hpp>
 
-//using namespace std;
+using namespace std;
 
 namespace LandmarkDetector
 {
-    std::vector<cv::Point> eyeCenters;
+    vector<cv::Point> eyeCenters;
     cv::Mat cloneimg;
     bool needDrawEyes = true;
     cv::Mat eyeLenseImage;
     double lenseColorAlpha = 0.05;
     double pupilPercent = 10.0;
+    Curves::BezierCurve* bezierCurve = new Curves::BezierCurve;
     
-    void drawEyeBorder(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
-        //        int thickness_2 = 1.0;
-        //        for (int i = 0; i < eyeborder.size(); i++) {
-        //            // Draw border line
-        //            cv::line(img, eyeborder[i], eyebordernext[i], cv::Scalar(255, 0, 0), 1.0);
-        //        }
-        // Fill inside eye area by white color
-        cv::fillConvexPoly(img, eyeborder, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
+    void drawEyeBorder(cv::Mat img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
+        if (eyeborder.size() == 0) {
+            return;
+        }
+        eyeborder.push_back(eyeborder[0]);
+        cv::Rect eyeRect = cv::boundingRect(eyeborder);
+        int y0 = eyeborder[0].y;
+        for (int i = 0; i < eyeborder.size(); i++) {
+            if (eyeborder[i].x == eyeRect.tl().x) {
+                y0 = eyeborder[i].y;
+            }
+        }
+        std::vector<cv::Point> topborder;
+        std::vector<cv::Point> bottomborder;
+        for (int i = 0; i < eyeborder.size(); i++) {
+            cv::Point pt = eyeborder[i];
+            if (pt.y >= y0) {
+                topborder.push_back(pt);
+            } else {
+                bottomborder.push_back(pt);
+            }
+        }
+        std::vector<cv::Point> border;
+        bezierCurve->bezier2D(topborder, eyeRect.width, border);
+        std::vector<cv::Point> bbezie;
+        bezierCurve->bezier2D(bottomborder, eyeRect.width, bbezie);
+
+        for (int i = 0; i < bbezie.size(); i++) {
+            border.push_back(bbezie[i]);
+        }
+        
+        cv::fillConvexPoly(img, border, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
+
+        printf("======\n%d=%d\n=======", eyeborder.size(), border.size());
+        
+//        vector<cv::Point> border1;
+//        for (int i = 0; i < 2; i++) {
+//            border1.push_back(eyeborder[i]);
+//        }
+//        vector<cv::Point> border;
+//        cv::approxPolyDP(border1, border, 0.5, false);
+//
+//        printf("======\n%d\n=======", border.size());
+//
+//
+//        vector<cv::Point> border2;
+//        double epsilon = 0.01 * cv::arcLength(eyeborder, true);
+//        cv::approxPolyDP(eyeborder, border2, epsilon, true);
+//        cv::fillConvexPoly(img, border2, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
+//
+//        printf("======\n%d=%d\n=======", eyeborder.size(), border2.size());
+        
     }
 
     void setCloneImg(cv::Mat img) {
@@ -48,8 +94,8 @@ namespace LandmarkDetector
         pupilPercent = percent;
     }
     
-    void cutEye(cv::Mat &img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
-        std::vector<std::vector<cv::Point> > contours;
+    void cutEye(cv::Mat &img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
+        vector<vector<cv::Point> > contours;
         contours.push_back(eyeborder);
         contours.push_back(eyebordernext);
         cv::Mat mask(cloneimg.size(), CV_8UC1);
@@ -70,7 +116,7 @@ namespace LandmarkDetector
         cv::add(img1_bg, img2_fg, img);
     }
 
-    void drawPupilPercent(cv::Mat& img, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext, std::vector<cv::Point>& iris) {
+    void drawPupilPercent(cv::Mat& img, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext, vector<cv::Point>& iris) {
         if (pupilPercent < 5.0) {
             return;
         }
@@ -84,14 +130,14 @@ namespace LandmarkDetector
         cv::ellipse(img, box, cv::Scalar(0, 0, 0), -1.0);
     }
 
-    void drawIris(cv::Mat img, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext) {
+    void drawIris(cv::Mat img, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {
         //        for (int i = 0; i < irisborder.size(); i++) {
         //            cv::line(img, irisborder[i], irisbordernext[i], cv::Scalar(255, 0, 0), 1.0);
         //        }
         cv::fillConvexPoly(img, irisborder, cv::Scalar(255, 0, 0), cv::LINE_AA, 0);
     }
     
-    void drawPupil(cv::Mat img, std::vector<cv::Point>& iris, std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext) {
+    void drawPupil(cv::Mat img, vector<cv::Point>& iris, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {
         cv::Rect rect = cv::boundingRect(iris);
         cv::Point ayeCenter(rect.tl().x + (rect.width / 2), rect.tl().y + (rect.height / 2));
         if (eyeCenters.size() %2 == 0) {
@@ -102,11 +148,11 @@ namespace LandmarkDetector
         drawPupilPercent(img, irisborder, irisbordernext, iris);
     }
     
-    std::vector<cv::Point> getPupilsCoordinate() {
+    vector<cv::Point> getPupilsCoordinate() {
         return eyeCenters;
     }
     
-    void drawLense(cv::Mat& img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext) {
+    void drawLense(cv::Mat& img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
         if (lenseColorAlpha < 0.1) {
             return;
         }
@@ -126,9 +172,9 @@ namespace LandmarkDetector
     }
     
     void drawEyes(cv::Mat img,
-                  std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext,
-                  std::vector<cv::Point>& irisborder, std::vector<cv::Point>& irisbordernext,
-                  std::vector<cv::Point>& iris) {
+                  vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext,
+                  vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext,
+                  vector<cv::Point>& iris) {
         if (needDrawEyes) {
             drawEyeBorder(img, eyeborder, eyebordernext);
             drawIris(img, irisborder, irisbordernext);
