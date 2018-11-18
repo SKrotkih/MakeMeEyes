@@ -20,22 +20,22 @@ namespace LandmarkDetector
     double pupilPercent = 10.0;
     Curves::BezierCurve* bezierCurve = new Curves::BezierCurve;
     
-    void drawEyeBorder(cv::Mat img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
-        if (eyeborder.size() == 0) {
+    void drawAntiAliasingPoly(cv::Mat img, vector<cv::Point>& polyline, const cv::Scalar& color) {
+        if (polyline.size() == 0) {
             return;
         }
-        eyeborder.push_back(eyeborder[0]);
-        cv::Rect eyeRect = cv::boundingRect(eyeborder);
-        int y0 = eyeborder[0].y;
-        for (int i = 0; i < eyeborder.size(); i++) {
-            if (eyeborder[i].x == eyeRect.tl().x) {
-                y0 = eyeborder[i].y;
+        polyline.push_back(polyline[0]);
+        cv::Rect eyeRect = cv::boundingRect(polyline);
+        int y0 = polyline[0].y;
+        for (int i = 0; i < polyline.size(); i++) {
+            if (polyline[i].x == eyeRect.tl().x) {
+                y0 = polyline[i].y;
             }
         }
         std::vector<cv::Point> topborder;
         std::vector<cv::Point> bottomborder;
-        for (int i = 0; i < eyeborder.size(); i++) {
-            cv::Point pt = eyeborder[i];
+        for (int i = 0; i < polyline.size(); i++) {
+            cv::Point pt = polyline[i];
             if (pt.y >= y0) {
                 topborder.push_back(pt);
             } else {
@@ -46,34 +46,15 @@ namespace LandmarkDetector
         bezierCurve->bezier2D(topborder, eyeRect.width, border);
         std::vector<cv::Point> bbezie;
         bezierCurve->bezier2D(bottomborder, eyeRect.width, bbezie);
-
         for (int i = 0; i < bbezie.size(); i++) {
             border.push_back(bbezie[i]);
         }
-        
-        cv::fillConvexPoly(img, border, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
-
-        printf("======\n%d=%d\n=======", eyeborder.size(), border.size());
-        
-//        vector<cv::Point> border1;
-//        for (int i = 0; i < 2; i++) {
-//            border1.push_back(eyeborder[i]);
-//        }
-//        vector<cv::Point> border;
-//        cv::approxPolyDP(border1, border, 0.5, false);
-//
-//        printf("======\n%d\n=======", border.size());
-//
-//
-//        vector<cv::Point> border2;
-//        double epsilon = 0.01 * cv::arcLength(eyeborder, true);
-//        cv::approxPolyDP(eyeborder, border2, epsilon, true);
-//        cv::fillConvexPoly(img, border2, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
-//
-//        printf("======\n%d=%d\n=======", eyeborder.size(), border2.size());
-        
+        for (int i = 0; i < border.size() - 1; i++) {
+            cv::line(img, border[i], border[i + 1], color, 1.0, cv::LINE_AA);
+        }
+        cv::fillConvexPoly(img, border, color, cv::LINE_AA, 0);
     }
-
+    
     void setCloneImg(cv::Mat img) {
         cloneimg = img.clone();
     }
@@ -128,6 +109,10 @@ namespace LandmarkDetector
         cv::Point ayeCenter(rect.tl().x + (rect.width / 2), rect.tl().y + (rect.height / 2));
         cv::RotatedRect box = cv::RotatedRect(ayeCenter, cv::Size2f(horDiameter, vertDiameter), 0);
         cv::ellipse(img, box, cv::Scalar(0, 0, 0), -1.0);
+    }
+
+    void drawEyeBorder(cv::Mat img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
+        drawAntiAliasingPoly(img, eyeborder, cv::Scalar(254, 254, 254));
     }
 
     void drawIris(cv::Mat img, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {

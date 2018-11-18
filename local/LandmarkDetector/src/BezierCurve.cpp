@@ -125,7 +125,7 @@ void BezierCurve::bezier2D(vector<cv::Point>& src, int cpts, vector<cv::Point>& 
             x1 += basis * x0;
             y1 += basis * y0;
         }
-        cv::Point pt = cv::Point(x1, y1);
+        cv::Point pt = cv::Point(std::round(x1), std::round(y1));
         dst.push_back(pt);
         t += step;
     }
