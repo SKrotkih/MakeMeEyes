@@ -34,22 +34,24 @@ using namespace cv;
 {
     VideoViewController* viewController;
     UIImageView* imageView;
+    UIImageView* foregroundImageView;
     FaceDetectWrapper* faceDetector;
     CppUtils* utils;
     VideoCamera* videoCamera;
+    double scale;
     int frame_count;
 }
 
-@synthesize foregroundImageView;
-
-- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView
+- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView foreground: (UIImageView*) _foregroundView
 {
     viewController = _viewController;
     imageView = _imageView;
+    foregroundImageView = _foregroundView;
     videoCamera = [[VideoCamera alloc] initWithParentView: imageView
                                                  delegate: self];
     faceDetector = [[FaceDetectWrapper alloc] init];
     utils = new CppUtils();
+    scale = 0.0;
     return self;
 }
 
@@ -69,7 +71,8 @@ using namespace cv;
 
     dispatch_async(dispatch_get_main_queue(), ^{
         UIImage* image_ = self->utils->matToImage(image);
-        self.foregroundImageView.image = image_;
+        self->foregroundImageView.image = image_;
+        self->scale = self->foregroundImageView.frame.size.width / CGFloat([self->videoCamera imageWidth]);
     });
 
     [self drawMask];
@@ -81,10 +84,10 @@ using namespace cv;
     cv::Point leftPupil;
     cv::Point rightPupil;
     if ([faceDetector getPupilsCoordinate: leftPupil rightPupil: rightPupil]) {
-        [viewController updatePupilsCoordinate: leftPupil.x
-                                        _leftY: leftPupil.y
-                                       _rightX: rightPupil.x
-                                       _rightY: rightPupil.y];
+        [self->viewController updatePupilsCoordinate: leftPupil.x * scale
+                                              _leftY: leftPupil.y * scale
+                                             _rightX: rightPupil.x * scale
+                                             _rightY: rightPupil.y * scale];
     }
 }
 

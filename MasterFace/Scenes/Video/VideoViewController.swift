@@ -23,8 +23,7 @@ import SceneKit
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.videoCameraWrapper = CvVideoCameraWrapper(controller: self, andImageView: imageView)
-        self.videoCameraWrapper.foregroundImageView = self.foregroundImageView;
+        self.videoCameraWrapper = CvVideoCameraWrapper(controller: self, andImageView: imageView, foreground: self.foregroundImageView);
         self.sceneInteractor = SceneInteractor(parentView: self.foregroundImageView)
     }
 
@@ -63,6 +62,7 @@ import SceneKit
     }
     
     @objc func updatePupilsCoordinate(_ leftX: Int, _leftY: Int, _rightX: Int, _rightY: Int) {
+        
         self.sceneInteractor.updatePupilsCoordinate(leftX, _leftY: _leftY, _rightX: _rightX, _rightY: _rightY)
     }
     
