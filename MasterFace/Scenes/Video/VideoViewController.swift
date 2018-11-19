@@ -30,8 +30,10 @@ import SceneKit
 
     override func updateViewConstraints() {
         super.updateViewConstraints()
+        let camWidth = videoCameraWrapper.camWidth();
+        let camHeight = videoCameraWrapper.camHeight();
         let h = self.view.frame.height
-        let w = h * 288.0 / 352.0   // S.K. 288.0 / 352.0  480.0 / 640.0
+        let w = h * CGFloat(camWidth) / CGFloat(camHeight);
         videoHeightConstraint.constant = h;
         videoWidthConstraint.constant = w;
         

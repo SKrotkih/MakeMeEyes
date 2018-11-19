@@ -7,7 +7,7 @@
 
 @interface FaceDetectWrapper: NSObject
 
-- (BOOL) detectFacesOnImage: (cv::Mat &) image;
+- (void) detectFacesOnImage: (cv::Mat&) image frameCount: (int) frameCount;
 - (void) detectFacesOnUIImage: (UIImage*) image;
 - (void) showBox;
 - (void) setNeedDrawEyes: (BOOL) newValue;

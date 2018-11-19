@@ -6,6 +6,7 @@
 #import "FaceDetectWrapper.h"
 #import "MasterFace-Swift.h"
 #import "CppUtils.hpp"
+#import "VideoCamera.h"
 #import <opencv2/videoio/cap_ios.h>
 #import <opencv2/objdetect/objdetect.hpp>
 #import <opencv2/imgproc/imgproc_c.h>
@@ -27,7 +28,6 @@ using namespace cv;
 @implementation FaceDetectWrapper
 {
     FaceARDetectIOS* facear;
-    int frame_count;
 }
 
 - (id) init
@@ -45,18 +45,11 @@ using namespace cv;
     CppUtils* utils = new CppUtils;
     cv::Mat frame;
     utils->imageToMat(image, frame);
-    [self detectFacesOnImage: frame];
+    [self detectFacesOnImage: frame frameCount: 0];
 }
 
-- (BOOL) detectFacesOnImage: (cv::Mat &) image
+- (void) detectFacesOnImage: (cv::Mat&) image frameCount: (int) frameCount
 {
-    frame_count = frame_count + 1;
-    if (frame_count%2 != 0) {
-        return false;
-    }
-    double rowsScreen = 352.0;  // S.K. 352.0   640.0
-    double colsScreen = 288.0;  //      288.0   480.0
-    
     cv::Mat targetImage(image.cols, image.rows, CV_8UC3);
     cv::cvtColor(image, targetImage, cv::COLOR_BGRA2BGR);
     if(targetImage.empty()) {
@@ -68,21 +61,20 @@ using namespace cv;
         cx = 1.0 * targetImage.cols / 2.0;
         cy = 1.0 * targetImage.rows / 2.0;
         
-        fx = 500 * (targetImage.cols / rowsScreen);
-        fy = 500 * (targetImage.rows / colsScreen);
+        fx = 500 * (targetImage.cols / [VideoCamera camHeight]);
+        fy = 500 * (targetImage.rows / [VideoCamera camWidth]);
         
         fx = (fx + fy) / 2.0;
         fy = fx;
         
         [facear run_FaceAR: targetImage
-                   frame__: frame_count
+                   frame__: frameCount
                       fx__: fx
                       fy__: fy
                       cx__: cx
                       cy__: cy];
     }
     cv::cvtColor(targetImage, image, cv::COLOR_BGRA2RGB);
-    return true;
 }
 
 #endif

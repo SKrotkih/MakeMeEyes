@@ -27,6 +27,7 @@
 		7F14A25821984E23001A57CF /* KFaceCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F14A23721984E22001A57CF /* KFaceCropper.swift */; };
 		7F21D1822192051D002AE655 /* FaceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F21D1812192051D002AE655 /* FaceDetail.swift */; };
 		7F21D184219211B9002AE655 /* FaceDetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F21D183219211B9002AE655 /* FaceDetailImageView.swift */; };
+		7F287D2721A2D64E006E49F7 /* VideoCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F287D2621A2D64E006E49F7 /* VideoCamera.mm */; };
 		7F28863B21A17B4D00A05E39 /* BezierCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F28863921A17B4D00A05E39 /* BezierCurve.cpp */; };
 		7F29855C219D9EF300875198 /* pipil.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F29855A219D9EF300875198 /* pipil.png */; };
 		7F29855F219D9F0900875198 /* lense_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F29855E219D9F0900875198 /* lense_white.png */; };
@@ -97,6 +98,8 @@
 		7F14A23721984E22001A57CF /* KFaceCropper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFaceCropper.swift; sourceTree = "<group>"; };
 		7F21D1812192051D002AE655 /* FaceDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetail.swift; sourceTree = "<group>"; };
 		7F21D183219211B9002AE655 /* FaceDetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetailImageView.swift; sourceTree = "<group>"; };
+		7F287D2521A2D64E006E49F7 /* VideoCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoCamera.h; sourceTree = "<group>"; };
+		7F287D2621A2D64E006E49F7 /* VideoCamera.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoCamera.mm; sourceTree = "<group>"; };
 		7F28863921A17B4D00A05E39 /* BezierCurve.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BezierCurve.cpp; sourceTree = "<group>"; };
 		7F28863A21A17B4D00A05E39 /* BezierCurve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezierCurve.h; sourceTree = "<group>"; };
 		7F29855A219D9EF300875198 /* pipil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pipil.png; sourceTree = "<group>"; };
@@ -428,8 +431,10 @@
 			isa = PBXGroup;
 			children = (
 				7FAEE1512196900E00E2305E /* VideoViewController.swift */,
-				7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */,
 				7FAEE15B2196BBC600E2305E /* CvVideoCameraWrapper.h */,
+				7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */,
+				7F287D2521A2D64E006E49F7 /* VideoCamera.h */,
+				7F287D2621A2D64E006E49F7 /* VideoCamera.mm */,
 				7F14A0D32197FBCA001A57CF /* SceneKit */,
 			);
 			path = Video;
@@ -582,6 +587,7 @@
 				7F14A10121984804001A57CF /* PDM.cpp in Sources */,
 				7F14A10321984804001A57CF /* LandmarkDetectorFunc.cpp in Sources */,
 				7F2A96532190150F0024F342 /* AppDelegate.swift in Sources */,
+				7F287D2721A2D64E006E49F7 /* VideoCamera.mm in Sources */,
 				7F2AFCE0219E54E200F8976C /* LandmarkDetectorUtilsExt.cpp in Sources */,
 				7F14A0FD21984804001A57CF /* SVR_patch_expert.cpp in Sources */,
 				7F14A10021984804001A57CF /* LandmarkDetectionValidator.cpp in Sources */,

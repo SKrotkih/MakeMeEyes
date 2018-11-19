@@ -7,10 +7,11 @@
 //
 
 #import "CvVideoCameraWrapper.h"
-#import "FaceDetectWrapper.h"
-
+#import "VideoCamera.h"
 #import "MasterFace-Swift.h"
+#import "FaceDetectWrapper.h"
 #import "CppUtils.hpp"
+
 #import <opencv2/videoio/cap_ios.h>
 #import <opencv2/objdetect/objdetect.hpp>
 #import <opencv2/imgproc/imgproc_c.h>
@@ -33,9 +34,10 @@ using namespace cv;
 {
     VideoViewController* viewController;
     UIImageView* imageView;
-    CvVideoCamera* videoCamera;
     FaceDetectWrapper* faceDetector;
     CppUtils* utils;
+    VideoCamera* videoCamera;
+    int frame_count;
 }
 
 @synthesize foregroundImageView;
@@ -44,27 +46,11 @@ using namespace cv;
 {
     viewController = _viewController;
     imageView = _imageView;
+    videoCamera = [[VideoCamera alloc] initWithParentView: imageView
+                                                 delegate: self];
     faceDetector = [[FaceDetectWrapper alloc] init];
     utils = new CppUtils();
-    
-    [self setupVideoCamera];
     return self;
-}
-
-- (void) setupVideoCamera {
-    // Assuming camera input is 640x480 (set using AVCaptureSessionPreset)
-    // float cam_width = 288; float cam_height = 352;
-    //float cam_width = 480; float cam_height = 640;
-    //float cam_width = 720; float cam_height = 1280;
-    
-    videoCamera = [[CvVideoCamera alloc] initWithParentView: imageView];
-    videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
-    videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset352x288;  // AVCaptureSessionPreset640x480; AVCaptureSessionPreset352x288
-    videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
-    videoCamera.defaultFPS = 25;   // S.K. 30
-    videoCamera.grayscaleMode = NO;
-    videoCamera.rotateVideo = NO;
-    videoCamera.delegate = self;
 }
 
 #ifdef __cplusplus
@@ -73,12 +59,19 @@ using namespace cv;
 
 - (void) processImage: (cv::Mat &) image
 {
-    if ([faceDetector detectFacesOnImage: image]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIImage* image_ = self->utils->matToImage(image);
-            self.foregroundImageView.image = image_;
-        });
+    frame_count = frame_count + 1;
+    if (frame_count%[VideoCamera takeFrame] != 0) {
+        return;
     }
+    
+    [faceDetector detectFacesOnImage: image
+                          frameCount: frame_count];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIImage* image_ = self->utils->matToImage(image);
+        self.foregroundImageView.image = image_;
+    });
+
     [self drawMask];
 }
 
@@ -115,12 +108,23 @@ using namespace cv;
 
 - (void) startCamera
 {
-    [videoCamera start];
+    [videoCamera startCamera];
 }
 
 - (void) stopCamera
 {
-    [videoCamera stop];
+    [videoCamera stopCamera];
 }
+
+- (int) camWidth
+{
+    return [VideoCamera camWidth];
+}
+
+- (int) camHeight
+{
+    return [VideoCamera camHeight];
+}
+
 
 @end

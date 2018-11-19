@@ -23,7 +23,7 @@
     CppUtils* utils = new CppUtils;
     cv::Mat frame;
     utils->imageToMat(image, frame);
-    [faceDetector detectFacesOnImage: frame];
+    [faceDetector detectFacesOnImage: frame frameCount: 0];
 }
 
 @end

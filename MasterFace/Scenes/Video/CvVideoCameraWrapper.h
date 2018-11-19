@@ -21,5 +21,7 @@
 - (void) setPupilPercent: (double) percent;
 - (void) startCamera;
 - (void) stopCamera;
+- (int) camWidth;
+- (int) camHeight;
 
 @end
