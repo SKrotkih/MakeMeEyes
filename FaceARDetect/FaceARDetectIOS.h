@@ -24,7 +24,6 @@
 
 @interface FaceARDetectIOS : NSObject
 
-@property(nonatomic, readonly) FaceCoordinates* faceCoordinates;
 @property(nonatomic) BOOL needShowBox;
 
 //bool inits_FaceAR();

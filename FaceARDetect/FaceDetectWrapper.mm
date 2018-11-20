@@ -83,16 +83,6 @@ using namespace cv;
     [facear showBox];
 }
 
-- (bool) getPupilsCoordinate: (cv::Point&) _leftPupil rightPupil: (cv::Point&) _rightPupil {
-    std::vector<cv::Point> pupils = facear.faceCoordinates->eyeCenters;
-    if (pupils.size() == 2) {
-        _leftPupil = pupils[0];
-        _rightPupil = pupils[1];
-        return true;
-    }
-    return false;
-}
-
 - (void) setNeedDrawEyes: (BOOL) newValue {
     [facear setNeedShowEyes: newValue];
 }

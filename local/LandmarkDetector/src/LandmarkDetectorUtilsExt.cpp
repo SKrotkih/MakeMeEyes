@@ -2,6 +2,7 @@
 
 #include "LandmarkDetectorUtilsExt.h"
 #include "BezierCurve.h"
+#include "FaceCoordinates.h"
 
 // OpenCV includes
 #include <opencv2/core/core.hpp>
@@ -18,12 +19,7 @@ namespace LandmarkDetector
     double lenseColorAlpha = 0.05;
     double pupilPercent = 10.0;
     Curves::BezierCurve* bezierCurve = new Curves::BezierCurve;
-    FaceCoordinates* fc = new FaceCoordinates;
 
-    FaceCoordinates* getFaceCoordinates() {
-        return fc;
-    }
-    
     void drawAntiAliasingPoly(cv::Mat img, vector<cv::Point>& polyline, std::vector<cv::Point>& border, int offset) {
         if (polyline.size() == 0) {
             return;
@@ -155,10 +151,7 @@ namespace LandmarkDetector
     void drawPupil(cv::Mat img, vector<cv::Point>& iris, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {
         cv::Rect rect = cv::boundingRect(iris);
         cv::Point ayeCenter(rect.tl().x + (rect.width / 2), rect.tl().y + (rect.height / 2));
-        if (fc->eyeCenters.size() %2 == 0) {
-            fc->eyeCenters.clear();
-        }
-        fc->eyeCenters.push_back(ayeCenter);
+        Coordinates::FaceCoordinates::getInstance()->addEyeCenter(ayeCenter);
         cv::fillConvexPoly(img, iris, cv::Scalar(0, 0, 0), cv::LINE_AA, 0);
         drawPupilPercent(img, irisborder, irisbordernext, iris);
     }

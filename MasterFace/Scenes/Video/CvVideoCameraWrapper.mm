@@ -34,7 +34,7 @@ using namespace cv;
 {
     VideoViewController* viewController;
     UIImageView* imageView;
-    UIImageView* foregroundImageView;
+    FaceView* foregroundImageView;
     FaceDetectWrapper* faceDetector;
     CppUtils* utils;
     VideoCamera* videoCamera;
@@ -83,12 +83,24 @@ using namespace cv;
 - (void) didImageProcessed {
     cv::Point leftPupil;
     cv::Point rightPupil;
-    if ([faceDetector getPupilsCoordinate: leftPupil rightPupil: rightPupil]) {
+    if ([self getPupilsCoordinate: leftPupil rightPupil: rightPupil]) {
         [self->viewController updatePupilsCoordinate: leftPupil.x * scale
                                               _leftY: leftPupil.y * scale
                                              _rightX: rightPupil.x * scale
                                              _rightY: rightPupil.y * scale];
     }
+    
+    [foregroundImageView drawFace];
+}
+
+- (bool) getPupilsCoordinate: (cv::Point&) _leftPupil rightPupil: (cv::Point&) _rightPupil {
+    std::vector<cv::Point> pupils = Coordinates::FaceCoordinates::getInstance()->getEyeCenters();
+    if (pupils.size() == 2) {
+        _leftPupil = pupils[0];
+        _rightPupil = pupils[1];
+        return true;
+    }
+    return false;
 }
 
 - (void) showBox {

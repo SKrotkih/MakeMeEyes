@@ -6,7 +6,6 @@
 #include <opencv2/core/core.hpp>
 
 #include "LandmarkDetectorModel.h"
-#include "FaceCoordinates.h"
 
 //using namespace std;
 
@@ -28,7 +27,5 @@ namespace LandmarkDetector
     void setLenseColorAlpha(double alpha);
     void setPupilPercent(double percent);
     void setCloneImg(cv::Mat img);
-
-    FaceCoordinates* getFaceCoordinates();
 }
 #endif

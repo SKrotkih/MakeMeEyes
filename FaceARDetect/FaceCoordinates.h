@@ -12,8 +12,15 @@
 ///// C++
 #include <iostream>
 
-class FaceCoordinates {
-    
-public:
-    std::vector<cv::Point> eyeCenters;
-};
+namespace Coordinates {
+    class FaceCoordinates {
+    private:
+        FaceCoordinates();
+        static FaceCoordinates* instance;
+        std::vector<cv::Point> eyeCenters;
+    public:
+        static FaceCoordinates* getInstance();
+        void addEyeCenter(cv::Point);
+        std::vector<cv::Point> getEyeCenters();
+    };
+}

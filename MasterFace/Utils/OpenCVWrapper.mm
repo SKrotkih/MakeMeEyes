@@ -13,6 +13,7 @@
 #import "OpenCVWrapper.h"
 #import "CppUtils.hpp"
 #import "EyeIrisDetector.hpp"
+#import "FaceCoordinates.h"
 
 #pragma clang pop
 #endif
@@ -144,7 +145,7 @@ using namespace cv;
 
 // After the processing we need to convert it back to UIImage.
 
-+(UIImage *)UIImageFromCVMat:(cv::Mat)cvMat
++ (UIImage*) UIImageFromCVMat: (cv::Mat) cvMat
 {
     NSData *data = [NSData dataWithBytes:cvMat.data length:cvMat.elemSize()*cvMat.total()];
     CGColorSpaceRef colorSpace;
@@ -189,6 +190,16 @@ using namespace cv;
 + (UIImage *) detectEyeIris: (UIImage*) image {
     EyeIrisDetector* detectEyeIris = new EyeIrisDetector;
     return detectEyeIris->detectEyeIris(image);
+}
+
++ (NSArray*) faceCoordinates {
+    Coordinates::FaceCoordinates* fc = Coordinates::FaceCoordinates::getInstance();
+
+    printf("\nREADS=%d\n", fc->getEyeCenters().size() == 0 ? 0 : fc->getEyeCenters().size());
+
+    NSArray* array = @[@1,@2,@2];
+    
+    return array;
 }
 
 @end

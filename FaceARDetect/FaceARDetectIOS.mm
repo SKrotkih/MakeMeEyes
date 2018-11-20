@@ -16,7 +16,6 @@ LandmarkDetector::CLNF clnf_model;
 @implementation FaceARDetectIOS
 
 @synthesize needShowBox;
-@synthesize faceCoordinates;
 
 //bool inits_FaceAR();
 -(id) init
@@ -88,11 +87,6 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
 
 - (void) setPupilPercent: (double) percent {
     LandmarkDetector::setPupilPercent(percent);
-}
-
-- (FaceCoordinates*) faceCoordinates
-{
-    return LandmarkDetector::getFaceCoordinates();
 }
 
 //bool run_FaceAR(cv::Mat &captured_image, int frame_count, float fx, float fy, float cx, float cy);

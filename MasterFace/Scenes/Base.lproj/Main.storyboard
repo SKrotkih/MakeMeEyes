@@ -40,7 +40,7 @@
                                     <constraint firstAttribute="width" constant="501" id="wjn-3w-yGU"/>
                                 </constraints>
                             </imageView>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KMv-EA-oEi">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KMv-EA-oEi" customClass="FaceView" customModule="MasterFace" customModuleProvider="target">
                                 <rect key="frame" x="-63" y="64" width="501" height="603"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="STZ-tk-Hh6">
