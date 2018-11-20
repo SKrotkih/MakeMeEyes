@@ -15,6 +15,7 @@ import SceneKit
     @IBOutlet weak var foregroundImageView: UIImageView!
     @IBOutlet weak var videoHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var videoWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var faceView: FaceView!
     
     private var videoCameraWrapper : CvVideoCameraWrapper!
     private var sceneInteractor: SceneInteractor!
@@ -23,7 +24,9 @@ import SceneKit
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.videoCameraWrapper = CvVideoCameraWrapper(controller: self, andImageView: imageView, foreground: self.foregroundImageView);
+        faceView.imageView = foregroundImageView
+        
+        self.videoCameraWrapper = CvVideoCameraWrapper(controller: self, andImageView: imageView, foreground: self.faceView);
         self.sceneInteractor = SceneInteractor(parentView: self.foregroundImageView)
     }
 

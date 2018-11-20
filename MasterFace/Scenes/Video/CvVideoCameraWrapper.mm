@@ -34,7 +34,7 @@ using namespace cv;
 {
     VideoViewController* viewController;
     UIImageView* imageView;
-    FaceView* foregroundImageView;
+    FaceView* faceView;
     FaceDetectWrapper* faceDetector;
     CppUtils* utils;
     VideoCamera* videoCamera;
@@ -42,11 +42,11 @@ using namespace cv;
     int frame_count;
 }
 
-- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView foreground: (UIImageView*) _foregroundView
+- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView foreground: (UIView*) _faceView
 {
     viewController = _viewController;
     imageView = _imageView;
-    foregroundImageView = _foregroundView;
+    faceView = (FaceView*)_faceView;
     videoCamera = [[VideoCamera alloc] initWithParentView: imageView
                                                  delegate: self];
     faceDetector = [[FaceDetectWrapper alloc] init];
@@ -71,8 +71,8 @@ using namespace cv;
 
     dispatch_async(dispatch_get_main_queue(), ^{
         UIImage* _image = self->utils->matToImage(image);
-        self->foregroundImageView.image = _image;
-        self->scale = self->foregroundImageView.frame.size.width / CGFloat([self->videoCamera imageWidth]);
+        self->faceView.imageView.image = _image;
+        self->scale = self->faceView.frame.size.width / CGFloat([self->videoCamera imageWidth]);
     });
 
     [self didImageProcessed];
@@ -90,11 +90,11 @@ using namespace cv;
                                              _rightY: rightPupil.y * scale];
     }
     
-    [foregroundImageView drawFace];
+    [faceView drawFaceWithScaleWithScale: scale];
 }
 
 - (bool) getPupilsCoordinate: (cv::Point&) _leftPupil rightPupil: (cv::Point&) _rightPupil {
-    std::vector<cv::Point> pupils = Coordinates::FaceCoordinates::getInstance()->getEyeCenters();
+    std::vector<cv::Point> pupils = FaceCoords::getInstance()->getEyeCenters();
     if (pupils.size() == 2) {
         _leftPupil = pupils[0];
         _rightPupil = pupils[1];
@@ -140,6 +140,5 @@ using namespace cv;
 {
     return [VideoCamera camHeight];
 }
-
 
 @end

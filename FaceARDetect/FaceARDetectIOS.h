@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FaceCoordinates.h"
+#import "FaceCoords.h"
 
 #include <iostream>
 #include <fstream>

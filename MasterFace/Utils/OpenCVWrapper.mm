@@ -13,7 +13,7 @@
 #import "OpenCVWrapper.h"
 #import "CppUtils.hpp"
 #import "EyeIrisDetector.hpp"
-#import "FaceCoordinates.h"
+#import "FaceCoords.h"
 
 #pragma clang pop
 #endif
@@ -22,6 +22,8 @@ using namespace std;
 using namespace cv;
 
 #pragma mark - OpenCVWrapper
+
+#define Coords FaceCoords::getInstance()
 
 @implementation OpenCVWrapper
 
@@ -192,14 +194,28 @@ using namespace cv;
     return detectEyeIris->detectEyeIris(image);
 }
 
-+ (NSArray*) faceCoordinates {
-    Coordinates::FaceCoordinates* fc = Coordinates::FaceCoordinates::getInstance();
+// MARK: - Interface to the FaceCoords
 
-    printf("\nREADS=%d\n", fc->getEyeCenters().size() == 0 ? 0 : fc->getEyeCenters().size());
++ (NSArray*) eyeBorder {
+    return [self copyToObjCArray: Coords->eyeBorder];
+}
 
-    NSArray* array = @[@1,@2,@2];
-    
-    return array;
++ (NSArray*) irisborder {
+    return [self copyToObjCArray: Coords->irisborder];
+}
+
++ (NSArray*) pupilborder {
+    return [self copyToObjCArray: Coords->pupilborder];
+}
+
++ (NSArray*) copyToObjCArray: (std::vector<cv::Point>) vec {
+    NSMutableArray* x = [[NSMutableArray alloc] initWithCapacity: vec.size()];
+    NSMutableArray* y = [[NSMutableArray alloc] initWithCapacity: vec.size()];
+    for (int i = 0; i < vec.size(); i++) {
+        [x addObject: @(vec[i].x)];
+        [y addObject: @(vec[i].y)];
+    }
+    return @[x, y];
 }
 
 @end

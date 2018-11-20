@@ -2,7 +2,7 @@
 
 #include "LandmarkDetectorUtilsExt.h"
 #include "BezierCurve.h"
-#include "FaceCoordinates.h"
+#include "FaceCoords.h"
 
 // OpenCV includes
 #include <opencv2/core/core.hpp>
@@ -10,6 +10,8 @@
 #include <opencv2/calib3d.hpp>
 
 using namespace std;
+
+#define Coords FaceCoords::getInstance()
 
 namespace LandmarkDetector
 {
@@ -20,7 +22,7 @@ namespace LandmarkDetector
     double pupilPercent = 10.0;
     Curves::BezierCurve* bezierCurve = new Curves::BezierCurve;
 
-    void drawAntiAliasingPoly(cv::Mat img, vector<cv::Point>& polyline, std::vector<cv::Point>& border, int offset) {
+    void approxBezier(cv::Mat img, vector<cv::Point>& polyline, std::vector<cv::Point>& border, int offset) {
         if (polyline.size() == 0) {
             return;
         }
@@ -95,7 +97,7 @@ namespace LandmarkDetector
     
     void cutEye(cv::Mat &img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
         std::vector<cv::Point> border;
-        drawAntiAliasingPoly(img, eyeborder, border, -1);
+        approxBezier(img, eyeborder, border, -1);
         vector<vector<cv::Point> > contours;
         contours.push_back(border);
         cv::Mat mask(cloneimg.size(), CV_8UC1);
@@ -131,27 +133,27 @@ namespace LandmarkDetector
     }
 
     void drawEyeBorder(cv::Mat img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
-        std::vector<cv::Point> border;
-        drawAntiAliasingPoly(img, eyeborder, border, 0);
-        for (int i = 0; i < border.size() - 1; i++) {
-            cv::line(img, border[i], border[i + 1], cv::Scalar(254, 254, 254), 1.0, cv::LINE_AA);
+        Coords->eyeBorder.clear();
+        approxBezier(img, eyeborder, Coords->eyeBorder, 0);
+        for (int i = 0; i < Coords->eyeBorder.size() - 1; i++) {
+            cv::line(img, Coords->eyeBorder[i], Coords->eyeBorder[i + 1], cv::Scalar(254, 254, 254), 1.0, cv::LINE_AA);
         }
-        cv::fillConvexPoly(img, border, cv::Scalar(254, 254, 254), cv::LINE_AA, 0);
-
-        //cv::fillConvexPoly(img, eyeborder, cv::Scalar(255, 255, 255), cv::LINE_AA, 0);
+        cv::fillConvexPoly(img, Coords->eyeBorder, cv::Scalar(254, 254, 254), cv::LINE_AA, 0);
     }
 
     void drawIris(cv::Mat img, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {
         //        for (int i = 0; i < irisborder.size(); i++) {
         //            cv::line(img, irisborder[i], irisbordernext[i], cv::Scalar(255, 0, 0), 1.0);
         //        }
+        Coords->irisborder = irisborder;
         cv::fillConvexPoly(img, irisborder, cv::Scalar(255, 0, 0), cv::LINE_AA, 0);
     }
     
     void drawPupil(cv::Mat img, vector<cv::Point>& iris, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {
         cv::Rect rect = cv::boundingRect(iris);
         cv::Point ayeCenter(rect.tl().x + (rect.width / 2), rect.tl().y + (rect.height / 2));
-        Coordinates::FaceCoordinates::getInstance()->addEyeCenter(ayeCenter);
+        FaceCoords::getInstance()->addEyeCenter(ayeCenter);
+        Coords->pupilborder = iris;
         cv::fillConvexPoly(img, iris, cv::Scalar(0, 0, 0), cv::LINE_AA, 0);
         drawPupilPercent(img, irisborder, irisbordernext, iris);
     }

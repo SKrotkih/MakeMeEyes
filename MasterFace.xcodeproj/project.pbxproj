@@ -56,7 +56,7 @@
 		7F4D02A5219B01C800B9A4EC /* FaceDetectWrapper2.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F4D02A4219B01C800B9A4EC /* FaceDetectWrapper2.mm */; };
 		7FAEE1522196900E00E2305E /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEE1512196900E00E2305E /* VideoViewController.swift */; };
 		7FAEE15D2196BBC600E2305E /* CvVideoCameraWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */; };
-		7FBC789721A33AB600E6A23E /* FaceCoordinates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC789621A33AB600E6A23E /* FaceCoordinates.cpp */; };
+		7FBC789721A33AB600E6A23E /* FaceCoords.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC789621A33AB600E6A23E /* FaceCoords.cpp */; };
 		7FECD6B62196C7810069CE31 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2A9665219015870024F342 /* opencv2.framework */; };
 		7FECD6B82196C92E0069CE31 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6B72196C92E0069CE31 /* AVFoundation.framework */; };
 		7FECD6BA2196C93D0069CE31 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6B92196C93D0069CE31 /* CoreImage.framework */; };
@@ -142,8 +142,8 @@
 		7FAEE1512196900E00E2305E /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		7FAEE15B2196BBC600E2305E /* CvVideoCameraWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CvVideoCameraWrapper.h; sourceTree = "<group>"; };
 		7FAEE15C2196BBC600E2305E /* CvVideoCameraWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CvVideoCameraWrapper.mm; sourceTree = "<group>"; };
-		7FBC789521A33AB600E6A23E /* FaceCoordinates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceCoordinates.h; sourceTree = "<group>"; };
-		7FBC789621A33AB600E6A23E /* FaceCoordinates.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FaceCoordinates.cpp; sourceTree = "<group>"; };
+		7FBC789521A33AB600E6A23E /* FaceCoords.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceCoords.h; sourceTree = "<group>"; };
+		7FBC789621A33AB600E6A23E /* FaceCoords.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FaceCoords.cpp; sourceTree = "<group>"; };
 		7FECD6B72196C92E0069CE31 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		7FECD6B92196C93D0069CE31 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		7FECD6BB2196C94C0069CE31 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -202,8 +202,8 @@
 				7F4D02A4219B01C800B9A4EC /* FaceDetectWrapper2.mm */,
 				7F14A0D921984804001A57CF /* FaceARDetectIOS.h */,
 				7F14A0D821984804001A57CF /* FaceARDetectIOS.mm */,
-				7FBC789521A33AB600E6A23E /* FaceCoordinates.h */,
-				7FBC789621A33AB600E6A23E /* FaceCoordinates.cpp */,
+				7FBC789521A33AB600E6A23E /* FaceCoords.h */,
+				7FBC789621A33AB600E6A23E /* FaceCoords.cpp */,
 			);
 			path = FaceARDetect;
 			sourceTree = "<group>";
@@ -604,7 +604,7 @@
 				7F14A0FC21984804001A57CF /* CCNF_patch_expert.cpp in Sources */,
 				7F405C162191578A00068592 /* ImageViewController.swift in Sources */,
 				7F2A9674219016B00024F342 /* OpenCVWrapper.mm in Sources */,
-				7FBC789721A33AB600E6A23E /* FaceCoordinates.cpp in Sources */,
+				7FBC789721A33AB600E6A23E /* FaceCoords.cpp in Sources */,
 				7F14A10421984804001A57CF /* GazeEstimation.cpp in Sources */,
 				7F14A0FB21984804001A57CF /* LandmarkDetectorModel.cpp in Sources */,
 				7F14A0FA21984804001A57CF /* Patch_experts.cpp in Sources */,

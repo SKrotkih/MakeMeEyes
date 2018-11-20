@@ -12,7 +12,7 @@
 
 @interface CvVideoCameraWrapper: NSObject
 
-- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView foreground: (UIImageView*) _foregroundView;
+- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView foreground: (UIView*) _foregroundView;
 - (void) showBox;
 - (void) setNeedDrawEyes: (BOOL) newValue;
 - (void) setLenseColorAlpha: (double) alpha;

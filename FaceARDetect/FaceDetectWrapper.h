@@ -4,7 +4,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FaceCoordinates.h"
+#import "FaceCoords.h"
 
 @interface FaceDetectWrapper: NSObject
 

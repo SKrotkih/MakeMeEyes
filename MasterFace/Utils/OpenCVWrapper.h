@@ -16,7 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage*) toGray: (UIImage*) source;
 + (UIImage*) callCPP: (UIImage*) image;
 + (UIImage*) detectEyeIris: (UIImage*) image;
-+ (NSArray*) faceCoordinates;
+
++ (NSArray*) eyeBorder;
++ (NSArray*) irisborder;
++ (NSArray*) pupilborder;
 
 @end
 
