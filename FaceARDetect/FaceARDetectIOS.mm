@@ -15,8 +15,8 @@ LandmarkDetector::CLNF clnf_model;
 
 @implementation FaceARDetectIOS
 
-@synthesize eyePupils;
 @synthesize needShowBox;
+@synthesize faceCoordinates;
 
 //bool inits_FaceAR();
 -(id) init
@@ -90,6 +90,11 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
     LandmarkDetector::setPupilPercent(percent);
 }
 
+- (FaceCoordinates*) faceCoordinates
+{
+    return LandmarkDetector::getFaceCoordinates();
+}
+
 //bool run_FaceAR(cv::Mat &captured_image, int frame_count, float fx, float fy, float cx, float cy);
 -(BOOL) run_FaceAR:(cv::Mat)captured_image frame__:(int)frame_count fx__:(double)fx fy__:(double)fy cx__:(double)cx cy__:(double)cy
 {
@@ -129,9 +134,6 @@ void visualise_tracking(cv::Mat& captured_image, cv::Mat_<float>& depth_image, c
         // S.K.
         //GazeEstimate::DrawGaze(captured_image, clnf_model, gazeDirection0, gazeDirection1, fx, fy, cx, cy);
     }
-    
-    self.eyePupils = LandmarkDetector::getPupilsCoordinate();
-    
     return true;
 }
 

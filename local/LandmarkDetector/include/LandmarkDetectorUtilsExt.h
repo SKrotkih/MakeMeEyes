@@ -6,6 +6,7 @@
 #include <opencv2/core/core.hpp>
 
 #include "LandmarkDetectorModel.h"
+#include "FaceCoordinates.h"
 
 //using namespace std;
 
@@ -22,11 +23,12 @@ namespace LandmarkDetector
     void drawIris(cv::Mat img, std::vector<cv::Point>& eyeborder, std::vector<cv::Point>& eyebordernext);
     void drawPupil(cv::Mat img, std::vector<cv::Point>& iris);
     
-    std::vector<cv::Point> getPupilsCoordinate();
     void setNeedDrawEyes(bool newValue);
     void setEyeLenseImage(cv::Mat image);
     void setLenseColorAlpha(double alpha);
     void setPupilPercent(double percent);
     void setCloneImg(cv::Mat img);
+
+    FaceCoordinates* getFaceCoordinates();
 }
 #endif

@@ -12,13 +12,17 @@ using namespace std;
 
 namespace LandmarkDetector
 {
-    vector<cv::Point> eyeCenters;
     cv::Mat cloneimg;
     bool needDrawEyes = true;
     cv::Mat eyeLenseImage;
     double lenseColorAlpha = 0.05;
     double pupilPercent = 10.0;
     Curves::BezierCurve* bezierCurve = new Curves::BezierCurve;
+    FaceCoordinates* fc = new FaceCoordinates;
+
+    FaceCoordinates* getFaceCoordinates() {
+        return fc;
+    }
     
     void drawAntiAliasingPoly(cv::Mat img, vector<cv::Point>& polyline, std::vector<cv::Point>& border, int offset) {
         if (polyline.size() == 0) {
@@ -151,16 +155,12 @@ namespace LandmarkDetector
     void drawPupil(cv::Mat img, vector<cv::Point>& iris, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {
         cv::Rect rect = cv::boundingRect(iris);
         cv::Point ayeCenter(rect.tl().x + (rect.width / 2), rect.tl().y + (rect.height / 2));
-        if (eyeCenters.size() %2 == 0) {
-            eyeCenters.clear();
+        if (fc->eyeCenters.size() %2 == 0) {
+            fc->eyeCenters.clear();
         }
-        eyeCenters.push_back(ayeCenter);
+        fc->eyeCenters.push_back(ayeCenter);
         cv::fillConvexPoly(img, iris, cv::Scalar(0, 0, 0), cv::LINE_AA, 0);
         drawPupilPercent(img, irisborder, irisbordernext, iris);
-    }
-    
-    vector<cv::Point> getPupilsCoordinate() {
-        return eyeCenters;
     }
     
     void drawLense(cv::Mat& img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {

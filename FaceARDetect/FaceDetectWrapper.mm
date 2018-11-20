@@ -1,5 +1,5 @@
 //
-//  CvVideoCameraWrapper.m
+//  CvVideoCameraWrapper.mm
 //  MasterFace
 //
 
@@ -84,7 +84,7 @@ using namespace cv;
 }
 
 - (bool) getPupilsCoordinate: (cv::Point&) _leftPupil rightPupil: (cv::Point&) _rightPupil {
-    std::vector<cv::Point> pupils = facear.eyePupils;
+    std::vector<cv::Point> pupils = facear.faceCoordinates->eyeCenters;
     if (pupils.size() == 2) {
         _leftPupil = pupils[0];
         _rightPupil = pupils[1];
@@ -98,8 +98,8 @@ using namespace cv;
 }
 
 - (void) setUpEyeLenseImage {
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource: @"lense_white" ofType: @"png"];
-    UIImage *image = [UIImage imageWithContentsOfFile: imagePath];
+    NSString* imagePath = [[NSBundle mainBundle] pathForResource: @"lense_white" ofType: @"png"];
+    UIImage* image = [UIImage imageWithContentsOfFile: imagePath];
     cv::Mat frame;
     CppUtils* utils = new CppUtils;
     utils->imageToMat(image, frame);

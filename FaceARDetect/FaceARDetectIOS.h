@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FaceCoordinates.h"
 
 #include <iostream>
 #include <fstream>
@@ -23,7 +24,7 @@
 
 @interface FaceARDetectIOS : NSObject
 
-@property(nonatomic) std::vector<cv::Point> eyePupils;
+@property(nonatomic, readonly) FaceCoordinates* faceCoordinates;
 @property(nonatomic) BOOL needShowBox;
 
 //bool inits_FaceAR();

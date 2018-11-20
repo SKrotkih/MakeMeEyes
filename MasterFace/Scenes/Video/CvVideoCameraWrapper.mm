@@ -70,17 +70,17 @@ using namespace cv;
                           frameCount: frame_count];
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIImage* image_ = self->utils->matToImage(image);
-        self->foregroundImageView.image = image_;
+        UIImage* _image = self->utils->matToImage(image);
+        self->foregroundImageView.image = _image;
         self->scale = self->foregroundImageView.frame.size.width / CGFloat([self->videoCamera imageWidth]);
     });
 
-    [self drawMask];
+    [self didImageProcessed];
 }
 
 #endif
 
-- (void) drawMask {
+- (void) didImageProcessed {
     cv::Point leftPupil;
     cv::Point rightPupil;
     if ([faceDetector getPupilsCoordinate: leftPupil rightPupil: rightPupil]) {
