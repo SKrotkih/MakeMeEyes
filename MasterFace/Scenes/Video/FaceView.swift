@@ -48,7 +48,7 @@ import UIKit
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-
+        
         guard let context = UIGraphicsGetCurrentContext() else {
             return
         }
@@ -75,6 +75,39 @@ extension FaceView {
         guard let arrX = _arrX, let arrY = _arrY else {
             return
         }
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return
+        }
+        context.setShouldAntialias(true);
+        context.setAllowsAntialiasing(true);
+        context.interpolationQuality = .high;
+        let path = UIBezierPath()
+        let point0 = self.point(arrX[0], arrY[0])
+        path.move(to: point0)
+        var i = 3
+        while i < arrX.count {
+            let point1 = self.point(arrX[i - 2], arrY[i - 2])
+            let point2 = self.point(arrX[i - 1], arrY[i - 1])
+            let point3 = self.point(arrX[i],     arrY[i])
+            path.addCurve(to: point3, controlPoint1: point1, controlPoint2: point2)
+            i += 1
+        }
+        path.close()
+        color.setFill()
+        path.fill()
+    }
+
+    private func drawPoly2(_ _arrX: [Any]?, _ _arrY: [Any]?, _ color: UIColor) {
+        guard let arrX = _arrX, let arrY = _arrY else {
+            return
+        }
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return
+        }
+        context.setShouldAntialias(true);
+        context.setAllowsAntialiasing(true);
+        context.interpolationQuality = .high;
+        
         let path = UIBezierPath()
         for i in 0..<arrX.count {
             let point = self.point(arrX[i], arrY[i])
@@ -88,6 +121,7 @@ extension FaceView {
         color.setFill()
         path.fill()
     }
+
     
     private func point(_ _x: Any, _ _y: Any) -> CGPoint {
         let x = CGFloat(scale * CGFloat(_x as! Int))

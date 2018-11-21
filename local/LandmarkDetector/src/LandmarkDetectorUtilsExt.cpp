@@ -17,6 +17,7 @@ namespace LandmarkDetector
 {
     cv::Mat cloneimg;
     bool needDrawEyes = true;
+    bool drawWithOpenCV = false;
     cv::Mat eyeLenseImage;
     double lenseColorAlpha = 0.05;
     double pupilPercent = 10.0;
@@ -139,7 +140,6 @@ namespace LandmarkDetector
             cv::line(img, border[i], border[i + 1], cv::Scalar(254, 254, 254), 1.0, cv::LINE_AA);
         }
         cv::fillConvexPoly(img, border, cv::Scalar(254, 254, 254), cv::LINE_AA, 0);
-        Coords->saveEyeBorder(border);
     }
 
     void drawIris(cv::Mat img, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {
@@ -147,7 +147,6 @@ namespace LandmarkDetector
         //            cv::line(img, irisborder[i], irisbordernext[i], cv::Scalar(255, 0, 0), 1.0);
         //        }
         cv::fillConvexPoly(img, irisborder, cv::Scalar(255, 0, 0), cv::LINE_AA, 0);
-        Coords->saveIrisBorder(irisborder);
     }
     
     void drawPupil(cv::Mat img, vector<cv::Point>& pupil, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {
@@ -156,8 +155,6 @@ namespace LandmarkDetector
         FaceCoords::getInstance()->addEyeCenter(ayeCenter);
         cv::fillConvexPoly(img, pupil, cv::Scalar(0, 0, 0), cv::LINE_AA, 0);
         drawPupilPercent(img, irisborder, irisbordernext, pupil);
-
-        Coords->savePupilBorder(pupil);
     }
     
     void drawLense(cv::Mat& img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
@@ -184,11 +181,16 @@ namespace LandmarkDetector
                   vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext,
                   vector<cv::Point>& iris) {
         if (needDrawEyes) {
-            drawEyeBorder(img, eyeborder, eyebordernext);
-            drawIris(img, irisborder, irisbordernext);
-            drawPupil(img, iris, irisborder, irisbordernext);
-            drawLense(img, eyeborder, eyebordernext);
-            cutEye(img, eyeborder, eyebordernext);
+            if (drawWithOpenCV) {
+                drawEyeBorder(img, eyeborder, eyebordernext);
+                drawIris(img, irisborder, irisbordernext);
+                drawPupil(img, iris, irisborder, irisbordernext);
+                drawLense(img, eyeborder, eyebordernext);
+                cutEye(img, eyeborder, eyebordernext);
+            }
+            Coords->saveEyeBorder(eyeborder);
+            Coords->saveIrisBorder(irisborder);
+            Coords->savePupilBorder(iris);
         }
     }
 }
