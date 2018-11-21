@@ -204,12 +204,20 @@ using namespace cv;
     return [self copyToObjCArray: Coords->getRightEyeBorder()];
 }
 
-+ (NSArray*) irisborder {
-    return [self copyToObjCArray: Coords->irisborder];
++ (NSArray*) leftIrisBorder {
+    return [self copyToObjCArray: Coords->getLeftIrisBorder()];
 }
 
-+ (NSArray*) pupilborder {
-    return [self copyToObjCArray: Coords->pupilborder];
++ (NSArray*) rightIrisBorder {
+    return [self copyToObjCArray: Coords->getRightIrisBorder()];
+}
+
++ (NSArray*) leftPupilBorder {
+    return [self copyToObjCArray: Coords->getLeftPupilBorder()];
+}
+
++ (NSArray*) rightPupilBorder {
+    return [self copyToObjCArray: Coords->getRightPupilBorder()];
 }
 
 + (void) didDrawFinish {

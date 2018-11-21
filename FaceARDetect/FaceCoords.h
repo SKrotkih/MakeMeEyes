@@ -21,15 +21,28 @@ private:
     vector<cv::Point> eyeCenters;
     vector<cv::Point> leftEyeBorder;
     vector<cv::Point> rightEyeBorder;
+    vector<cv::Point> leftIrisborder;
+    vector<cv::Point> rightIrisborder;
+    vector<cv::Point> leftPupilBorder;
+    vector<cv::Point> rightPupilBorder;
+    
 public:
     static FaceCoords* getInstance();
     void addEyeCenter(cv::Point);
     vector<cv::Point> getEyeCenters();
+
     void saveEyeBorder(vector<cv::Point> poly);
+    void saveIrisBorder(vector<cv::Point> poly);
+    void savePupilBorder(vector<cv::Point> poly);
+    
     vector<cv::Point> getLeftEyeBorder();
     vector<cv::Point> getRightEyeBorder();
+    vector<cv::Point> getLeftIrisBorder();
+    vector<cv::Point> getRightIrisBorder();
+    vector<cv::Point> getLeftPupilBorder();
+    vector<cv::Point> getRightPupilBorder();
+
     void cleanStorage();
     
-    vector<cv::Point> irisborder;
     vector<cv::Point> pupilborder;
 };

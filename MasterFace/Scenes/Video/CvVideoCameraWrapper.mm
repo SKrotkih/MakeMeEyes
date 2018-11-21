@@ -38,7 +38,7 @@ using namespace cv;
     FaceDetectWrapper* faceDetector;
     CppUtils* utils;
     VideoCamera* videoCamera;
-    double scale;
+    CGFloat scale;
     int frame_count;
 }
 

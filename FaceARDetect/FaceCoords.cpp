@@ -42,6 +42,30 @@ void FaceCoords::saveEyeBorder(vector<cv::Point> poly) {
     }
 }
 
+void FaceCoords::saveIrisBorder(vector<cv::Point> poly) {
+    if (leftIrisborder.size() == 0) {
+        leftIrisborder = poly;
+    } else {
+        rightIrisborder = poly;
+    }
+}
+
+void FaceCoords::savePupilBorder(vector<cv::Point> poly) {
+    if (leftPupilBorder.size() == 0) {
+        leftPupilBorder = poly;
+    } else {
+        rightPupilBorder = poly;
+    }
+}
+
+vector<cv::Point> FaceCoords::getLeftPupilBorder() {
+    return leftPupilBorder;
+}
+
+vector<cv::Point> FaceCoords::getRightPupilBorder() {
+    return rightPupilBorder;
+}
+
 std::vector<cv::Point> FaceCoords::getLeftEyeBorder() {
     return leftEyeBorder;
 }
@@ -50,7 +74,19 @@ std::vector<cv::Point> FaceCoords::getRightEyeBorder() {
     return rightEyeBorder;
 }
 
+std::vector<cv::Point> FaceCoords::getLeftIrisBorder() {
+    return leftIrisborder;
+}
+
+std::vector<cv::Point> FaceCoords::getRightIrisBorder() {
+    return rightIrisborder;
+}
+
 void FaceCoords::cleanStorage() {
     leftEyeBorder.clear();
     rightEyeBorder.clear();
+    leftIrisborder.clear();
+    rightIrisborder.clear();
+    leftPupilBorder.clear();
+    rightPupilBorder.clear();
 }

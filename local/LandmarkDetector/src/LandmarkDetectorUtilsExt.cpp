@@ -146,17 +146,18 @@ namespace LandmarkDetector
         //        for (int i = 0; i < irisborder.size(); i++) {
         //            cv::line(img, irisborder[i], irisbordernext[i], cv::Scalar(255, 0, 0), 1.0);
         //        }
-        Coords->irisborder = irisborder;
         cv::fillConvexPoly(img, irisborder, cv::Scalar(255, 0, 0), cv::LINE_AA, 0);
+        Coords->saveIrisBorder(irisborder);
     }
     
-    void drawPupil(cv::Mat img, vector<cv::Point>& iris, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {
-        cv::Rect rect = cv::boundingRect(iris);
+    void drawPupil(cv::Mat img, vector<cv::Point>& pupil, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {
+        cv::Rect rect = cv::boundingRect(pupil);
         cv::Point ayeCenter(rect.tl().x + (rect.width / 2), rect.tl().y + (rect.height / 2));
         FaceCoords::getInstance()->addEyeCenter(ayeCenter);
-        Coords->pupilborder = iris;
-        cv::fillConvexPoly(img, iris, cv::Scalar(0, 0, 0), cv::LINE_AA, 0);
-        drawPupilPercent(img, irisborder, irisbordernext, iris);
+        cv::fillConvexPoly(img, pupil, cv::Scalar(0, 0, 0), cv::LINE_AA, 0);
+        drawPupilPercent(img, irisborder, irisbordernext, pupil);
+
+        Coords->savePupilBorder(pupil);
     }
     
     void drawLense(cv::Mat& img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
