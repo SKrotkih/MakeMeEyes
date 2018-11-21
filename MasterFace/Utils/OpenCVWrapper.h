@@ -17,9 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage*) callCPP: (UIImage*) image;
 + (UIImage*) detectEyeIris: (UIImage*) image;
 
-+ (NSArray*) eyeBorder;
++ (NSArray*) leftEyeBorder;
++ (NSArray*) rightEyeBorder;
 + (NSArray*) irisborder;
 + (NSArray*) pupilborder;
+
++ (void) didDrawFinish;
 
 @end
 

@@ -196,8 +196,12 @@ using namespace cv;
 
 // MARK: - Interface to the FaceCoords
 
-+ (NSArray*) eyeBorder {
-    return [self copyToObjCArray: Coords->eyeBorder];
++ (NSArray*) leftEyeBorder {
+    return [self copyToObjCArray: Coords->getLeftEyeBorder()];
+}
+
++ (NSArray*) rightEyeBorder {
+    return [self copyToObjCArray: Coords->getRightEyeBorder()];
 }
 
 + (NSArray*) irisborder {
@@ -206,6 +210,10 @@ using namespace cv;
 
 + (NSArray*) pupilborder {
     return [self copyToObjCArray: Coords->pupilborder];
+}
+
++ (void) didDrawFinish {
+    Coords->cleanStorage();
 }
 
 + (NSArray*) copyToObjCArray: (std::vector<cv::Point>) vec {

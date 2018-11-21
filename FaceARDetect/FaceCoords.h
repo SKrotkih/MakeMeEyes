@@ -19,11 +19,17 @@ private:
     FaceCoords();
     static FaceCoords* instance;
     vector<cv::Point> eyeCenters;
+    vector<cv::Point> leftEyeBorder;
+    vector<cv::Point> rightEyeBorder;
 public:
     static FaceCoords* getInstance();
     void addEyeCenter(cv::Point);
     vector<cv::Point> getEyeCenters();
-    vector<cv::Point> eyeBorder;
+    void saveEyeBorder(vector<cv::Point> poly);
+    vector<cv::Point> getLeftEyeBorder();
+    vector<cv::Point> getRightEyeBorder();
+    void cleanStorage();
+    
     vector<cv::Point> irisborder;
     vector<cv::Point> pupilborder;
 };

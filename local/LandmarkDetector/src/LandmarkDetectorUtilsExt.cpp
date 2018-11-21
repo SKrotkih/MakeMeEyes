@@ -133,12 +133,13 @@ namespace LandmarkDetector
     }
 
     void drawEyeBorder(cv::Mat img, vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext) {
-        Coords->eyeBorder.clear();
-        approxBezier(img, eyeborder, Coords->eyeBorder, 0);
-        for (int i = 0; i < Coords->eyeBorder.size() - 1; i++) {
-            cv::line(img, Coords->eyeBorder[i], Coords->eyeBorder[i + 1], cv::Scalar(254, 254, 254), 1.0, cv::LINE_AA);
+        vector<cv::Point> border;
+        approxBezier(img, eyeborder, border, 0);
+        for (int i = 0; i < border.size() - 1; i++) {
+            cv::line(img, border[i], border[i + 1], cv::Scalar(254, 254, 254), 1.0, cv::LINE_AA);
         }
-        cv::fillConvexPoly(img, Coords->eyeBorder, cv::Scalar(254, 254, 254), cv::LINE_AA, 0);
+        cv::fillConvexPoly(img, border, cv::Scalar(254, 254, 254), cv::LINE_AA, 0);
+        Coords->saveEyeBorder(border);
     }
 
     void drawIris(cv::Mat img, vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext) {

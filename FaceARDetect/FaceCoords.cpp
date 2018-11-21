@@ -33,3 +33,24 @@ void FaceCoords::addEyeCenter(cv::Point point) {
 std::vector<cv::Point> FaceCoords::getEyeCenters() {
     return eyeCenters;
 }
+
+void FaceCoords::saveEyeBorder(vector<cv::Point> poly) {
+    if (leftEyeBorder.size() == 0) {
+        leftEyeBorder = poly;
+    } else {
+        rightEyeBorder = poly;
+    }
+}
+
+std::vector<cv::Point> FaceCoords::getLeftEyeBorder() {
+    return leftEyeBorder;
+}
+
+std::vector<cv::Point> FaceCoords::getRightEyeBorder() {
+    return rightEyeBorder;
+}
+
+void FaceCoords::cleanStorage() {
+    leftEyeBorder.clear();
+    rightEyeBorder.clear();
+}
