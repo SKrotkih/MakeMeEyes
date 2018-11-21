@@ -1,3 +1,11 @@
+//
+//  LandmarkDetectorExt.cpp
+//  MasterFace
+//
+//  Created by Сергей Кротких on 10/11/2018.
+//  Copyright © 2018 Сергей Кротких. All rights reserved.
+//
+
 #include "stdafx.h"
 
 #include "LandmarkDetectorUtilsExt.h"
@@ -187,10 +195,11 @@ namespace LandmarkDetector
                 drawPupil(img, iris, irisborder, irisbordernext);
                 drawLense(img, eyeborder, eyebordernext);
                 cutEye(img, eyeborder, eyebordernext);
+            } else {
+                Coords->saveEyeBorder(eyeborder);
+                Coords->saveIrisBorder(irisborder);
+                Coords->savePupilBorder(iris);
             }
-            Coords->saveEyeBorder(eyeborder);
-            Coords->saveIrisBorder(irisborder);
-            Coords->savePupilBorder(iris);
         }
     }
 }
