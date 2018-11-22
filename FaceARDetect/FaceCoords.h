@@ -18,7 +18,7 @@ class FaceCoords {
 private:
     FaceCoords();
     static FaceCoords* instance;
-    vector<cv::Point> eyeCenters;
+
     vector<cv::Point> leftEyeBorder;
     vector<cv::Point> rightEyeBorder;
     vector<cv::Point> leftIrisborder;
@@ -28,8 +28,6 @@ private:
     
 public:
     static FaceCoords* getInstance();
-    void addEyeCenter(cv::Point);
-    vector<cv::Point> getEyeCenters();
 
     void saveEyeBorder(vector<cv::Point> poly);
     void saveIrisBorder(vector<cv::Point> poly);

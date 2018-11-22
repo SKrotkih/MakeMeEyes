@@ -19,6 +19,8 @@ import SceneKit
     @IBOutlet weak var eyesScrollView: UIScrollView!
     @IBOutlet weak var eyesContentView: UIView!
     
+    @IBOutlet weak var takePhotoButton: UIButton!
+    
     private var videoCameraWrapper : CvVideoCameraWrapper!
     private var sceneInteractor: SceneInteractor!
     private var needDrawEyes: Bool = true
@@ -30,6 +32,8 @@ import SceneKit
         
         self.videoCameraWrapper = CvVideoCameraWrapper(controller: self, andImageView: imageView, foreground: self.faceView);
         self.sceneInteractor = SceneInteractor(parentView: self.foregroundImageView)
+        
+        takePhotoButton.layer.cornerRadius = takePhotoButton.bounds.width / 2.0
     }
 
     override func updateViewConstraints() {
@@ -72,11 +76,6 @@ import SceneKit
         videoCameraWrapper.setNeedDrawEyes(needDrawEyes)
     }
     
-    @objc func updatePupilsCoordinate(_ leftX: Int, _leftY: Int, _rightX: Int, _rightY: Int) {
-        
-        self.sceneInteractor.updatePupilsCoordinate(leftX, _leftY: _leftY, _rightX: _rightX, _rightY: _rightY)
-    }
-    
     @IBAction func didChangeSliderTransparetValue(_ sender: Any) {
         let slider = sender as! UISlider
         let value = slider.value
@@ -99,16 +98,13 @@ import SceneKit
         faceView.irisImage = image
     }
     
-    @IBAction func didTapOnEyeImageButton(_ sender: Any) {
-        guard let tapGesture = sender as? UITapGestureRecognizer else {
-            return
-        }
-        guard let view = tapGesture.view else {
-            return
-        }
-        let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
-        let imageName = images[view.tag]
-        let image = UIImage(named: imageName)
-        faceView.irisImage = image
+    @IBAction func pressOnTakePhotoButton(_ sender: Any) {
+        print("123")
+    }
+    
+    
+    //
+    @objc func drawFaceWithScale(_ scale: Double) {
+        self.sceneInteractor.drawSceneWithScale(CGFloat(scale))
     }
 }

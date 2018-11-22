@@ -27,7 +27,7 @@ import UIKit
     private var rightPupilBorderX: [Int]?
     private var rightPupilBorderY: [Int]?
 
-    @objc func drawFaceWithScale(scale: CGFloat) {
+    @objc func drawFace(scale: CGFloat) {
         self.scale = scale
         self.leftEyeBorderX = OpenCVWrapper.leftEyeBorder()[0] as? [Int];
         self.leftEyeBorderY = OpenCVWrapper.leftEyeBorder()[1] as? [Int];

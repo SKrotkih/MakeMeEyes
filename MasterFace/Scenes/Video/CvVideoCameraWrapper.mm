@@ -81,26 +81,8 @@ using namespace cv;
 #endif
 
 - (void) didImageProcessed {
-    cv::Point leftPupil;
-    cv::Point rightPupil;
-    if ([self getPupilsCoordinate: leftPupil rightPupil: rightPupil]) {
-        [self->viewController updatePupilsCoordinate: leftPupil.x * scale
-                                              _leftY: leftPupil.y * scale
-                                             _rightX: rightPupil.x * scale
-                                             _rightY: rightPupil.y * scale];
-    }
-    
-    [faceView drawFaceWithScaleWithScale: scale];
-}
-
-- (bool) getPupilsCoordinate: (cv::Point&) _leftPupil rightPupil: (cv::Point&) _rightPupil {
-    std::vector<cv::Point> pupils = FaceCoords::getInstance()->getEyeCenters();
-    if (pupils.size() == 2) {
-        _leftPupil = pupils[0];
-        _rightPupil = pupils[1];
-        return true;
-    }
-    return false;
+    [viewController drawFaceWithScale: scale];
+    [faceView drawFaceWithScale: scale];
 }
 
 - (void) showBox {

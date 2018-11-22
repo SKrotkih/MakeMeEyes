@@ -99,19 +99,42 @@ class SceneInteractor {
     }
     
     // Public func: handle did update pupil coordinate event
-    func updatePupilsCoordinate(_ leftX: Int, _leftY: Int, _rightX: Int, _rightY: Int) {
+    func drawSceneWithScale(_ scale: CGFloat) {
         guard let sceneView = _sceneView else {
             return
         }
-        
-        let leftEyePoint = CGPoint(x: CGFloat(leftX), y: CGFloat(_leftY))
-        let leftEyePosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: _leftEyeNode.position.z, point: leftEyePoint)
+        guard let leftPupilBorderX = OpenCVWrapper.leftPupilBorder()[0] as? [Int],
+            let leftPupilBorderY = OpenCVWrapper.leftPupilBorder()[1] as? [Int],
+            let rightPupilBorderX = OpenCVWrapper.rightPupilBorder()[0] as? [Int],
+            let rightPupilBorderY = OpenCVWrapper.rightPupilBorder()[1] as? [Int] else {
+                return
+        }
+        guard let leftEyeCenter = getCenter(scale, leftPupilBorderX, leftPupilBorderY),
+            let rightEyeCenter = getCenter(scale, rightPupilBorderX, rightPupilBorderY) else {
+                return
+        }
+
+        let leftEyePosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: _leftEyeNode.position.z, point: leftEyeCenter)
         _leftEyeNode.position = leftEyePosition
-        
-        let rightEyePoint = CGPoint(x: CGFloat(_rightX), y: CGFloat(_rightY))
-        let rightEyePosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: _rightEyeNode.position.z, point: rightEyePoint)
+
+        let rightEyePosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: _rightEyeNode.position.z, point: rightEyeCenter)
         _rightEyeNode.position = rightEyePosition
     }
+
+    private func getCenter(_ scale: CGFloat, _ _arrX: [Int]?, _ _arrY: [Int]?) -> CGPoint? {
+        guard let arrX = _arrX, let arrY = _arrY else {
+            return nil
+        }
+        let xMax = CGFloat(scale * CGFloat(arrX.reduce(Int.min, { max($0, $1) })))
+        let xMin = CGFloat(scale * CGFloat(arrX.reduce(Int.max, { min($0, $1) })))
+        let yMax = CGFloat(scale * CGFloat(arrY.reduce(Int.min, { max($0, $1) })))
+        let yMin = CGFloat(scale * CGFloat(arrY.reduce(Int.max, { min($0, $1) })))
+        let height = yMax - yMin
+        let width = xMax - xMin
+        let point = CGPoint(x: xMin + width / 2, y: yMin + height / 2)
+        return point
+    }
+
     
     private func CGPointToSCNVector3(view: SCNView, depth: Float, point: CGPoint) -> SCNVector3 {
         let projectedOrigin = view.projectPoint(SCNVector3Make(0, 0, depth))

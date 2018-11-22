@@ -23,17 +23,6 @@ FaceCoords* FaceCoords::getInstance()
 
 FaceCoords::FaceCoords() { }
 
-void FaceCoords::addEyeCenter(cv::Point point) {
-    if (eyeCenters.size()%2 == 0) {
-        eyeCenters.clear();
-    }
-    eyeCenters.push_back(point);
-}
-
-std::vector<cv::Point> FaceCoords::getEyeCenters() {
-    return eyeCenters;
-}
-
 void FaceCoords::saveEyeBorder(vector<cv::Point> poly) {
     if (leftEyeBorder.size() == 0) {
         leftEyeBorder = poly;

@@ -21,7 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray*) rightEyeBorder;
 + (NSArray*) leftIrisBorder;
 + (NSArray*) rightIrisBorder;
-+ (NSArray*) pupilborder;
 + (NSArray*) leftPupilBorder;
 + (NSArray*) rightPupilBorder;
 
