@@ -25,6 +25,7 @@ import SceneKit
     
     @IBOutlet weak var maskSceneView: UIView!
     @IBOutlet weak var takePhotoButton: UIButton!
+    @IBOutlet weak var takePhotoView: UIView!
     
     private var videoCameraWrapper : CvVideoCameraWrapper!
     private var sceneInteractor: SceneInteractor!
@@ -40,6 +41,9 @@ import SceneKit
     
     @IBOutlet weak var eyesTabBarView: UIView!
     @IBOutlet weak var masksTabBarView: UIView!
+    
+    private var viewModel: VideoViewModel!
+    private var photo: UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +62,8 @@ import SceneKit
 
         eyesTabBarView.isHidden = false
         masksTabBarView.isHidden = true
+        
+        viewModel = VideoViewModel(self)
     }
 
     override func updateViewConstraints() {
@@ -93,6 +99,13 @@ import SceneKit
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         videoCameraWrapper.stopCamera()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let photoShowVC = segue.destination as? PhotoShowViewController {
+            photoShowVC.image = self.photo
+        }
+
     }
     
     @IBAction func didChangeSliderTransparetValue(_ sender: Any) {
@@ -142,8 +155,6 @@ import SceneKit
         }
     }
     
-    
-    
     @IBAction func eyesButtonPressed(_ sender: Any) {
         eyesTabBarView.isHidden = false
         masksTabBarView.isHidden = true
@@ -155,7 +166,10 @@ import SceneKit
     }
     
     @IBAction func pressOnTakePhotoButton(_ sender: Any) {
-        print("123")
+        viewModel.takePhoto(self.takePhotoView.frame) { selectedImage in
+            self.photo = selectedImage
+            self.performSegue(withIdentifier: "showphotosegue", sender: self)
+        }
     }
     
     //

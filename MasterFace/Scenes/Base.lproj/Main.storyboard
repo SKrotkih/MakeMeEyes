@@ -57,6 +57,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nex-hV-yEQ">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="pressOnTakePhotoButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="YWf-DD-hJI"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -650,13 +653,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RdT-fd-l8B"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Maser Face" id="9OF-km-1yd">
-                        <barButtonItem key="rightBarButtonItem" title="Photo" id="Mgd-U8-iGO">
-                            <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" id="nq2-69-w1f"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Maser Face" id="9OF-km-1yd"/>
                     <connections>
                         <outlet property="contentViewWidthConstraint" destination="7Sp-p7-e8X" id="uS2-Iz-rEg"/>
                         <outlet property="eyesButton" destination="xeg-Xy-Q3I" id="cJi-WN-37Z"/>
@@ -673,8 +670,10 @@
                         <outlet property="masksScrollView" destination="lpz-Kn-lri" id="elj-R8-ixg"/>
                         <outlet property="masksTabBarView" destination="rMg-mN-cOw" id="oJ7-eC-cvs"/>
                         <outlet property="takePhotoButton" destination="Nex-hV-yEQ" id="dN0-va-RmA"/>
+                        <outlet property="takePhotoView" destination="utV-Ps-LfP" id="paj-YO-8aG"/>
                         <outlet property="videoHeightConstraint" destination="NOM-7G-DKZ" id="o6A-aE-zai"/>
                         <outlet property="videoWidthConstraint" destination="wjn-3w-yGU" id="DP8-NV-jpw"/>
+                        <segue destination="urf-IK-lOI" kind="show" identifier="showphotosegue" id="Flt-7g-BVc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YZ5-bh-rij" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -686,6 +685,51 @@
             </objects>
             <point key="canvasLocation" x="40.799999999999997" y="133.5832083958021"/>
         </scene>
+        <!--Photo Show View Controller-->
+        <scene sceneID="I4R-1g-lSV">
+            <objects>
+                <viewController id="urf-IK-lOI" customClass="PhotoShowViewController" customModule="MasterFace" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VEd-4P-FdW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IfI-en-bA4">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4FJ-lh-8G8">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="4FJ-lh-8G8" firstAttribute="trailing" secondItem="KNd-bN-FEF" secondAttribute="trailing" id="37Q-H1-d2l"/>
+                            <constraint firstItem="IfI-en-bA4" firstAttribute="leading" secondItem="KNd-bN-FEF" secondAttribute="leading" id="3Td-hE-1Yv"/>
+                            <constraint firstItem="4FJ-lh-8G8" firstAttribute="bottom" secondItem="KNd-bN-FEF" secondAttribute="bottom" id="5fu-c1-uRe"/>
+                            <constraint firstItem="IfI-en-bA4" firstAttribute="top" secondItem="KNd-bN-FEF" secondAttribute="top" id="BHY-Yh-dV0"/>
+                            <constraint firstItem="IfI-en-bA4" firstAttribute="bottom" secondItem="KNd-bN-FEF" secondAttribute="bottom" id="EaS-sO-DrL"/>
+                            <constraint firstItem="IfI-en-bA4" firstAttribute="trailing" secondItem="KNd-bN-FEF" secondAttribute="trailing" id="INC-6B-Vcn"/>
+                            <constraint firstItem="4FJ-lh-8G8" firstAttribute="leading" secondItem="KNd-bN-FEF" secondAttribute="leading" id="m2r-ZJ-6hE"/>
+                            <constraint firstItem="4FJ-lh-8G8" firstAttribute="top" secondItem="KNd-bN-FEF" secondAttribute="top" id="va3-yx-kCt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="KNd-bN-FEF"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="cIM-LO-DJL">
+                        <barButtonItem key="rightBarButtonItem" title="Done" width="73" style="done" id="DxO-DO-uu2">
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="urf-IK-lOI" id="8hm-tg-fEY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="faceView" destination="4FJ-lh-8G8" id="w8M-3n-5yp"/>
+                        <outlet property="imageView" destination="IfI-en-bA4" id="9Sv-xe-4LP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zri-4A-jmH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="772" y="133.5832083958021"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -695,13 +739,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eJ7-ew-cNL">
-                                <rect key="frame" x="0.0" y="114" width="375" height="553"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="597"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mif-Dk-B0t">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="276.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="298.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lena" translatesAutoresizingMaskIntoConstraints="NO" id="mJD-QJ-qsM">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="276.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="298.5"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -716,10 +760,10 @@
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fee-VO-mnS">
-                                        <rect key="frame" x="0.0" y="276.5" width="375" height="276.5"/>
+                                        <rect key="frame" x="0.0" y="298.5" width="375" height="298.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mandrill" translatesAutoresizingMaskIntoConstraints="NO" id="7UH-DT-P7c">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="276.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="298.5"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -746,7 +790,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RZV-fD-4QN">
-                                <rect key="frame" x="283" y="76" width="76" height="30"/>
+                                <rect key="frame" x="283" y="32" width="76" height="30"/>
                                 <state key="normal" title="Take Photo"/>
                                 <connections>
                                     <action selector="takePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UDj-wt-ueu"/>
@@ -801,7 +845,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bzb-u1-C8Q">
-                                <rect key="frame" x="16" y="64" width="343" height="587"/>
+                                <rect key="frame" x="16" y="20" width="343" height="631"/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="SV1-WF-vXr" appends="YES" id="6Bf-pJ-ThR"/>
                                 </connections>
@@ -839,7 +883,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s7X-Sg-Vda">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="IWx-BU-vJx">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="2500"/>
