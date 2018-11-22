@@ -48,19 +48,19 @@ import UIKit
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        
         guard let context = UIGraphicsGetCurrentContext() else {
             return
         }
         context.clear(rect);
-        
         if ((leftEyeBorderX?.count ?? 0) + (leftIrisBorderX?.count ?? 0)) > 0 {
-            drawPoly(leftEyeBorderX, leftEyeBorderY, UIColor.white)
-            drawPoly(rightEyeBorderX, rightEyeBorderY, UIColor.white)
+            let path = UIBezierPath()
+            drawPoly(path, leftEyeBorderX, leftEyeBorderY, UIColor.white)
+            drawPoly(path, rightEyeBorderX, rightEyeBorderY, UIColor.white)
             drawOval(leftIrisBorderX, leftIrisBorderY, UIColor.blue)
             drawOval(rightIrisBorderX, rightIrisBorderY, UIColor.blue)
             drawOval(leftPupilBorderX, leftPupilBorderY, UIColor.black)
             drawOval(rightPupilBorderX, rightPupilBorderY, UIColor.black)
+            maskEye(leftEyeBorderX, leftEyeBorderY, rightEyeBorderX, rightEyeBorderY)
             OpenCVWrapper.didDrawFinish()
         }
     }
@@ -70,7 +70,7 @@ import UIKit
 
 extension FaceView {
     
-    private func drawPoly(_ _arrX: [Int]?, _ _arrY: [Int]?, _ color: UIColor) {
+    private func drawPoly(_ _path: UIBezierPath, _ _arrX: [Int]?, _ _arrY: [Int]?, _ color: UIColor) {
         guard let arrX = _arrX, let arrY = _arrY else {
             return
         }
@@ -80,20 +80,29 @@ extension FaceView {
         context.setShouldAntialias(true);
         context.setAllowsAntialiasing(true);
         context.interpolationQuality = .high;
-        let path = UIBezierPath()
+
         let point0 = self.point(arrX[0], arrY[0])
-        path.move(to: point0)
+        _path.move(to: point0)
         var i = 3
         while i < arrX.count {
             let point1 = self.point(arrX[i - 2], arrY[i - 2])
             let point2 = self.point(arrX[i - 1], arrY[i - 1])
             let point3 = self.point(arrX[i],     arrY[i])
-            path.addCurve(to: point3, controlPoint1: point1, controlPoint2: point2)
+            _path.addCurve(to: point3, controlPoint1: point1, controlPoint2: point2)
             i += 1
         }
-        path.close()
+        _path.close()
         color.setFill()
-        path.fill()
+        _path.fill()
+    }
+    
+    private func maskEye(_ _arr1X: [Int]?, _ _arr1Y: [Int]?, _ _arr2X: [Int]?, _ _arr2Y: [Int]?) {
+        let path = UIBezierPath()
+        drawPoly(path, _arr1X, _arr1Y, UIColor.clear)
+        drawPoly(path, _arr2X, _arr2Y, UIColor.clear)
+        let mask           = CAShapeLayer()
+        mask.path          = path.cgPath
+        layer.mask         = mask
     }
 
     private func drawOval(_ _arrX: [Int]?, _ _arrY: [Int]?, _ color: UIColor) {
