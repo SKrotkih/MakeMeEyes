@@ -16,6 +16,8 @@ import SceneKit
     @IBOutlet weak var videoHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var videoWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var faceView: FaceView!
+    @IBOutlet weak var eyesScrollView: UIScrollView!
+    @IBOutlet weak var eyesContentView: UIView!
     
     private var videoCameraWrapper : CvVideoCameraWrapper!
     private var sceneInteractor: SceneInteractor!
@@ -39,6 +41,12 @@ import SceneKit
         videoHeightConstraint.constant = h;
         videoWidthConstraint.constant = w;
         
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        eyesScrollView.contentSize = CGSize(width: 9*50, height: 50)
+        eyesContentView.frame = CGRect(x: 0, y: 0, width: 9*50, height: 50)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,5 +87,28 @@ import SceneKit
         let slider = sender as! UISlider
         let value = slider.value
         videoCameraWrapper.setPupilPercent(Double(value))
+    }
+    
+    @IBAction func didTabOnEyesButton(_ sender: Any) {
+        guard let button = sender as? UIButton else {
+            return
+        }
+        let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
+        let imageName = images[button.tag]
+        let image = UIImage(named: imageName)
+        faceView.irisImage = image
+    }
+    
+    @IBAction func didTapOnEyeImageButton(_ sender: Any) {
+        guard let tapGesture = sender as? UITapGestureRecognizer else {
+            return
+        }
+        guard let view = tapGesture.view else {
+            return
+        }
+        let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
+        let imageName = images[view.tag]
+        let image = UIImage(named: imageName)
+        faceView.irisImage = image
     }
 }

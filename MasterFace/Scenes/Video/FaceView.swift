@@ -10,6 +10,9 @@ import UIKit
 
 @objc class FaceView: UIView {
     @objc var imageView: UIImageView!
+    
+    var irisImage: UIImage?
+    
     private var scale: CGFloat = 0.0
     private var leftEyeBorderX: [Int]?
     private var leftEyeBorderY: [Int]?
@@ -54,12 +57,21 @@ import UIKit
         context.clear(rect);
         if ((leftEyeBorderX?.count ?? 0) + (leftIrisBorderX?.count ?? 0)) > 0 {
             let path = UIBezierPath()
+            
+            // Draw Eye Borders
             drawPoly(path, leftEyeBorderX, leftEyeBorderY, UIColor.white)
             drawPoly(path, rightEyeBorderX, rightEyeBorderY, UIColor.white)
-            drawOval(leftIrisBorderX, leftIrisBorderY, UIColor.blue)
-            drawOval(rightIrisBorderX, rightIrisBorderY, UIColor.blue)
-            drawOval(leftPupilBorderX, leftPupilBorderY, UIColor.black)
-            drawOval(rightPupilBorderX, rightPupilBorderY, UIColor.black)
+            
+            // Draw Irises
+            drawOval(leftIrisBorderX, leftIrisBorderY, UIColor.blue, irisImage)
+            drawOval(rightIrisBorderX, rightIrisBorderY, UIColor.blue, irisImage)
+            
+            // Draw Pupils
+            if irisImage == nil {
+                drawOval(leftPupilBorderX, leftPupilBorderY, UIColor.black, nil)
+                drawOval(rightPupilBorderX, rightPupilBorderY, UIColor.black, nil)
+            }
+            
             maskEye(leftEyeBorderX, leftEyeBorderY, rightEyeBorderX, rightEyeBorderY)
             OpenCVWrapper.didDrawFinish()
         }
@@ -105,13 +117,17 @@ extension FaceView {
         layer.mask         = mask
     }
 
-    private func drawOval(_ _arrX: [Int]?, _ _arrY: [Int]?, _ color: UIColor) {
+    private func drawOval(_ _arrX: [Int]?, _ _arrY: [Int]?, _ color: UIColor, _ image: UIImage?) {
         guard let rect = makeRect(_arrX, _arrY) else {
             return
         }
-        let path = UIBezierPath(ovalIn: rect)
-        color.setFill()
-        path.fill()
+        if image == nil {
+            let path = UIBezierPath(ovalIn: rect)
+            color.setFill()
+            path.fill()
+        } else {
+            image!.draw(in: rect)
+        }
     }
     
     private func point(_ _x: Any, _ _y: Any) -> CGPoint {
