@@ -16,14 +16,30 @@ import SceneKit
     @IBOutlet weak var videoHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var videoWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var faceView: FaceView!
+    
     @IBOutlet weak var eyesScrollView: UIScrollView!
     @IBOutlet weak var eyesContentView: UIView!
     
+    @IBOutlet weak var masksScrollView: UIScrollView!
+    @IBOutlet weak var masksContentView: UIView!
+    
+    @IBOutlet weak var maskSceneView: UIView!
     @IBOutlet weak var takePhotoButton: UIButton!
     
     private var videoCameraWrapper : CvVideoCameraWrapper!
     private var sceneInteractor: SceneInteractor!
     private var needDrawEyes: Bool = true
+
+    @IBOutlet weak var contentViewWidthConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var masksContentViewWidthConstraint: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var eyesButton: UIButton!
+    @IBOutlet weak var masksButton: UIButton!
+    
+    @IBOutlet weak var eyesTabBarView: UIView!
+    @IBOutlet weak var masksTabBarView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +47,17 @@ import SceneKit
         faceView.imageView = foregroundImageView
         
         self.videoCameraWrapper = CvVideoCameraWrapper(controller: self, andImageView: imageView, foreground: self.faceView);
-        self.sceneInteractor = SceneInteractor(parentView: self.foregroundImageView)
+        self.sceneInteractor = SceneInteractor(parentView: self.maskSceneView)
         
         takePhotoButton.layer.cornerRadius = takePhotoButton.bounds.width / 2.0
+        takePhotoButton.layer.borderColor = UIColor.green.cgColor
+        takePhotoButton.layer.borderWidth = 1.0
+        
+        eyesButton.layer.cornerRadius = eyesButton.bounds.width / 2.0
+        masksButton.layer.cornerRadius = masksButton.bounds.width / 2.0
+
+        eyesTabBarView.isHidden = false
+        masksTabBarView.isHidden = true
     }
 
     override func updateViewConstraints() {
@@ -47,10 +71,18 @@ import SceneKit
         
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        eyesScrollView.contentSize = CGSize(width: 9*50, height: 50)
-        eyesContentView.frame = CGRect(x: 0, y: 0, width: 9*50, height: 50)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let eyesContentWidth = CGFloat(10 * 50)
+        let masksContentWidth = CGFloat(9 * 50)
+        
+        eyesScrollView.contentSize = CGSize(width: eyesContentWidth, height: 50)
+        
+        masksScrollView.contentSize = CGSize(width: masksContentWidth, height: 50)
+
+        contentViewWidthConstraint.constant = eyesContentWidth
+        masksContentViewWidthConstraint.constant = masksContentWidth
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,19 +93,6 @@ import SceneKit
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         videoCameraWrapper.stopCamera()
-    }
-    
-    @IBAction func addSceneButtonPressed(_ sender: Any) {
-        sceneInteractor.addScene()
-    }
-    
-    @IBAction func addFaceButtonPressed(_ sender: Any) {
-        videoCameraWrapper.showBox()
-    }
-
-    @IBAction func needDrawEyesButtonPressed(_ sender: Any) {
-        needDrawEyes = !needDrawEyes
-        videoCameraWrapper.setNeedDrawEyes(needDrawEyes)
     }
     
     @IBAction func didChangeSliderTransparetValue(_ sender: Any) {
@@ -92,16 +111,52 @@ import SceneKit
         guard let button = sender as? UIButton else {
             return
         }
-        let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
-        let imageName = images[button.tag]
-        let image = UIImage(named: imageName)
-        faceView.irisImage = image
+        if button.tag == 100 {
+            faceView.needFaceDrawing = !faceView.needFaceDrawing
+            
+//            needDrawEyes = !needDrawEyes
+//            videoCameraWrapper.setNeedDrawEyes(needDrawEyes)
+            
+        } else {
+            faceView.needFaceDrawing = true
+            let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
+            let imageName = images[button.tag]
+            let image = UIImage(named: imageName)
+            faceView.irisImage = image
+        }
+    }
+
+    @IBAction func didTapOnMasksButtyon(_ sender: Any) {
+        guard let button = sender as? UIButton else {
+            return
+        }
+        let tag = button.tag
+        
+        switch tag {
+        case 0:
+            sceneInteractor.addScene()
+        case 1:
+            videoCameraWrapper.showBox()
+        default:
+            break
+        }
+    }
+    
+    
+    
+    @IBAction func eyesButtonPressed(_ sender: Any) {
+        eyesTabBarView.isHidden = false
+        masksTabBarView.isHidden = true
+    }
+    
+    @IBAction func masksButtonPressed(_ sender: Any) {
+        eyesTabBarView.isHidden = true
+        masksTabBarView.isHidden = false
     }
     
     @IBAction func pressOnTakePhotoButton(_ sender: Any) {
         print("123")
     }
-    
     
     //
     @objc func drawFaceWithScale(_ scale: Double) {

@@ -12,6 +12,7 @@ import UIKit
     @objc var imageView: UIImageView!
     
     var irisImage: UIImage?
+    var needFaceDrawing: Bool = true
     
     private var scale: CGFloat = 0.0
     private var leftEyeBorderX: [Int]?
@@ -26,14 +27,14 @@ import UIKit
     private var leftPupilBorderY: [Int]?
     private var rightPupilBorderX: [Int]?
     private var rightPupilBorderY: [Int]?
-
+    
     @objc func drawFace(scale: CGFloat) {
         self.scale = scale
         self.leftEyeBorderX = OpenCVWrapper.leftEyeBorder()[0] as? [Int];
         self.leftEyeBorderY = OpenCVWrapper.leftEyeBorder()[1] as? [Int];
         self.rightEyeBorderX = OpenCVWrapper.rightEyeBorder()[0] as? [Int];
         self.rightEyeBorderY = OpenCVWrapper.rightEyeBorder()[1] as? [Int];
-
+        
         self.leftIrisBorderX = OpenCVWrapper.leftIrisBorder()[0] as? [Int];
         self.leftIrisBorderY = OpenCVWrapper.leftIrisBorder()[1] as? [Int];
         self.rightIrisBorderX = OpenCVWrapper.rightIrisBorder()[0] as? [Int];
@@ -55,26 +56,27 @@ import UIKit
             return
         }
         context.clear(rect);
-        if ((leftEyeBorderX?.count ?? 0) + (leftIrisBorderX?.count ?? 0)) > 0 {
-            let path = UIBezierPath()
-            
-            // Draw Eye Borders
-            drawPoly(path, leftEyeBorderX, leftEyeBorderY, UIColor.white)
-            drawPoly(path, rightEyeBorderX, rightEyeBorderY, UIColor.white)
-            
-            // Draw Irises
-            drawOval(leftIrisBorderX, leftIrisBorderY, UIColor.blue, irisImage)
-            drawOval(rightIrisBorderX, rightIrisBorderY, UIColor.blue, irisImage)
-            
-            // Draw Pupils
-            if irisImage == nil {
-                drawOval(leftPupilBorderX, leftPupilBorderY, UIColor.black, nil)
-                drawOval(rightPupilBorderX, rightPupilBorderY, UIColor.black, nil)
-            }
-            
-            maskEye(leftEyeBorderX, leftEyeBorderY, rightEyeBorderX, rightEyeBorderY)
-            OpenCVWrapper.didDrawFinish()
+        guard needFaceDrawing, ((leftEyeBorderX?.count ?? 0) + (leftIrisBorderX?.count ?? 0)) > 0  else {
+            return
         }
+        let path = UIBezierPath()
+        
+        // Draw Eye Borders
+        drawPoly(path, leftEyeBorderX, leftEyeBorderY, UIColor.white)
+        drawPoly(path, rightEyeBorderX, rightEyeBorderY, UIColor.white)
+        
+        // Draw Irises
+        drawOval(leftIrisBorderX, leftIrisBorderY, UIColor.blue, irisImage)
+        drawOval(rightIrisBorderX, rightIrisBorderY, UIColor.blue, irisImage)
+        
+        // Draw Pupils
+        if irisImage == nil {
+            drawOval(leftPupilBorderX, leftPupilBorderY, UIColor.black, nil)
+            drawOval(rightPupilBorderX, rightPupilBorderY, UIColor.black, nil)
+        }
+        
+        maskEye(leftEyeBorderX, leftEyeBorderY, rightEyeBorderX, rightEyeBorderY)
+        OpenCVWrapper.didDrawFinish()
     }
 }
 
@@ -92,7 +94,7 @@ extension FaceView {
         context.setShouldAntialias(true);
         context.setAllowsAntialiasing(true);
         context.interpolationQuality = .high;
-
+        
         let point0 = self.point(arrX[0], arrY[0])
         _path.move(to: point0)
         var i = 3
@@ -116,7 +118,7 @@ extension FaceView {
         mask.path          = path.cgPath
         layer.mask         = mask
     }
-
+    
     private func drawOval(_ _arrX: [Int]?, _ _arrY: [Int]?, _ color: UIColor, _ image: UIImage?) {
         guard let rect = makeRect(_arrX, _arrY) else {
             return
@@ -150,3 +152,4 @@ extension FaceView {
         return rect
     }
 }
+
