@@ -45,7 +45,7 @@ using namespace cv;
     CppUtils* utils = new CppUtils;
     cv::Mat frame;
     utils->imageToMat(image, frame);
-    [self detectFacesOnImage: frame frameCount: 0];
+    [self detectFacesOnImage: frame frameCount: 1];
 }
 
 - (void) detectFacesOnImage: (cv::Mat&) image frameCount: (int) frameCount

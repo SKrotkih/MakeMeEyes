@@ -102,10 +102,9 @@ import SceneKit
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let photoShowVC = segue.destination as? PhotoShowViewController {
+        if let photoShowVC = segue.destination as? PhotoPreviewViewController {
             photoShowVC.image = self.photo
         }
-
     }
     
     @IBAction func didChangeSliderTransparetValue(_ sender: Any) {

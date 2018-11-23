@@ -685,23 +685,24 @@
             </objects>
             <point key="canvasLocation" x="40.799999999999997" y="133.5832083958021"/>
         </scene>
-        <!--Photo Show View Controller-->
+        <!--Photo Preview View Controller-->
         <scene sceneID="I4R-1g-lSV">
             <objects>
-                <viewController id="urf-IK-lOI" customClass="PhotoShowViewController" customModule="MasterFace" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="urf-IK-lOI" customClass="PhotoPreviewViewController" customModule="MasterFace" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VEd-4P-FdW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IfI-en-bA4">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4FJ-lh-8G8">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4FJ-lh-8G8" customClass="FaceView" customModule="MasterFace" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4FJ-lh-8G8" firstAttribute="trailing" secondItem="KNd-bN-FEF" secondAttribute="trailing" id="37Q-H1-d2l"/>
                             <constraint firstItem="IfI-en-bA4" firstAttribute="leading" secondItem="KNd-bN-FEF" secondAttribute="leading" id="3Td-hE-1Yv"/>

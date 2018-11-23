@@ -1,5 +1,5 @@
 //
-//  PhotoShowViewController.swift
+//  PhotoPreviewViewController.swift
 //  MasterFace
 //
 //  Created by Сергей Кротких on 22/11/2018.
@@ -8,27 +8,30 @@
 
 import UIKit
 
-class PhotoShowViewController: UIViewController {
+class PhotoPreviewViewController: UIViewController {
 
     var image: UIImage!
     
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var faceView: UIView!
+    @IBOutlet weak var faceView: FaceView!
+    
+    private var viewModel: PhotoPreviewViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        viewModel = PhotoPreviewViewModel(faceView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        imageView.image = self.image
+        imageView.image = image
+        viewModel.processImage(image)
     }
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-
+        
 
         self.navigationController?.popViewController(animated: true)
     }

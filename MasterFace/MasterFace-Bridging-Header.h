@@ -4,5 +4,6 @@
 
 #import "OpenCVWrapper.h"
 #import "CvVideoCameraWrapper.h"
+#import "CvCameraWrapper.h"
 #import "CppUtils.hpp"
 #import "FaceDetectWrapper2.h"
