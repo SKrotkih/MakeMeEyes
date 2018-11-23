@@ -167,9 +167,14 @@ import SceneKit
     }
     
     @IBAction func pressOnTakePhotoButton(_ sender: Any) {
+        videoCameraWrapper.stopCamera()
         viewModel.takePhoto(self.takePhotoView.frame) { selectedImage in
-            self.photo = selectedImage
-            self.performSegue(withIdentifier: "showphotosegue", sender: self)
+            if selectedImage == nil {
+                self.videoCameraWrapper.startCamera()
+            } else {
+                self.photo = selectedImage
+                self.performSegue(withIdentifier: "showphotosegue", sender: self)
+            }
         }
     }
     

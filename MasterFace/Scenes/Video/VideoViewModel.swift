@@ -27,20 +27,20 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: {action in
                 picker.sourceType = .camera
+                picker.cameraDevice = .front
                 self.viewController.present(picker, animated: true, completion: nil)
             }))
         }
         alert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { action in
             picker.sourceType = .photoLibrary
-            // on iPad we are required to present this as a popover
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                picker.modalPresentationStyle = .popover
-                picker.popoverPresentationController?.sourceView = self.viewController.view
-                picker.popoverPresentationController?.sourceRect = rect
-            }
+            picker.modalPresentationStyle = .popover
+            picker.popoverPresentationController?.sourceView = self.viewController.view
+            picker.popoverPresentationController?.sourceRect = rect
             self.viewController.present(picker, animated: true, completion: nil)
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            self.completion?(nil)
+        }))
         // on iPad this is a popover
         alert.popoverPresentationController?.sourceView = self.viewController.view
         alert.popoverPresentationController?.sourceRect = rect
