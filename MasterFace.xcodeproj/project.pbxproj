@@ -225,14 +225,13 @@
 		7F14A0D721984804001A57CF /* FaceARDetect */ = {
 			isa = PBXGroup;
 			children = (
+				7F2CDB9321A86834000E2811 /* FaceCoords */,
 				7F4D02A1219AF59200B9A4EC /* FaceDetectWrapper.h */,
 				7F4D02A0219AF59200B9A4EC /* FaceDetectWrapper.mm */,
 				7F4D02A3219B01C700B9A4EC /* FaceDetectWrapper2.h */,
 				7F4D02A4219B01C800B9A4EC /* FaceDetectWrapper2.mm */,
 				7F14A0D921984804001A57CF /* FaceARDetectIOS.h */,
 				7F14A0D821984804001A57CF /* FaceARDetectIOS.mm */,
-				7FBC789521A33AB600E6A23E /* FaceCoords.h */,
-				7FBC789621A33AB600E6A23E /* FaceCoords.cpp */,
 			);
 			path = FaceARDetect;
 			sourceTree = "<group>";
@@ -406,6 +405,15 @@
 				E9A032FD7918DDC05BF4A7E7 /* Pods_MasterFace.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F2CDB9321A86834000E2811 /* FaceCoords */ = {
+			isa = PBXGroup;
+			children = (
+				7FBC789521A33AB600E6A23E /* FaceCoords.h */,
+				7FBC789621A33AB600E6A23E /* FaceCoords.cpp */,
+			);
+			path = FaceCoords;
 			sourceTree = "<group>";
 		};
 		7F405C0D219134C900068592 /* Utils */ = {

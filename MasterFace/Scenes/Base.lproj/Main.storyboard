@@ -720,7 +720,7 @@
                         <viewLayoutGuide key="safeArea" id="KNd-bN-FEF"/>
                     </view>
                     <navigationItem key="navigationItem" id="cIM-LO-DJL">
-                        <barButtonItem key="rightBarButtonItem" title="Done" width="73" style="done" id="DxO-DO-uu2">
+                        <barButtonItem key="rightBarButtonItem" title="Save" width="73" style="done" id="DxO-DO-uu2">
                             <connections>
                                 <action selector="doneButtonPressed:" destination="urf-IK-lOI" id="8hm-tg-fEY"/>
                             </connections>

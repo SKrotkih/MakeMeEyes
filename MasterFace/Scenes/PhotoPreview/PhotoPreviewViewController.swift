@@ -11,6 +11,7 @@ import UIKit
 class PhotoPreviewViewController: UIViewController {
 
     var image: UIImage!
+    var resultImage: UIImage!
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var faceView: FaceView!
@@ -44,14 +45,28 @@ class PhotoPreviewViewController: UIViewController {
     }
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        UIImageWriteToSavedPhotosAlbum(resultImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Saved!", message: "Image saved successfully", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            present(alert, animated: true)
+        }
     }
 }
 
 extension PhotoPreviewViewController: UIScrollViewDelegate {
 
     private func showResultPhoto() {
-        let imahe = self.view.takeScreenshot(afterScreenUpdates: true)
+        resultImage = self.view.takeScreenshot(afterScreenUpdates: true)
         scrollView = UIScrollView(frame: view.bounds)
         scrollView.backgroundColor = UIColor.black
         scrollView.contentSize = imageView.bounds.size
@@ -64,7 +79,7 @@ extension PhotoPreviewViewController: UIScrollViewDelegate {
         scrollView.minimumZoomScale = 0.5
         scrollView.maximumZoomScale = 10.0
         scrollView.zoomScale = 1.0
-        contentImageView.image = imahe
+        contentImageView.image = resultImage
     }
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

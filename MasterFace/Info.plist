@@ -38,6 +38,8 @@
 	<string>Access camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Library</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Please allow access to save photo in your photo library</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
