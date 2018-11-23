@@ -15,19 +15,23 @@ class PhotoPreviewViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var faceView: FaceView!
     
-    private var viewModel: PhotoPreviewViewModel!
+    private var viewModel = PhotoPreviewViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        viewModel = PhotoPreviewViewModel(faceView)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         imageView.image = image
-        viewModel.processImage(image)
+        
+        let renderer = UIGraphicsImageRenderer(size: imageView.bounds.size)
+        let screenshot = renderer.image { ctx in
+            imageView.drawHierarchy(in: imageView.bounds, afterScreenUpdates: true)
+        }
+        
+        viewModel.recognizeFaceOn(screenshot, drawTo: faceView)
     }
     
     @IBAction func doneButtonPressed(_ sender: Any) {

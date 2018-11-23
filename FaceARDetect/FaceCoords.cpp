@@ -8,7 +8,7 @@
 
 #import "FaceCoords.h"
 
-// The syngleton
+// The Syngleton
 
 FaceCoords* FaceCoords::instance = 0;
 
@@ -45,6 +45,19 @@ void FaceCoords::savePupilBorder(vector<cv::Point> poly) {
     } else {
         rightPupilBorder = poly;
     }
+}
+
+void FaceCoords::saveSize(int cols, int rows) {
+    frameWidth = cols;
+    frameHeight = rows;
+}
+
+int FaceCoords::getFrameWidth() {
+    return frameWidth;
+}
+
+int FaceCoords::getFrameHeight() {
+    return frameHeight;
 }
 
 vector<cv::Point> FaceCoords::getLeftPupilBorder() {

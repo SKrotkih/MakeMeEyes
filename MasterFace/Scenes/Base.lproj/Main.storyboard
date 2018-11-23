@@ -25,7 +25,7 @@
             </objects>
             <point key="canvasLocation" x="-703" y="134"/>
         </scene>
-        <!--Maser Face-->
+        <!--Master Face-->
         <scene sceneID="Nu4-xC-vlM">
             <objects>
                 <viewController id="DcM-fu-vqt" customClass="VideoViewController" customModule="MasterFace" customModuleProvider="target" sceneMemberID="viewController">
@@ -653,7 +653,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RdT-fd-l8B"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Maser Face" id="9OF-km-1yd"/>
+                    <navigationItem key="navigationItem" title="Master Face" id="9OF-km-1yd"/>
                     <connections>
                         <outlet property="contentViewWidthConstraint" destination="7Sp-p7-e8X" id="uS2-Iz-rEg"/>
                         <outlet property="eyesButton" destination="xeg-Xy-Q3I" id="cJi-WN-37Z"/>

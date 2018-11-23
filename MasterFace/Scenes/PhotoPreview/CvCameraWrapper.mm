@@ -32,7 +32,7 @@
 - (void) processImage: (UIImage*) image
 {
     [faceDetector detectFacesOnUIImage: image];
-    [faceView drawFaceWithScale: 1.0];
+    [faceView drawFace];
 }
 
 #endif

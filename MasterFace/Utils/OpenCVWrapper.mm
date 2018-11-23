@@ -196,6 +196,14 @@ using namespace cv;
 
 // MARK: - Interface to the FaceCoords
 
++ (int) frameWidth {
+    return Coords->getFrameWidth();
+}
+
++ (int) frameHeight {
+    return Coords->getFrameHeight();
+}
+
 + (NSArray*) leftEyeBorder {
     return [self copyToObjCArray: Coords->getLeftEyeBorder()];
 }

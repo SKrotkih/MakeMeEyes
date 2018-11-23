@@ -82,7 +82,7 @@ using namespace cv;
 
 - (void) didImageProcessed {
     [viewController drawFaceWithScale: scale];
-    [faceView drawFaceWithScale: scale];
+    [faceView drawFace];
 }
 
 - (void) showBox {

@@ -93,11 +93,13 @@ import SceneKit
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        faceView.needFaceDrawing = true
         videoCameraWrapper.startCamera()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        faceView.needFaceDrawing = false
         videoCameraWrapper.stopCamera()
     }
     

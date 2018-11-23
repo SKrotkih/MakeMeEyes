@@ -10,16 +10,13 @@ import Foundation
 
 class PhotoPreviewViewModel: NSObject {
     
-    private var faceView: FaceView!
-    private var cameraWrapper : CvCameraWrapper!
+    private var cameraWrapper : CvCameraWrapper?
     
-    init(_ _faceView: FaceView) {
-        faceView = _faceView
-        cameraWrapper = CvCameraWrapper(faceView: self.faceView);
-    }
-    
-    func processImage(_ _image: UIImage) {
-        cameraWrapper.processImage(_image)
+    func recognizeFaceOn(_ _image: UIImage, drawTo faceView: FaceView) {
+        if cameraWrapper == nil {
+            cameraWrapper = CvCameraWrapper(faceView: faceView);
+        }
+        cameraWrapper?.processImage(_image)
     }
     
 }

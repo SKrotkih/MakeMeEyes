@@ -24,6 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray*) leftPupilBorder;
 + (NSArray*) rightPupilBorder;
 
++ (int) frameWidth;
++ (int) frameHeight;
+
 + (void) didDrawFinish;
 
 @end

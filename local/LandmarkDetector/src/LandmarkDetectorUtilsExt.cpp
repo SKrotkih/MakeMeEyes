@@ -196,6 +196,7 @@ namespace LandmarkDetector
                 Coords->saveEyeBorder(eyeborder);
                 Coords->saveIrisBorder(irisborder);
                 Coords->savePupilBorder(pupil);
+                Coords->saveSize(img.cols, img.rows);
             }
         }
     }
