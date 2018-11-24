@@ -77,17 +77,7 @@ class SceneInteractor {
         createLeftEye()
         createRightEye()
     }
-    
-    private func createLeftEye() {
-        var geometry: SCNGeometry
-        switch ShapeType.random() {
-        default:
-            geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
-        }
-        _leftEyeNode = SCNNode(geometry: geometry)
-        _scnScene.rootNode.addChildNode(_leftEyeNode)
-    }
-    
+
     private func createRightEye() {
         var geometry: SCNGeometry
         switch ShapeType.random() {
@@ -98,9 +88,75 @@ class SceneInteractor {
         _scnScene.rootNode.addChildNode(_rightEyeNode)
     }
     
+    private func createLeftEye() {
+//        var geometry: SCNGeometry
+//        switch ShapeType.random() {
+//        default:
+//            geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
+//        }
+//        _leftEyeNode = SCNNode(geometry: geometry)
+//        _scnScene.rootNode.addChildNode(_leftEyeNode)
+        
+        if let rootNode = extractRootNode() {
+            _leftEyeNode = rootNode
+            _scnScene.rootNode.addChildNode(_leftEyeNode)
+        }
+    }
+    
+    private func extractRootNode() -> SCNNode? {
+        guard let url = Bundle.main.url(forResource: "SceneKit.scnassets/Winter_Hat/HatwithFur", withExtension: "dae") else {
+            return nil
+        }
+        guard let source = SCNSceneSource(url: url, options: nil) else {
+            return nil
+        }
+        guard let yourGeometry = source.entryWithIdentifier("Fur_hat_Plane", withClass: SCNGeometry.self) else {
+            return nil
+        }
+
+        
+        
+//        SCNMaterial *silverMaterial = [SCNMaterial material];
+//        silverMaterial.diffuse.contents = [UIImage imageNamed:@"silver-background"];
+//
+//        SCNBox *horizontalBarOne = [SCNBox boxWithWidth:11 height:0.5 length:0.5 chamferRadius:0];
+//        SCNNode *horizontalBarOneNode = [SCNNode nodeWithGeometry:horizontalBarOne];
+//        horizontalBarOneNode.position = SCNVector3Make(0, 2.0, 0.5);
+//        horizontalBarOne.materials = @[silverMaterial];
+//        [scene.rootNode addChildNode:horizontalBarOneNode];
+        
+        
+        let newMaterial = SCNMaterial()
+        let name: String = "SceneKit.scnassets/WinterHat_tex2.png"
+        let timage = UIImage(named: name)
+        
+//        guard let material = source.entryWithIdentifier("Fur_hat_Plane", withClass: SCNMaterial.self) else {
+//            return nil
+//        }
+
+        
+        newMaterial.diffuse.contents = timage
+        newMaterial.specular.contents = UIColor.red
+        yourGeometry.firstMaterial = newMaterial
+        
+        
+        let node = SCNNode(geometry: yourGeometry)
+
+//        let scale = SCNVector3Make(10.1, 10.1, 10.1)
+//        let byWorldRotation = SCNVector4Make(0, 1, 0, Float(.pi/2.0))
+//        let worldTarget = SCNVector3Make(1, 1, 1)
+//
+//        node.scale = scale
+//        node.rotate(by: byWorldRotation, aroundTarget: worldTarget)
+        
+        return node
+    }
+    
     // Public func: handle did update pupil coordinate event
     func drawSceneWithScale(_ scale: CGFloat) {
-        guard let sceneView = _sceneView else {
+        guard let sceneView = _sceneView,
+            let leftEyeNode = _leftEyeNode,
+            let rightEyeNode = _rightEyeNode else {
             return
         }
         guard let leftPupilBorderX = OpenCVWrapper.leftPupilBorder()[0] as? [Int],
@@ -114,11 +170,11 @@ class SceneInteractor {
                 return
         }
 
-        let leftEyePosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: _leftEyeNode.position.z, point: leftEyeCenter)
-        _leftEyeNode.position = leftEyePosition
+        let leftEyePosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: leftEyeNode.position.z, point: leftEyeCenter)
+        leftEyeNode.position = leftEyePosition
 
-        let rightEyePosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: _rightEyeNode.position.z, point: rightEyeCenter)
-        _rightEyeNode.position = rightEyePosition
+        let rightEyePosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: rightEyeNode.position.z, point: rightEyeCenter)
+        rightEyeNode.position = rightEyePosition
     }
 
     private func getCenter(_ scale: CGFloat, _ _arrX: [Int]?, _ _arrY: [Int]?) -> CGPoint? {

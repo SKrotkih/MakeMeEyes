@@ -31,7 +31,12 @@ import UIKit
     
     @objc func drawFace() {
         let irisImageName = OpenCVWrapper.irisImageName()
-        irisImage = UIImage(named: irisImageName)
+        
+        if irisImageName.count > 0 {
+            irisImage = UIImage(named: irisImageName)
+        } else {
+            irisImage = nil
+        }
         
         needFaceDrawing = OpenCVWrapper.needFaceDrawing()
         
