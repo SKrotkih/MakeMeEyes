@@ -11,8 +11,10 @@ import UIKit
 @objc class FaceView: UIView {
     @objc var imageView: UIImageView!
     
-    var irisImage: UIImage?
-    var needFaceDrawing: Bool = true
+    var isEnable = true
+    
+    private var irisImage: UIImage?
+    private var needFaceDrawing: Bool = true
     
     private var leftEyeBorderX: [Int]?
     private var leftEyeBorderY: [Int]?
@@ -28,6 +30,11 @@ import UIKit
     private var rightPupilBorderY: [Int]?
     
     @objc func drawFace() {
+        let irisImageName = OpenCVWrapper.irisImageName()
+        irisImage = UIImage(named: irisImageName)
+        
+        needFaceDrawing = OpenCVWrapper.needFaceDrawing()
+        
         self.leftEyeBorderX = OpenCVWrapper.leftEyeBorder()[0] as? [Int];
         self.leftEyeBorderY = OpenCVWrapper.leftEyeBorder()[1] as? [Int];
         self.rightEyeBorderX = OpenCVWrapper.rightEyeBorder()[0] as? [Int];
@@ -54,15 +61,16 @@ import UIKit
             return
         }
         context.clear(rect);
-        guard needFaceDrawing, ((leftEyeBorderX?.count ?? 0) + (leftIrisBorderX?.count ?? 0)) > 0  else {
+        guard needFaceDrawing, isEnable, ((leftEyeBorderX?.count ?? 0) + (leftIrisBorderX?.count ?? 0)) > 0  else {
             return
         }
         let scale: CGFloat = self.frame.width / CGFloat(OpenCVWrapper.frameWidth());
         let path = UIBezierPath()
         
         // Draw Eye Borders
-        drawPoly(path, scale, leftEyeBorderX, leftEyeBorderY, UIColor.white)
-        drawPoly(path, scale, rightEyeBorderX, rightEyeBorderY, UIColor.white)
+        let eyeballColor = UIColor(named: "eyeball")!
+        drawPoly(path, scale, leftEyeBorderX, leftEyeBorderY, eyeballColor)
+        drawPoly(path, scale, rightEyeBorderX, rightEyeBorderY, eyeballColor)
         
         // Draw Irises
         drawOval(scale, leftIrisBorderX, leftIrisBorderY, UIColor.blue, irisImage)

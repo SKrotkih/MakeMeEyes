@@ -78,6 +78,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xeg-Xy-Q3I">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="E"/>
                                         <connections>
                                             <action selector="eyesButtonPressed:" destination="DcM-fu-vqt" eventType="touchUpInside" id="IfF-kY-36W"/>
                                         </connections>
@@ -99,6 +100,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yaT-UY-XsC">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="M"/>
                                         <connections>
                                             <action selector="masksButtonPressed:" destination="DcM-fu-vqt" eventType="touchUpInside" id="VWR-p9-6bP"/>
                                         </connections>

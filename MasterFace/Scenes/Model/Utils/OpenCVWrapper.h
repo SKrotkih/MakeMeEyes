@@ -29,6 +29,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void) didDrawFinish;
 
++ (NSString*) irisImageName;
++ (BOOL) needFaceDrawing;
++ (void) setIrisImageName: (NSString*) _newValue;
++ (void) setNeedFaceDrawing: (BOOL) _newValue;
+
 @end
 
 NS_ASSUME_NONNULL_END

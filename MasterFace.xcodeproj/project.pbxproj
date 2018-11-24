@@ -388,8 +388,8 @@
 		7F29976221A8EFD5004645E7 /* SceneConf */ = {
 			isa = PBXGroup;
 			children = (
-				7F29976321A8F058004645E7 /* SceneConf.cpp */,
 				7F29976421A8F058004645E7 /* SceneConf.h */,
+				7F29976321A8F058004645E7 /* SceneConf.cpp */,
 			);
 			path = SceneConf;
 			sourceTree = "<group>";

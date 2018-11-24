@@ -6,13 +6,35 @@
 //  Copyright © 2018 Сергей Кротких. All rights reserved.
 //
 
+// C++ stuff
+#include <stdio.h>
+
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
+#include <vector>
+#include <map>
+
+#define _USE_MATH_DEFINES
+#include <cmath>
+
+using namespace std;
+
 class SceneConf {
 private:
     SceneConf();
     static SceneConf* instance;
 
+    string irisImageName;
+    bool needFaceDrawing = true;
     
 public:
     static SceneConf* getInstance();
 
+    void setIrisImageName(string _newValue);
+    void setNeedFaceDrawing(bool _newValue);
+    
+    string getIrisImageName();
+    bool getNeedFaceDrawing();
 };

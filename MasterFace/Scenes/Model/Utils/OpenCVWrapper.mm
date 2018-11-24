@@ -14,6 +14,7 @@
 #import "CppUtils.hpp"
 #import "EyeIrisDetector.hpp"
 #import "FaceCoords.h"
+#import "SceneConf.h"
 
 #pragma clang pop
 #endif
@@ -24,6 +25,7 @@ using namespace cv;
 #pragma mark - OpenCVWrapper
 
 #define Coords FaceCoords::getInstance()
+#define Config SceneConf::getInstance()
 
 @implementation OpenCVWrapper
 
@@ -240,6 +242,26 @@ using namespace cv;
         [y addObject: @(vec[i].y)];
     }
     return @[x, y];
+}
+
+// Scene Configuration property
+
++ (NSString*) irisImageName {
+    return [NSString stringWithCString: Config->getIrisImageName().c_str()
+                              encoding: [NSString defaultCStringEncoding]];
+}
+
++ (BOOL) needFaceDrawing {
+    return Config->getNeedFaceDrawing();
+}
+
++ (void) setIrisImageName: (NSString*) _newValue {
+    std::string str = std::string([_newValue UTF8String]);
+    Config->setIrisImageName(str);
+}
+
++ (void) setNeedFaceDrawing: (BOOL) _newValue {
+    Config->setNeedFaceDrawing(_newValue);
 }
 
 @end

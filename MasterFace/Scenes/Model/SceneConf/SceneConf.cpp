@@ -23,3 +23,19 @@ SceneConf* SceneConf::getInstance()
 
 SceneConf::SceneConf() { }
 
+
+void SceneConf::setIrisImageName(string _newValue) {
+    irisImageName = _newValue;
+}
+
+void SceneConf::setNeedFaceDrawing(bool _newValue) {
+    needFaceDrawing = _newValue;
+}
+
+string SceneConf::getIrisImageName() {
+    return irisImageName;
+}
+
+bool SceneConf::getNeedFaceDrawing() {
+    return needFaceDrawing;
+}

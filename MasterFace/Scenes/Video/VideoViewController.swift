@@ -93,13 +93,13 @@ import SceneKit
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        faceView.needFaceDrawing = true
+        faceView.isEnable = true
         videoCameraWrapper.startCamera()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        faceView.needFaceDrawing = false
+        faceView.isEnable = false
         videoCameraWrapper.stopCamera()
     }
     
@@ -126,17 +126,16 @@ import SceneKit
             return
         }
         if button.tag == 100 {
-            faceView.needFaceDrawing = !faceView.needFaceDrawing
+            OpenCVWrapper.setNeedFaceDrawing(!OpenCVWrapper.needFaceDrawing())
             
 //            needDrawEyes = !needDrawEyes
 //            videoCameraWrapper.setNeedDrawEyes(needDrawEyes)
             
         } else {
-            faceView.needFaceDrawing = true
             let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
             let imageName = images[button.tag]
-            let image = UIImage(named: imageName)
-            faceView.irisImage = image
+            OpenCVWrapper.setIrisImageName(imageName)
+            OpenCVWrapper.setNeedFaceDrawing(true)
         }
     }
 
