@@ -16,8 +16,7 @@ class SceneInteractor {
     private var _scnScene: SCNScene!
     private var _cameraNode: SCNNode!
     
-    private var _leftEyeNode: SCNNode!
-    private var _rightEyeNode: SCNNode!
+    private var maskaNode: SCNNode!
     
     init(parentView: UIView) {
         _parentView = parentView
@@ -27,8 +26,6 @@ class SceneInteractor {
         if _sceneView == nil {
             configureScene()
             setupScene()
-            setupCamera()
-            createMask()
         } else {
             _sceneView?.removeFromSuperview()
             _sceneView = nil
@@ -47,23 +44,21 @@ class SceneInteractor {
         _sceneView!.autoenablesDefaultLighting = true
         
         _parentView.addSubview(_sceneView!)
-        
-        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
-        swipeLeftGesture.direction = .left
-        _sceneView!.addGestureRecognizer(swipeLeftGesture)
-    }
-    
-    @objc private func handleSwipe(_ gestureRecognize: UISwipeGestureRecognizer) {
-        if (gestureRecognize.direction == .left) {
-        }
-        else if (gestureRecognize.direction == .right) {
-        }
     }
     
     private func setupScene() {
-        _scnScene = SCNScene()
+        _scnScene = SCNScene(named: "SceneKit.scnassets/Winter_Hat/WinterHat.scn")
         _sceneView?.scene = _scnScene
-        //_scnScene.background.contents = "GeometryFighter.scnassets/Textures/Background_Diffuse.png"
+        
+        _scnScene.rootNode.childNodes.forEach({ print("NAME=\(String(describing: $0.name))")  })
+
+        if let node = _scnScene.rootNode.childNodes.filter({ $0.name == "Fur_hat_Plane" }).first {
+            let currScale = node.scale
+            // 5.231
+            let scale = SCNVector3Make(currScale.x * 0.65, currScale.y * 0.65, currScale.z * 0.65)
+            node.scale = scale
+            self.maskaNode = node
+        }
     }
     
     private func setupCamera() {
@@ -73,90 +68,10 @@ class SceneInteractor {
         _scnScene.rootNode.addChildNode(_cameraNode)
     }
     
-    private func createMask() {
-        createLeftEye()
-        createRightEye()
-    }
-
-    private func createRightEye() {
-        var geometry: SCNGeometry
-        switch ShapeType.random() {
-        default:
-            geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
-        }
-        _rightEyeNode = SCNNode(geometry: geometry)
-        _scnScene.rootNode.addChildNode(_rightEyeNode)
-    }
-    
-    private func createLeftEye() {
-//        var geometry: SCNGeometry
-//        switch ShapeType.random() {
-//        default:
-//            geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
-//        }
-//        _leftEyeNode = SCNNode(geometry: geometry)
-//        _scnScene.rootNode.addChildNode(_leftEyeNode)
-        
-        if let rootNode = extractRootNode() {
-            _leftEyeNode = rootNode
-            _scnScene.rootNode.addChildNode(_leftEyeNode)
-        }
-    }
-    
-    private func extractRootNode() -> SCNNode? {
-        guard let url = Bundle.main.url(forResource: "SceneKit.scnassets/Winter_Hat/HatwithFur", withExtension: "dae") else {
-            return nil
-        }
-        guard let source = SCNSceneSource(url: url, options: nil) else {
-            return nil
-        }
-        guard let yourGeometry = source.entryWithIdentifier("Fur_hat_Plane", withClass: SCNGeometry.self) else {
-            return nil
-        }
-
-        
-        
-//        SCNMaterial *silverMaterial = [SCNMaterial material];
-//        silverMaterial.diffuse.contents = [UIImage imageNamed:@"silver-background"];
-//
-//        SCNBox *horizontalBarOne = [SCNBox boxWithWidth:11 height:0.5 length:0.5 chamferRadius:0];
-//        SCNNode *horizontalBarOneNode = [SCNNode nodeWithGeometry:horizontalBarOne];
-//        horizontalBarOneNode.position = SCNVector3Make(0, 2.0, 0.5);
-//        horizontalBarOne.materials = @[silverMaterial];
-//        [scene.rootNode addChildNode:horizontalBarOneNode];
-        
-        
-        let newMaterial = SCNMaterial()
-        let name: String = "SceneKit.scnassets/WinterHat_tex2.png"
-        let timage = UIImage(named: name)
-        
-//        guard let material = source.entryWithIdentifier("Fur_hat_Plane", withClass: SCNMaterial.self) else {
-//            return nil
-//        }
-
-        
-        newMaterial.diffuse.contents = timage
-        newMaterial.specular.contents = UIColor.red
-        yourGeometry.firstMaterial = newMaterial
-        
-        
-        let node = SCNNode(geometry: yourGeometry)
-
-//        let scale = SCNVector3Make(10.1, 10.1, 10.1)
-//        let byWorldRotation = SCNVector4Make(0, 1, 0, Float(.pi/2.0))
-//        let worldTarget = SCNVector3Make(1, 1, 1)
-//
-//        node.scale = scale
-//        node.rotate(by: byWorldRotation, aroundTarget: worldTarget)
-        
-        return node
-    }
-    
     // Public func: handle did update pupil coordinate event
     func drawSceneWithScale(_ scale: CGFloat) {
         guard let sceneView = _sceneView,
-            let leftEyeNode = _leftEyeNode,
-            let rightEyeNode = _rightEyeNode else {
+            let maskaNode = self.maskaNode else {
             return
         }
         guard let leftPupilBorderX = OpenCVWrapper.leftPupilBorder()[0] as? [Int],
@@ -170,11 +85,11 @@ class SceneInteractor {
                 return
         }
 
-        let leftEyePosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: leftEyeNode.position.z, point: leftEyeCenter)
-        leftEyeNode.position = leftEyePosition
-
-        let rightEyePosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: rightEyeNode.position.z, point: rightEyeCenter)
-        rightEyeNode.position = rightEyePosition
+        let xCenter: CGFloat = rightEyeCenter.x + 45.0
+        let yCenter: CGFloat = leftEyeCenter.y - 220.0
+        
+        let maskaPosition: SCNVector3 = CGPointToSCNVector3(view: sceneView, depth: maskaNode.position.z, point: CGPoint(x: xCenter, y: yCenter))
+        maskaNode.position = maskaPosition
     }
 
     private func getCenter(_ scale: CGFloat, _ _arrX: [Int]?, _ _arrY: [Int]?) -> CGPoint? {
@@ -190,7 +105,6 @@ class SceneInteractor {
         let point = CGPoint(x: xMin + width / 2, y: yMin + height / 2)
         return point
     }
-
     
     private func CGPointToSCNVector3(view: SCNView, depth: Float, point: CGPoint) -> SCNVector3 {
         let projectedOrigin = view.projectPoint(SCNVector3Make(0, 0, depth))
