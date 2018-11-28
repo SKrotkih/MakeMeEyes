@@ -1,12 +1,12 @@
 //
-//  CvVideoCameraWrapper.mm
+//  EyesCvVideoCameraWrapper.mm
 //  MasterFace
 //
 
-#import "FaceDetectWrapper.h"
+#import "EyesDetectWrapper.h"
 #import "MasterFace-Swift.h"
 #import "CppUtils.hpp"
-#import "VideoCamera.h"
+#import "EyesVideoCamera.h"
 #import <opencv2/videoio/cap_ios.h>
 #import <opencv2/objdetect/objdetect.hpp>
 #import <opencv2/imgproc/imgproc_c.h>
@@ -21,34 +21,38 @@
 
 using namespace cv;
 
-@interface FaceDetectWrapper () {
+@interface EyesDetectWrapper () {
 }
 @end
 
-@implementation FaceDetectWrapper
+@implementation EyesDetectWrapper
 {
     FaceARDetectIOS* facear;
+    EyesVideoCamera* videoCamera;
 }
 
-- (id) init
+- (id) initWithCamera: (EyesVideoCamera*) _videoCamera
 {
-    facear = [[FaceARDetectIOS alloc] init];
-    [self setUpEyeLenseImage];
+    if (self = [super init]) {
+        videoCamera = _videoCamera;
+        facear = [[FaceARDetectIOS alloc] init];
+        [self setUpEyeLenseImage];
+    }
     
     return self;
 }
 
 #ifdef __cplusplus
 
-- (void) detectFacesOnUIImage: (UIImage*) image
+- (void) detectEyesOnImage: (UIImage*) image
 {
     CppUtils* utils = new CppUtils;
     cv::Mat frame;
     utils->imageToMat(image, frame);
-    [self detectFacesOnImage: frame frameCount: 1];
+    [self detectEyesOnCvImage: frame frameCount: 1];
 }
 
-- (void) detectFacesOnImage: (cv::Mat&) image frameCount: (int) frameCount
+- (void) detectEyesOnCvImage: (cv::Mat&) image frameCount: (int) frameCount
 {
     cv::Mat targetImage(image.cols, image.rows, CV_8UC3);
     cv::cvtColor(image, targetImage, cv::COLOR_BGRA2BGR);
@@ -61,8 +65,8 @@ using namespace cv;
         cx = 1.0 * targetImage.cols / 2.0;
         cy = 1.0 * targetImage.rows / 2.0;
         
-        fx = 500 * (targetImage.cols / [VideoCamera camHeight]);
-        fy = 500 * (targetImage.rows / [VideoCamera camWidth]);
+        fx = 500 * (targetImage.cols / [videoCamera camHeight]);
+        fy = 500 * (targetImage.rows / [videoCamera camWidth]);
         
         fx = (fx + fy) / 2.0;
         fy = fx;

@@ -25,7 +25,7 @@ class FaceViewController: UIViewController {
     var leftCutEye: FaceDetail?
     var rightCutEye: FaceDetail?
 
-    let faceDetector = FaceDetectWrapper2()
+    let faceDetector = FaceWrapper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,7 @@ class FaceViewController: UIViewController {
     
     @IBAction func runRightCutEyeButtonPressed(_ sender: Any) {
         rightEyeCutView.image = orgImage;
-        faceDetector.detectFaces(on: rightEyeCutView.image)
+        faceDetector.detectEyes(on: rightEyeCutView.image)
 //        rightEyeCutView.drawEyesIris()
     }
 }

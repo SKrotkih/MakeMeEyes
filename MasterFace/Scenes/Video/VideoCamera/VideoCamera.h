@@ -11,16 +11,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef enum : NSUInteger {
+    lowResolution = 288,
+    middleResolution = 480,
+    heighResolutopn = 720,
+} VideoResolution;
+
 @interface VideoCamera : CvVideoCamera
 
-+ (int) camWidth;
-+ (int) camHeight;
+- (VideoResolution) camWidth;
+- (int) camHeight;
+- (int) camFPS;
+- (int) takeFrame;
 
 - (id) initWithParentView: (UIView*) _parentView delegate: (id<CvVideoCameraDelegate>) _delegate;
-- (void) startCamera;
-- (void) stopCamera;
+
 - (int) imageWidth;
-+ (int) takeFrame;
 
 @property (nonatomic, weak) id<CvVideoCameraDelegate> delegate;
 

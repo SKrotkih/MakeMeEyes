@@ -3,7 +3,7 @@
 //
 
 #import "OpenCVWrapper.h"
-#import "CvVideoCameraWrapper.h"
+#import "EyesCvVideoCameraWrapper.h"
 #import "CvCameraWrapper.h"
 #import "CppUtils.hpp"
-#import "FaceDetectWrapper2.h"
+#import "FaceWrapper.h"

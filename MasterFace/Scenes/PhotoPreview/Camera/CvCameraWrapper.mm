@@ -8,7 +8,7 @@
 
 #import "CvCameraWrapper.h"
 #import "MasterFace-Swift.h"
-#import "FaceDetectWrapper.h"
+#import "EyesDetectWrapper.h"
 
 @interface CvCameraWrapper () {
 }
@@ -17,13 +17,13 @@
 @implementation CvCameraWrapper
 {
     FaceView* faceView;
-    FaceDetectWrapper* faceDetector;
+    EyesDetectWrapper* eyesDetector;
 }
 
 - (id) initWithFaceView: (FaceView*) _faceView
 {
     faceView = _faceView;
-    faceDetector = [[FaceDetectWrapper alloc] init];
+    eyesDetector = [[EyesDetectWrapper alloc] initWithCamera: nil];
     return self;
 }
 
@@ -31,7 +31,7 @@
 
 - (void) processImage: (UIImage*) image
 {
-    [faceDetector detectFacesOnUIImage: image];
+    [eyesDetector detectEyesOnImage: image];
     [faceView drawFace];
 }
 

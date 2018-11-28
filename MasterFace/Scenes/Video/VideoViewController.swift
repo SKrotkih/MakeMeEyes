@@ -27,7 +27,7 @@ import SceneKit
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var takePhotoView: UIView!
     
-    private var videoCameraWrapper : CvVideoCameraWrapper!
+    private var videoCameraWrapper : EyesCvVideoCameraWrapper!
     private var sceneInteractor: SceneInteractor!
     private var needDrawEyes: Bool = true
 
@@ -50,7 +50,7 @@ import SceneKit
 
         faceView.imageView = foregroundImageView
         
-        self.videoCameraWrapper = CvVideoCameraWrapper(controller: self, andImageView: imageView, foreground: self.faceView);
+        self.videoCameraWrapper = EyesCvVideoCameraWrapper(controller: self, andImageView: imageView, foreground: self.faceView);
         self.sceneInteractor = SceneInteractor(parentView: self.maskSceneView)
         
         takePhotoButton.layer.cornerRadius = takePhotoButton.bounds.width / 2.0

@@ -1,5 +1,5 @@
 //
-//  CvVideoCameraWrapper.h
+//  EyesCvVideoCameraWrapper.h
 //  MasterFace
 //
 //  Created by Сергей Кротких on 10/11/2018.
@@ -10,7 +10,7 @@
 
 @class VideoViewController;
 
-@interface CvVideoCameraWrapper: NSObject
+@interface EyesCvVideoCameraWrapper: NSObject
 
 - (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView foreground: (UIView*) _foregroundView;
 - (void) showBox;

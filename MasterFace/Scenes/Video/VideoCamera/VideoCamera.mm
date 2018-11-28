@@ -39,34 +39,24 @@
 
 - (void) setupVideoCamera {
     self.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
-    switch ([VideoCamera camWidth]) {
-        case 288:
+    switch ([self camWidth]) {
+        case lowResolution:
             self.defaultAVCaptureSessionPreset = AVCaptureSessionPreset352x288;
             break;
-        case 480:
+        case middleResolution:
             self.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
             break;
-        case 720:
+        case heighResolutopn:
             self.defaultAVCaptureSessionPreset = AVCaptureSessionPreset1280x720;
             break;
         default:
             break;
     }
     self.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
-    self.defaultFPS = [VideoCamera camFPS];
+    self.defaultFPS = [self camFPS];
     self.grayscaleMode = NO;
     self.rotateVideo = NO;
     self.delegate = self.delegate;
-}
-
-- (void) startCamera
-{
-    [self start];
-}
-
-- (void) stopCamera
-{
-    [self stop];
 }
 
 - (int) imageWidth
@@ -77,23 +67,33 @@
     return videoWidth;
 }
 
-+ (int) camWidth
+- (int) camHeight
 {
-    return 288;  // 288 480 720
+    switch ([self camWidth]) {
+        case lowResolution:
+            return 352;
+        case middleResolution:
+            return 640;
+        case heighResolutopn:
+            return 1280;
+    }
 }
 
-+ (int) camHeight
+- (VideoResolution) camWidth
 {
-    return 352;  // 352 640 1280
+    NSAssert(false, @"This method should be implemented in a concrete class!");
+    return lowResolution;  // 288 480 720
 }
 
-+ (int) camFPS
+- (int) camFPS
 {
+    NSAssert(false, @"This method should be implemented in a concrete class!");
     return 25;  // 30
 }
 
-+ (int) takeFrame
+- (int) takeFrame
 {
+    NSAssert(false, @"This method should be implemented in a concrete class!");
     return 2;
 }
 
