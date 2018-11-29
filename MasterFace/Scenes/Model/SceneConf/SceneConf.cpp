@@ -28,8 +28,8 @@ void SceneConf::setIrisImageName(string _newValue) {
     irisImageName = _newValue;
 }
 
-void SceneConf::setNeedFaceDrawing(bool _newValue) {
-    needFaceDrawing = _newValue;
+void SceneConf::setNeedEyesDrawing(bool _newValue) {
+    needEyesDrawing = _newValue;
 }
 
 string SceneConf::getIrisImageName() {
@@ -37,5 +37,5 @@ string SceneConf::getIrisImageName() {
 }
 
 bool SceneConf::getNeedFaceDrawing() {
-    return needFaceDrawing;
+    return needEyesDrawing;
 }

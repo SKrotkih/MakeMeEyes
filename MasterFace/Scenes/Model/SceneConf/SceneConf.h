@@ -27,13 +27,13 @@ private:
     static SceneConf* instance;
 
     string irisImageName;
-    bool needFaceDrawing = true;
+    bool needEyesDrawing = true;
     
 public:
     static SceneConf* getInstance();
 
     void setIrisImageName(string _newValue);
-    void setNeedFaceDrawing(bool _newValue);
+    void setNeedEyesDrawing(bool _newValue);
     
     string getIrisImageName();
     bool getNeedFaceDrawing();

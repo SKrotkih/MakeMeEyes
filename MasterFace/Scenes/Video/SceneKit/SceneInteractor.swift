@@ -74,7 +74,13 @@ class SceneInteractor {
             let maskaNode = self.maskaNode else {
             return
         }
-        guard let leftPupilBorderX = OpenCVWrapper.leftPupilBorder()[0] as? [Int],
+        if let face = OpenCVWrapper.face()[0] as? [Int]  {
+            
+            print(face)
+            
+        }
+        
+        guard let leftPupilBorderX = OpenCVWrapper.face()[0] as? [Int],
             let leftPupilBorderY = OpenCVWrapper.leftPupilBorder()[1] as? [Int],
             let rightPupilBorderX = OpenCVWrapper.rightPupilBorder()[0] as? [Int],
             let rightPupilBorderY = OpenCVWrapper.rightPupilBorder()[1] as? [Int] else {

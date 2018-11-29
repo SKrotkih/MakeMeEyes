@@ -206,6 +206,10 @@ using namespace cv;
     return Coords->getFrameHeight();
 }
 
++ (NSArray*) face {
+    return [self copyRectsToObjCArray: Coords->getFace()];
+}
+
 + (NSArray*) leftEyeBorder {
     return [self copyToObjCArray: Coords->getLeftEyeBorder()];
 }
@@ -244,6 +248,16 @@ using namespace cv;
     return @[x, y];
 }
 
++ (NSArray*) copyRectsToObjCArray: (std::vector<cv::Rect>) vec {
+    NSMutableArray* x = [[NSMutableArray alloc] initWithCapacity: vec.size()];
+    NSMutableArray* y = [[NSMutableArray alloc] initWithCapacity: vec.size()];
+    for (int i = 0; i < vec.size(); i++) {
+        [x addObject: @(vec[i].x)];
+        [y addObject: @(vec[i].y)];
+    }
+    return @[x, y];
+}
+
 // Scene Configuration property
 
 + (NSString*) irisImageName {
@@ -251,7 +265,7 @@ using namespace cv;
                               encoding: [NSString defaultCStringEncoding]];
 }
 
-+ (BOOL) needFaceDrawing {
++ (BOOL) needEyesDrawing {
     return Config->getNeedFaceDrawing();
 }
 
@@ -260,8 +274,8 @@ using namespace cv;
     Config->setIrisImageName(str);
 }
 
-+ (void) setNeedFaceDrawing: (BOOL) _newValue {
-    Config->setNeedFaceDrawing(_newValue);
++ (void) setNeedEyesDrawing: (BOOL) _newValue {
+    Config->setNeedEyesDrawing(_newValue);
 }
 
 @end

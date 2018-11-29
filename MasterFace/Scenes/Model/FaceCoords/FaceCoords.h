@@ -19,6 +19,8 @@ private:
     FaceCoords();
     static FaceCoords* instance;
 
+    vector<cv::Rect> face;
+    
     vector<cv::Point> leftEyeBorder;
     vector<cv::Point> rightEyeBorder;
     vector<cv::Point> leftIrisborder;
@@ -31,6 +33,8 @@ private:
 public:
     static FaceCoords* getInstance();
 
+    void saveFace(vector<cv::Rect> rects);
+    
     void saveEyeBorder(vector<cv::Point> poly);
     void saveIrisBorder(vector<cv::Point> poly);
     void savePupilBorder(vector<cv::Point> poly);
@@ -38,6 +42,8 @@ public:
     void saveSize(int cols, int rows);
     int getFrameWidth();
     int getFrameHeight();
+    
+    vector<cv::Rect> getFace();
     
     vector<cv::Point> getLeftEyeBorder();
     vector<cv::Point> getRightEyeBorder();

@@ -17,10 +17,10 @@ import SceneKit
     @IBOutlet weak var videoWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var faceView: FaceView!
     
-    @IBOutlet weak var eyesScrollView: UIScrollView!
+    @IBOutlet weak var tabEyesScrollView: UIScrollView!
     @IBOutlet weak var eyesContentView: UIView!
     
-    @IBOutlet weak var masksScrollView: UIScrollView!
+    @IBOutlet weak var tabMasksScrollView: UIScrollView!
     @IBOutlet weak var masksContentView: UIView!
     
     @IBOutlet weak var maskSceneView: UIView!
@@ -28,7 +28,6 @@ import SceneKit
     @IBOutlet weak var takePhotoView: UIView!
     
     private var videoCameraWrapper : EyesCvVideoCameraWrapper!
-    private var sceneInteractor: SceneInteractor!
     private var needDrawEyes: Bool = true
 
     @IBOutlet weak var contentViewWidthConstraint: NSLayoutConstraint!
@@ -51,7 +50,6 @@ import SceneKit
         faceView.imageView = foregroundImageView
         
         self.videoCameraWrapper = EyesCvVideoCameraWrapper(controller: self, andImageView: imageView, foreground: self.faceView);
-        self.sceneInteractor = SceneInteractor(parentView: self.maskSceneView)
         
         takePhotoButton.layer.cornerRadius = takePhotoButton.bounds.width / 2.0
         takePhotoButton.layer.borderColor = UIColor.green.cgColor
@@ -63,7 +61,7 @@ import SceneKit
         eyesTabBarView.isHidden = false
         masksTabBarView.isHidden = true
         
-        viewModel = VideoViewModel(self)
+        viewModel = VideoViewModel(self, maskSceneView: maskSceneView, videoCameraWrapper: videoCameraWrapper)
     }
 
     override func updateViewConstraints() {
@@ -80,12 +78,15 @@ import SceneKit
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let eyesContentWidth = CGFloat(10 * 50)
-        let masksContentWidth = CGFloat(9 * 50)
+        let tabBarHeight = tabEyesScrollView.frame.height
+        let tabEyesItemsCount = 10
+        let tabMasksItemsCount = 9
         
-        eyesScrollView.contentSize = CGSize(width: eyesContentWidth, height: 50)
+        let eyesContentWidth = CGFloat(tabEyesItemsCount) * tabBarHeight
+        let masksContentWidth = CGFloat(tabMasksItemsCount) * tabBarHeight
         
-        masksScrollView.contentSize = CGSize(width: masksContentWidth, height: 50)
+        tabEyesScrollView.contentSize = CGSize(width: eyesContentWidth, height: tabBarHeight)
+        tabMasksScrollView.contentSize = CGSize(width: masksContentWidth, height: tabBarHeight)
 
         contentViewWidthConstraint.constant = eyesContentWidth
         masksContentViewWidthConstraint.constant = masksContentWidth
@@ -94,13 +95,13 @@ import SceneKit
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         faceView.isEnable = true
-        videoCameraWrapper.startCamera()
+        viewModel.didTakePhoto()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         faceView.isEnable = false
-        videoCameraWrapper.stopCamera()
+        viewModel.willTakePhoto()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -112,13 +113,13 @@ import SceneKit
     @IBAction func didChangeSliderTransparetValue(_ sender: Any) {
         let slider = sender as! UISlider
         let value = slider.value
-        videoCameraWrapper.setLenseColorAlpha(Double(value))
+        viewModel.setLenseColorAlpha(Double(value))
     }
     
     @IBAction func didChangeSliderPupilPercentValue(_ sender: Any) {
         let slider = sender as! UISlider
         let value = slider.value
-        videoCameraWrapper.setPupilPercent(Double(value))
+        viewModel.setPupilPercent(Double(value))
     }
     
     @IBAction func didTabOnEyesButton(_ sender: Any) {
@@ -126,16 +127,11 @@ import SceneKit
             return
         }
         if button.tag == 100 {
-            OpenCVWrapper.setNeedFaceDrawing(!OpenCVWrapper.needFaceDrawing())
-            
-//            needDrawEyes = !needDrawEyes
-//            videoCameraWrapper.setNeedDrawEyes(needDrawEyes)
-            
+            viewModel.setNeededEyesDrawing()
+            // needDrawEyes = !needDrawEyes
+            // videoCameraWrapper.setNeedDrawEyes(needDrawEyes)
         } else {
-            let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
-            let imageName = images[button.tag]
-            OpenCVWrapper.setIrisImageName(imageName)
-            OpenCVWrapper.setNeedFaceDrawing(true)
+            viewModel.didSelectedEyeItem(button.tag)
         }
     }
 
@@ -143,16 +139,7 @@ import SceneKit
         guard let button = sender as? UIButton else {
             return
         }
-        let tag = button.tag
-        
-        switch tag {
-        case 0:
-            sceneInteractor.addScene()
-        case 1:
-            videoCameraWrapper.showBox()
-        default:
-            break
-        }
+        viewModel.didSelectMaskItem(button.tag)
     }
     
     @IBAction func eyesButtonPressed(_ sender: Any) {
@@ -166,10 +153,10 @@ import SceneKit
     }
     
     @IBAction func pressOnTakePhotoButton(_ sender: Any) {
-        videoCameraWrapper.stopCamera()
+        viewModel.willTakePhoto()
         viewModel.takePhoto(self.takePhotoView.frame) { selectedImage in
             if selectedImage == nil {
-                self.videoCameraWrapper.startCamera()
+                self.viewModel.didTakePhoto()
             } else {
                 self.photo = selectedImage
                 self.performSegue(withIdentifier: "showphotosegue", sender: self)
@@ -179,6 +166,6 @@ import SceneKit
     
     //
     @objc func drawFaceWithScale(_ scale: Double) {
-        self.sceneInteractor.drawSceneWithScale(CGFloat(scale))
+        self.viewModel.drawFaceWithScale(scale)
     }
 }

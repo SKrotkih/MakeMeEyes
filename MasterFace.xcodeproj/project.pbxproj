@@ -63,6 +63,7 @@
 		7F2A9670219015EE0024F342 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2A966F219015EE0024F342 /* Accelerate.framework */; };
 		7F2A9674219016B00024F342 /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F2A9673219016B00024F342 /* OpenCVWrapper.mm */; };
 		7F2AFCE0219E54E200F8976C /* LandmarkDetectorUtilsExt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F2AFCDF219E54E100F8976C /* LandmarkDetectorUtilsExt.cpp */; };
+		7F31F82E21B01047005C9925 /* VideoSpeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F31F82D21B01047005C9925 /* VideoSpeedCoordinator.swift */; };
 		7F379E2721A78F1D00E2B63B /* CvCameraWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F379E2621A78F1D00E2B63B /* CvCameraWrapper.mm */; };
 		7F379E2921A7978400E2B63B /* PhotoPreviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F379E2821A7978400E2B63B /* PhotoPreviewViewModel.swift */; };
 		7F405C122191353500068592 /* CppUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F405C112191353400068592 /* CppUtils.mm */; };
@@ -168,6 +169,7 @@
 		7F2A96752190178C0024F342 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		7F2AFCDF219E54E100F8976C /* LandmarkDetectorUtilsExt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LandmarkDetectorUtilsExt.cpp; sourceTree = "<group>"; };
 		7F2AFCE1219E550700F8976C /* LandmarkDetectorUtilsExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandmarkDetectorUtilsExt.h; sourceTree = "<group>"; };
+		7F31F82D21B01047005C9925 /* VideoSpeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSpeedCoordinator.swift; sourceTree = "<group>"; };
 		7F379E2521A78F1D00E2B63B /* CvCameraWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CvCameraWrapper.h; sourceTree = "<group>"; };
 		7F379E2621A78F1D00E2B63B /* CvCameraWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CvCameraWrapper.mm; sourceTree = "<group>"; };
 		7F379E2821A7978400E2B63B /* PhotoPreviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewModel.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 			children = (
 				7F287D2521A2D64E006E49F7 /* VideoCamera.h */,
 				7F287D2621A2D64E006E49F7 /* VideoCamera.mm */,
+				7F31F82D21B01047005C9925 /* VideoSpeedCoordinator.swift */,
 				7F29A59821AC311B003C53DD /* Face */,
 				7F29A59721AC3109003C53DD /* Eyes */,
 			);
@@ -421,10 +424,10 @@
 		7F29A59821AC311B003C53DD /* Face */ = {
 			isa = PBXGroup;
 			children = (
-				7F15E08D21AE25660097D275 /* FaceCvVideoCameraWrapper.h */,
-				7F15E08B21AE25660097D275 /* FaceCvVideoCameraWrapper.mm */,
 				7F15E08E21AE25670097D275 /* FaceVideoCamera.h */,
 				7F15E08C21AE25660097D275 /* FaceVideoCamera.mm */,
+				7F15E08D21AE25660097D275 /* FaceCvVideoCameraWrapper.h */,
+				7F15E08B21AE25660097D275 /* FaceCvVideoCameraWrapper.mm */,
 			);
 			path = Face;
 			sourceTree = "<group>";
@@ -759,6 +762,7 @@
 				7F287D2721A2D64E006E49F7 /* VideoCamera.mm in Sources */,
 				7F2AFCE0219E54E200F8976C /* LandmarkDetectorUtilsExt.cpp in Sources */,
 				7F14A0FD21984804001A57CF /* SVR_patch_expert.cpp in Sources */,
+				7F31F82E21B01047005C9925 /* VideoSpeedCoordinator.swift in Sources */,
 				7F14A10021984804001A57CF /* LandmarkDetectionValidator.cpp in Sources */,
 				7F405C122191353500068592 /* CppUtils.mm in Sources */,
 				7FAEE15D2196BBC600E2305E /* EyesCvVideoCameraWrapper.mm in Sources */,

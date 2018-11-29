@@ -81,7 +81,6 @@ using namespace cv;
 #endif
 
 - (void) didImageProcessed {
-    [viewController drawFaceWithScale: scale];
     [faceView drawFace];
 }
 

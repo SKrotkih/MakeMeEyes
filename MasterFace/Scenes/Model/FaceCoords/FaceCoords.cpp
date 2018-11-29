@@ -23,6 +23,10 @@ FaceCoords* FaceCoords::getInstance()
 
 FaceCoords::FaceCoords() { }
 
+void FaceCoords::saveFace(vector<cv::Rect> rects) {
+    face = rects;
+}
+
 void FaceCoords::saveEyeBorder(vector<cv::Point> poly) {
     if (leftEyeBorder.size() == 0) {
         leftEyeBorder = poly;
@@ -58,6 +62,10 @@ int FaceCoords::getFrameWidth() {
 
 int FaceCoords::getFrameHeight() {
     return frameHeight;
+}
+
+vector<cv::Rect> FaceCoords::getFace() {
+    return face;
 }
 
 vector<cv::Point> FaceCoords::getLeftPupilBorder() {

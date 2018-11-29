@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage*) callCPP: (UIImage*) image;
 + (UIImage*) detectEyeIris: (UIImage*) image;
 
++ (NSArray*) face;
+
 + (NSArray*) leftEyeBorder;
 + (NSArray*) rightEyeBorder;
 + (NSArray*) leftIrisBorder;
@@ -30,9 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (void) didDrawFinish;
 
 + (NSString*) irisImageName;
-+ (BOOL) needFaceDrawing;
++ (BOOL) needEyesDrawing;
 + (void) setIrisImageName: (NSString*) _newValue;
-+ (void) setNeedFaceDrawing: (BOOL) _newValue;
++ (void) setNeedEyesDrawing: (BOOL) _newValue;
 
 @end
 

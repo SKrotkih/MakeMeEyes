@@ -15,8 +15,16 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
     private let viewController: UIViewController
     private var completion: photoPickerCompletion?
     
-    required init(_ viewController: UIViewController) {
+    private var maskSceneView: UIView!
+    private var sceneInteractor: SceneInteractor!
+    private var videoCameraWrapper: EyesCvVideoCameraWrapper!
+    private let speedCoordinator: VideoSpeedCoordinator
+    
+    required init(_ viewController: UIViewController, maskSceneView: UIView, videoCameraWrapper: EyesCvVideoCameraWrapper) {
         self.viewController = viewController
+        self.sceneInteractor = SceneInteractor(parentView: maskSceneView)
+        self.videoCameraWrapper = videoCameraWrapper
+        speedCoordinator = VideoSpeedCoordinator()
     }
     
     func takePhoto(_ rect: CGRect, completion: @escaping (UIImage?) -> Void) {
@@ -57,5 +65,55 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
         
         // Dismiss the picker.
         self.viewController.dismiss(animated: true, completion: nil)
+    }
+}
+
+
+extension VideoViewModel {
+    
+    func willTakePhoto() {
+        videoCameraWrapper.stopCamera()
+    }
+    
+    func didTakePhoto() {
+        videoCameraWrapper.startCamera()
+    }
+    
+    func setNeededEyesDrawing() {
+        let needEyesDrawing = !OpenCVWrapper.needEyesDrawing()
+        speedCoordinator.eyesIndex = needEyesDrawing ? 1 : 0
+        OpenCVWrapper.setNeedEyesDrawing(needEyesDrawing)
+    }
+
+    func didSelectedEyeItem(_ index: Int) {
+        speedCoordinator.eyesIndex = index
+        let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
+        let imageName = images[index]
+        OpenCVWrapper.setIrisImageName(imageName)
+        OpenCVWrapper.setNeedEyesDrawing(true)
+    }
+    
+    func didSelectMaskItem(_ index: Int) {
+        speedCoordinator.maskIndex = index
+        switch index {
+        case 0:
+            sceneInteractor.addScene()
+        case 1:
+            videoCameraWrapper.showBox()
+        default:
+            break
+        }
+    }
+    
+    func drawFaceWithScale(_ scale: Double) {
+        self.sceneInteractor.drawSceneWithScale(CGFloat(scale))
+    }
+
+    func setPupilPercent(_ value: Double) {
+       videoCameraWrapper.setPupilPercent(value)
+    }
+    
+    func setLenseColorAlpha(_ value: Double) {
+        videoCameraWrapper.setLenseColorAlpha(value)
     }
 }

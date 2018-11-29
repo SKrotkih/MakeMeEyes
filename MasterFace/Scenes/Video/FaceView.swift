@@ -14,7 +14,7 @@ import UIKit
     var isEnable = true
     
     private var irisImage: UIImage?
-    private var needFaceDrawing: Bool = true
+    private var needEyesDrawing: Bool = true
     
     private var leftEyeBorderX: [Int]?
     private var leftEyeBorderY: [Int]?
@@ -38,7 +38,7 @@ import UIKit
             irisImage = nil
         }
         
-        needFaceDrawing = OpenCVWrapper.needFaceDrawing()
+        needEyesDrawing = OpenCVWrapper.needEyesDrawing()
         
         self.leftEyeBorderX = OpenCVWrapper.leftEyeBorder()[0] as? [Int];
         self.leftEyeBorderY = OpenCVWrapper.leftEyeBorder()[1] as? [Int];
@@ -66,7 +66,7 @@ import UIKit
             return
         }
         context.clear(rect);
-        guard needFaceDrawing, isEnable, ((leftEyeBorderX?.count ?? 0) + (leftIrisBorderX?.count ?? 0)) > 0  else {
+        guard needEyesDrawing, isEnable, ((leftEyeBorderX?.count ?? 0) + (leftIrisBorderX?.count ?? 0)) > 0  else {
             return
         }
         let scale: CGFloat = self.frame.width / CGFloat(OpenCVWrapper.frameWidth());
