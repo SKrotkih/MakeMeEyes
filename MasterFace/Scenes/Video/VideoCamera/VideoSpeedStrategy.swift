@@ -18,40 +18,18 @@ class VideoSpeedStrategy  {
 
     private var eyesVideoCameraWrapper: EyesCvVideoCameraWrapper!
     private var faceVideoCameraWrapper: FaceCvVideoCameraWrapper!
-
-    var videoSize: CGSize {
-        let camWidth = eyesVideoCameraWrapper.camWidth();
-        let camHeight = eyesVideoCameraWrapper.camHeight();
-        return CGSize(width: CGFloat(camWidth), height: CGFloat(camHeight))
-    }
-    
-    func stopCamera() {
-        eyesVideoCameraWrapper.stopCamera()
-    }
-    
-    func startCamera() {
-        eyesVideoCameraWrapper.startCamera()
-    }
-    
-    func showBox() {
-        eyesVideoCameraWrapper.showBox()
-    }
-
-    func setPupilPercent(_ value: Double) {
-        eyesVideoCameraWrapper.setPupilPercent(value)
-    }
-
-    func setLenseColorAlpha(_ value: Double) {
-        eyesVideoCameraWrapper.setLenseColorAlpha(value)
-    }
+    private var sceneInteractor: SceneInteractor!
     
     required init(videoParentView: UIImageView,
-               drawingView: EyesDrawingView
+               drawingView: EyesDrawingView,
+               sceneInteractor: SceneInteractor
         ) {
+        self.sceneInteractor = sceneInteractor
         self.eyesVideoCameraWrapper = EyesCvVideoCameraWrapper(videoParentView: videoParentView,
                                                                drawing: drawingView);
         self.faceVideoCameraWrapper = FaceCvVideoCameraWrapper(videoParentView: videoParentView,
-                                                               drawing: drawingView);
+                                                               drawing: drawingView,
+                                                               sceneInteractor: sceneInteractor);
     }
     
     private var currentState: VideoSpeedState = .undefined {
@@ -88,6 +66,41 @@ class VideoSpeedStrategy  {
         }
     }
     
+}
+
+// MARK: - Protocol methods
+
+extension VideoSpeedStrategy {
+    
+    var videoSize: CGSize {
+        let camWidth = eyesVideoCameraWrapper.camWidth();
+        let camHeight = eyesVideoCameraWrapper.camHeight();
+        return CGSize(width: CGFloat(camWidth), height: CGFloat(camHeight))
+    }
+    
+    func stopCamera() {
+        eyesVideoCameraWrapper.stopCamera()
+    }
+    
+    func startCamera() {
+        eyesVideoCameraWrapper.startCamera()
+    }
+    
+    func showBox() {
+        eyesVideoCameraWrapper.showBox()
+    }
+    
+    func setPupilPercent(_ value: Double) {
+        eyesVideoCameraWrapper.setPupilPercent(value)
+    }
+    
+    func setLenseColorAlpha(_ value: Double) {
+        eyesVideoCameraWrapper.setLenseColorAlpha(value)
+    }
+    
+    func addScene() {
+        sceneInteractor.addScene()
+    }
 }
 
 // MARK: - Private methods

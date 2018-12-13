@@ -163,9 +163,4 @@ import SceneKit
             }
         }
     }
-    
-    //
-    @objc func drawFaceWithScale(_ scale: Double) {
-        self.viewModel.drawFaceWithScale(scale)
-    }
 }

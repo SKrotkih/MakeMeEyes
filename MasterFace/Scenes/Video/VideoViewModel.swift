@@ -16,7 +16,6 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
     private var videoSpeedStrategy: VideoSpeedStrategy!
 
     private var completion: photoPickerCompletion?
-    private var maskSceneView: UIView!
     private var sceneInteractor: SceneInteractor!
     
     var videoSize: CGSize {
@@ -33,9 +32,8 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
                      ) {
         self.init()
         self.viewController = _viewController
-        self.maskSceneView = sceneView
         self.sceneInteractor = SceneInteractor(parentView: sceneView)
-        self.videoSpeedStrategy = VideoSpeedStrategy(videoParentView: videoParentView, drawingView: drawingView)
+        self.videoSpeedStrategy = VideoSpeedStrategy(videoParentView: videoParentView, drawingView: drawingView, sceneInteractor: self.sceneInteractor)
     }
     
     func takePhoto(_ rect: CGRect, completion: @escaping (UIImage?) -> Void) {
@@ -109,16 +107,12 @@ extension VideoViewModel {
         videoSpeedStrategy.maskIndex = index
         switch index {
         case 0:
-            sceneInteractor.addScene()
+            videoSpeedStrategy.addScene()
         case 1:
             videoSpeedStrategy.showBox()
         default:
             break
         }
-    }
-    
-    func drawFaceWithScale(_ scale: Double) {
-        self.sceneInteractor.drawSceneWithScale(CGFloat(scale))
     }
 
     func setPupilPercent(_ value: Double) {

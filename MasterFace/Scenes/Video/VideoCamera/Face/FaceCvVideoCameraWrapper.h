@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class VideoViewController;
+@class SceneInteractor;
 
 @interface FaceCvVideoCameraWrapper: NSObject
 
 - (id) initWithVideoParentView: (UIImageView*) _videoParentView
-                   drawingView: (UIView*) _eyesDrawingView;
+                   drawingView: (UIView*) _eyesDrawingView
+               sceneInteractor: (SceneInteractor*) _sceneInteractor;
 - (void) startCamera;
 - (void) stopCamera;
 - (int) camWidth;

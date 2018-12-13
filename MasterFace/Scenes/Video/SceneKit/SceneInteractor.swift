@@ -9,7 +9,7 @@
 import UIKit
 import SceneKit
 
-class SceneInteractor {
+@objc class SceneInteractor: NSObject {
 
     private var _parentView: UIView!
     private var _sceneView: SCNView?
@@ -69,7 +69,7 @@ class SceneInteractor {
     }
     
     // Public func: handle did update pupil coordinate event
-    func drawSceneWithScale(_ scale: CGFloat) {
+    @objc func drawSceneWithScale(_ scale: CGFloat) {
         guard let sceneView = _sceneView,
             let maskaNode = self.maskaNode else {
             return

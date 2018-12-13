@@ -34,21 +34,22 @@ using namespace cv;
 
 @implementation FaceCvVideoCameraWrapper
 {
-    VideoViewController* viewController;
     UIImageView* imageView;
-    EyesDrawingView* faceView;
+    EyesDrawingView* drawingView;
     CppUtils* utils;
     FaceVideoCamera* videoCamera;
     CGFloat scale;
     int frame_count;
+    SceneInteractor* sceneInteractor;
 }
 
 - (id) initWithVideoParentView: (UIImageView*) _videoParentView
-                   drawingView: (UIView*) _faceView
+                   drawingView: (UIView*) _drawingView
+               sceneInteractor: (SceneInteractor*) _sceneInteractor
 {
-//    viewController = _viewController;
     imageView = _videoParentView;
-    faceView = (EyesDrawingView*)_faceView;
+    drawingView = (EyesDrawingView*)_drawingView;
+    sceneInteractor = _sceneInteractor;
     videoCamera = [[FaceVideoCamera alloc] initWithParentView: _videoParentView
                                                      delegate: self];
     utils = new CppUtils();
@@ -72,11 +73,10 @@ using namespace cv;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         UIImage* _image = self->utils->matToImage(image);
-        self->faceView.imageView.image = _image;
-        self->scale = self->faceView.frame.size.width / CGFloat([self->videoCamera imageWidth]);
+        self->drawingView.imageView.image = _image;
+        self->scale = self->drawingView.frame.size.width / CGFloat([self->videoCamera imageWidth]);
     });
-    
-    [viewController drawFaceWithScale: scale];
+    [sceneInteractor drawSceneWithScale: scale];
 }
 
 std::vector<cv::Rect> detectFace(cv::Mat &frame)
