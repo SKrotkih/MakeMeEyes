@@ -1,5 +1,5 @@
 //
-//  FaceViewController.swift
+//  FaceExcludedViewController.swift
 //  MasterFace
 //
 //  Created by Сергей Кротких on 06/11/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FaceViewController: UIViewController {
+class FaceExcludedViewController: UIViewController {
 
     @IBOutlet weak var faceImageView: UIImageView!
     

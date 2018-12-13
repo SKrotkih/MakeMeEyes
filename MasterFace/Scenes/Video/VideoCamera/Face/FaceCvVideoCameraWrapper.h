@@ -12,7 +12,8 @@
 
 @interface FaceCvVideoCameraWrapper: NSObject
 
-- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView foreground: (UIView*) _foregroundView;
+- (id) initWithVideoParentView: (UIImageView*) _videoParentView
+                   drawingView: (UIView*) _eyesDrawingView;
 - (void) startCamera;
 - (void) stopCamera;
 - (int) camWidth;

@@ -1,5 +1,5 @@
 //
-//  FaceView.swift
+//  EyesDrawingView.swift
 //  MasterFace
 //
 //  Created by Сергей Кротких on 20/11/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc class FaceView: UIView {
+@objc class EyesDrawingView: UIView {
     @objc var imageView: UIImageView!
     
     var isEnable = true
@@ -94,7 +94,7 @@ import UIKit
 
 // MARK: -
 
-extension FaceView {
+extension EyesDrawingView {
     
     private func drawPoly(_ _path: UIBezierPath, _ _scale: CGFloat, _ _arrX: [Int]?, _ _arrY: [Int]?, _ color: UIColor) {
         guard let arrX = _arrX, let arrY = _arrY else {

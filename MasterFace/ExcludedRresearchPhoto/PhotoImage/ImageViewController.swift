@@ -53,7 +53,7 @@ class ImageViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "faceSequence" {
-            if let faceViewController = segue.destination as? FaceViewController {
+            if let faceViewController = segue.destination as? FaceExcludedViewController {
                 cropComponents()
                 faceViewController.orgImage = cleanFace;
                 faceViewController.face = face

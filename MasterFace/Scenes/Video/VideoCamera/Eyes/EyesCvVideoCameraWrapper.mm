@@ -32,9 +32,8 @@ using namespace cv;
 
 @implementation EyesCvVideoCameraWrapper
 {
-    VideoViewController* viewController;
-    UIImageView* imageView;
-    FaceView* faceView;
+    UIImageView* videoParentView;
+    EyesDrawingView* eyesDrawingView;
     EyesDetectWrapper* faceDetector;
     CppUtils* utils;
     EyesVideoCamera* videoCamera;
@@ -42,12 +41,12 @@ using namespace cv;
     int frame_count;
 }
 
-- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView foreground: (UIView*) _faceView
+- (id) initWithVideoParentView: (UIImageView*) _videoParentView
+                   drawingView: (UIView*) _eyesDrawingView
 {
-    viewController = _viewController;
-    imageView = _imageView;
-    faceView = (FaceView*)_faceView;
-    videoCamera = [[EyesVideoCamera alloc] initWithParentView: imageView
+    videoParentView = _videoParentView;
+    eyesDrawingView = (EyesDrawingView*)_eyesDrawingView;
+    videoCamera = [[EyesVideoCamera alloc] initWithParentView: videoParentView
                                                      delegate: self];
     faceDetector = [[EyesDetectWrapper alloc] initWithCamera: videoCamera];
     utils = new CppUtils();
@@ -71,8 +70,8 @@ using namespace cv;
 
     dispatch_async(dispatch_get_main_queue(), ^{
         UIImage* _image = self->utils->matToImage(image);
-        self->faceView.imageView.image = _image;
-        self->scale = self->faceView.frame.size.width / CGFloat([self->videoCamera imageWidth]);
+        self->eyesDrawingView.imageView.image = _image;
+        self->scale = self->eyesDrawingView.frame.size.width / CGFloat([self->videoCamera imageWidth]);
     });
 
     [self didImageProcessed];
@@ -81,7 +80,7 @@ using namespace cv;
 #endif
 
 - (void) didImageProcessed {
-    [faceView drawFace];
+    [eyesDrawingView drawFace];
 }
 
 - (void) showBox {

@@ -14,7 +14,7 @@ class PhotoPreviewViewController: UIViewController {
     var resultImage: UIImage!
     
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var faceView: FaceView!
+    @IBOutlet weak var faceView: EyesDrawingView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private var scrollView: UIScrollView!
     private var contentImageView: UIImageView!

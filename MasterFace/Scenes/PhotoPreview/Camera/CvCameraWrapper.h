@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class FaceView;
+@class EyesDrawingView;
 
 @interface CvCameraWrapper: NSObject
 
-- (id) initWithFaceView: (FaceView*) _faceView;
+- (id) initWithEyesDrawingView: (EyesDrawingView*) _faceView;
 - (void) processImage: (UIImage*) image;
 
 @end

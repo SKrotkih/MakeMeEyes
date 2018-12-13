@@ -15,7 +15,8 @@ import SceneKit
     @IBOutlet weak var foregroundImageView: UIImageView!
     @IBOutlet weak var videoHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var videoWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var faceView: FaceView!
+
+    @IBOutlet weak var eyesDrawingView: EyesDrawingView!
     
     @IBOutlet weak var tabEyesScrollView: UIScrollView!
     @IBOutlet weak var eyesContentView: UIView!
@@ -27,7 +28,6 @@ import SceneKit
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var takePhotoView: UIView!
     
-    private var videoCameraWrapper : EyesCvVideoCameraWrapper!
     private var needDrawEyes: Bool = true
 
     @IBOutlet weak var contentViewWidthConstraint: NSLayoutConstraint!
@@ -47,9 +47,7 @@ import SceneKit
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        faceView.imageView = foregroundImageView
-        
-        self.videoCameraWrapper = EyesCvVideoCameraWrapper(controller: self, andImageView: imageView, foreground: self.faceView);
+        eyesDrawingView.imageView = foregroundImageView
         
         takePhotoButton.layer.cornerRadius = takePhotoButton.bounds.width / 2.0
         takePhotoButton.layer.borderColor = UIColor.green.cgColor
@@ -60,19 +58,21 @@ import SceneKit
 
         eyesTabBarView.isHidden = false
         masksTabBarView.isHidden = true
-        
-        viewModel = VideoViewModel(self, maskSceneView: maskSceneView, videoCameraWrapper: videoCameraWrapper)
+
+        viewModel = VideoViewModel(self,
+                                   sceneView: maskSceneView,
+                                   videoParentView: imageView,
+                                   drawingView: self.eyesDrawingView)
     }
 
     override func updateViewConstraints() {
         super.updateViewConstraints()
-        let camWidth = videoCameraWrapper.camWidth();
-        let camHeight = videoCameraWrapper.camHeight();
+        let camWidth = viewModel.videoSize.width
+        let camHeight = viewModel.videoSize.height
         let h = self.view.frame.height
         let w = h * CGFloat(camWidth) / CGFloat(camHeight);
         videoHeightConstraint.constant = h;
         videoWidthConstraint.constant = w;
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -94,13 +94,13 @@ import SceneKit
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        faceView.isEnable = true
+        eyesDrawingView.isEnable = true
         viewModel.didTakePhoto()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        faceView.isEnable = false
+        eyesDrawingView.isEnable = false
         viewModel.willTakePhoto()
     }
     
@@ -129,7 +129,7 @@ import SceneKit
         if button.tag == 100 {
             viewModel.setNeededEyesDrawing()
             // needDrawEyes = !needDrawEyes
-            // videoCameraWrapper.setNeedDrawEyes(needDrawEyes)
+            // eyesVideoCameraWrapper.setNeedDrawEyes(needDrawEyes)
         } else {
             viewModel.didSelectedEyeItem(button.tag)
         }

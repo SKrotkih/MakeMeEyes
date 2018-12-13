@@ -16,11 +16,11 @@
 
 @implementation CvCameraWrapper
 {
-    FaceView* faceView;
+    EyesDrawingView* faceView;
     EyesDetectWrapper* eyesDetector;
 }
 
-- (id) initWithFaceView: (FaceView*) _faceView
+- (id) initWithEyesDrawingView: (EyesDrawingView*) _faceView
 {
     faceView = _faceView;
     eyesDetector = [[EyesDetectWrapper alloc] initWithCamera: nil];

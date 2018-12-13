@@ -36,19 +36,20 @@ using namespace cv;
 {
     VideoViewController* viewController;
     UIImageView* imageView;
-    FaceView* faceView;
+    EyesDrawingView* faceView;
     CppUtils* utils;
     FaceVideoCamera* videoCamera;
     CGFloat scale;
     int frame_count;
 }
 
-- (id) initWithController: (VideoViewController*) _viewController andImageView: (UIImageView*) _imageView foreground: (UIView*) _faceView
+- (id) initWithVideoParentView: (UIImageView*) _videoParentView
+                   drawingView: (UIView*) _faceView
 {
-    viewController = _viewController;
-    imageView = _imageView;
-    faceView = (FaceView*)_faceView;
-    videoCamera = [[FaceVideoCamera alloc] initWithParentView: imageView
+//    viewController = _viewController;
+    imageView = _videoParentView;
+    faceView = (EyesDrawingView*)_faceView;
+    videoCamera = [[FaceVideoCamera alloc] initWithParentView: _videoParentView
                                                      delegate: self];
     utils = new CppUtils();
     scale = 0.0;

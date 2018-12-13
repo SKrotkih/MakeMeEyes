@@ -12,19 +12,30 @@ typealias photoPickerCompletion = (UIImage?) -> Void
 
 class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    private let viewController: UIViewController
+    private var viewController: UIViewController!
+    private var videoSpeedStrategy: VideoSpeedStrategy!
+
     private var completion: photoPickerCompletion?
-    
     private var maskSceneView: UIView!
     private var sceneInteractor: SceneInteractor!
-    private var videoCameraWrapper: EyesCvVideoCameraWrapper!
-    private let speedCoordinator: VideoSpeedCoordinator
     
-    required init(_ viewController: UIViewController, maskSceneView: UIView, videoCameraWrapper: EyesCvVideoCameraWrapper) {
-        self.viewController = viewController
-        self.sceneInteractor = SceneInteractor(parentView: maskSceneView)
-        self.videoCameraWrapper = videoCameraWrapper
-        speedCoordinator = VideoSpeedCoordinator()
+    var videoSize: CGSize {
+        return videoSpeedStrategy.videoSize
+    }
+    
+    override init() {
+    }
+    
+    convenience init(_ _viewController: UIViewController,
+                     sceneView: UIView,
+                     videoParentView: UIImageView,
+                     drawingView: EyesDrawingView
+                     ) {
+        self.init()
+        self.viewController = _viewController
+        self.maskSceneView = sceneView
+        self.sceneInteractor = SceneInteractor(parentView: sceneView)
+        self.videoSpeedStrategy = VideoSpeedStrategy(videoParentView: videoParentView, drawingView: drawingView)
     }
     
     func takePhoto(_ rect: CGRect, completion: @escaping (UIImage?) -> Void) {
@@ -68,25 +79,26 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
     }
 }
 
+// MARK: - 
 
 extension VideoViewModel {
     
     func willTakePhoto() {
-        videoCameraWrapper.stopCamera()
+        videoSpeedStrategy.stopCamera()
     }
     
     func didTakePhoto() {
-        videoCameraWrapper.startCamera()
+        videoSpeedStrategy.startCamera()
     }
     
     func setNeededEyesDrawing() {
         let needEyesDrawing = !OpenCVWrapper.needEyesDrawing()
-        speedCoordinator.eyesIndex = needEyesDrawing ? 1 : 0
+        videoSpeedStrategy.eyesIndex = needEyesDrawing ? 1 : 0
         OpenCVWrapper.setNeedEyesDrawing(needEyesDrawing)
     }
 
     func didSelectedEyeItem(_ index: Int) {
-        speedCoordinator.eyesIndex = index
+        videoSpeedStrategy.eyesIndex = index
         let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
         let imageName = images[index]
         OpenCVWrapper.setIrisImageName(imageName)
@@ -94,12 +106,12 @@ extension VideoViewModel {
     }
     
     func didSelectMaskItem(_ index: Int) {
-        speedCoordinator.maskIndex = index
+        videoSpeedStrategy.maskIndex = index
         switch index {
         case 0:
             sceneInteractor.addScene()
         case 1:
-            videoCameraWrapper.showBox()
+            videoSpeedStrategy.showBox()
         default:
             break
         }
@@ -110,10 +122,10 @@ extension VideoViewModel {
     }
 
     func setPupilPercent(_ value: Double) {
-       videoCameraWrapper.setPupilPercent(value)
+       videoSpeedStrategy.setPupilPercent(value)
     }
     
     func setLenseColorAlpha(_ value: Double) {
-        videoCameraWrapper.setLenseColorAlpha(value)
+        videoSpeedStrategy.setLenseColorAlpha(value)
     }
 }

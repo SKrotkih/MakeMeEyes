@@ -12,9 +12,9 @@ class PhotoPreviewViewModel: NSObject {
     
     private var cameraWrapper : CvCameraWrapper?
     
-    func recognizeFaceOn(_ _image: UIImage, drawTo faceView: FaceView) {
+    func recognizeFaceOn(_ _image: UIImage, drawTo faceView: EyesDrawingView) {
         if cameraWrapper == nil {
-            cameraWrapper = CvCameraWrapper(faceView: faceView);
+            cameraWrapper = CvCameraWrapper(eyesDrawingView: faceView);
         }
         cameraWrapper?.processImage(_image)
     }
