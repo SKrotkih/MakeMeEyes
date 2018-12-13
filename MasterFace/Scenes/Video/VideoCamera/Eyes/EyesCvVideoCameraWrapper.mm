@@ -34,7 +34,7 @@ using namespace cv;
 {
     UIImageView* videoParentView;
     EyesDrawingView* eyesDrawingView;
-    EyesDetectWrapper* faceDetector;
+    EyesDetectWrapper* eyesDetector;
     CppUtils* utils;
     EyesVideoCamera* videoCamera;
     CGFloat scale;
@@ -48,9 +48,10 @@ using namespace cv;
     eyesDrawingView = (EyesDrawingView*)_eyesDrawingView;
     videoCamera = [[EyesVideoCamera alloc] initWithParentView: videoParentView
                                                      delegate: self];
-    faceDetector = [[EyesDetectWrapper alloc] initWithCamera: videoCamera];
+    eyesDetector = [[EyesDetectWrapper alloc] initWithCamera: videoCamera];
     utils = new CppUtils();
     scale = 0.0;
+
     return self;
 }
 
@@ -65,8 +66,8 @@ using namespace cv;
         return;
     }
     
-    [faceDetector detectEyesOnCvImage: image
-                          frameCount: frame_count];
+    [eyesDetector detectEyesOnCvImage: image
+                           frameCount: frame_count];
 
     dispatch_async(dispatch_get_main_queue(), ^{
         UIImage* _image = self->utils->matToImage(image);
@@ -80,23 +81,23 @@ using namespace cv;
 #endif
 
 - (void) didImageProcessed {
-    [eyesDrawingView drawFace];
+    [eyesDrawingView drawEyes];
 }
 
 - (void) showBox {
-    [faceDetector showBox];
+    [eyesDetector showBox];
 }
 
 - (void) setNeedDrawEyes: (BOOL) newValue {
-    [faceDetector setNeedDrawEyes: newValue];
+    [eyesDetector setNeedDrawEyes: newValue];
 }
 
 - (void) setLenseColorAlpha: (double) alpha {
-    [faceDetector setLenseColorAlpha: alpha];
+    [eyesDetector setLenseColorAlpha: alpha];
 }
 
 - (void) setPupilPercent: (double) percent {
-    [faceDetector setPupilPercent: percent];
+    [eyesDetector setPupilPercent: percent];
 }
 
 #pragma mark - UI Actions

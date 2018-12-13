@@ -29,7 +29,7 @@ import UIKit
     private var rightPupilBorderX: [Int]?
     private var rightPupilBorderY: [Int]?
     
-    @objc func drawFace() {
+    @objc func drawEyes() {
         let irisImageName = OpenCVWrapper.irisImageName()
         
         if irisImageName.count > 0 {

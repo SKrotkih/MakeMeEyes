@@ -16,14 +16,15 @@
 
 @implementation CvCameraWrapper
 {
-    EyesDrawingView* faceView;
+    EyesDrawingView* drawingView;
     EyesDetectWrapper* eyesDetector;
 }
 
-- (id) initWithEyesDrawingView: (EyesDrawingView*) _faceView
+- (id) initWithEyesDrawingView: (EyesDrawingView*) _drawingView
 {
-    faceView = _faceView;
+    drawingView = _drawingView;
     eyesDetector = [[EyesDetectWrapper alloc] initWithCamera: nil];
+
     return self;
 }
 
@@ -32,7 +33,7 @@
 - (void) processImage: (UIImage*) image
 {
     [eyesDetector detectEyesOnImage: image];
-    [faceView drawFace];
+    [drawingView drawEyes];
 }
 
 #endif
