@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VideoCameraProtocol.h"
 
 @class VideoViewController;
 
-@interface EyesCvVideoCameraWrapper: NSObject
+@interface EyesCvVideoCameraWrapper : NSObject <VideoCameraProtocol>
 
 - (id) initWithVideoParentView: (UIImageView*) _videoParentView
                    drawingView: (UIView*) _eyesDrawingView;
@@ -18,9 +19,5 @@
 - (void) setNeedDrawEyes: (BOOL) newValue;
 - (void) setLenseColorAlpha: (double) alpha;
 - (void) setPupilPercent: (double) percent;
-- (void) startCamera;
-- (void) stopCamera;
-- (int) camWidth;
-- (int) camHeight;
 
 @end

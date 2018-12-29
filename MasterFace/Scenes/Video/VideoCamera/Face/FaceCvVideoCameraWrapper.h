@@ -7,17 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VideoCameraProtocol.h"
 
 @class SceneInteractor;
 
-@interface FaceCvVideoCameraWrapper: NSObject
+@interface FaceCvVideoCameraWrapper : NSObject <VideoCameraProtocol>
 
 - (id) initWithVideoParentView: (UIImageView*) _videoParentView
                    drawingView: (UIView*) _eyesDrawingView
                sceneInteractor: (SceneInteractor*) _sceneInteractor;
-- (void) startCamera;
-- (void) stopCamera;
-- (int) camWidth;
-- (int) camHeight;
 
 @end

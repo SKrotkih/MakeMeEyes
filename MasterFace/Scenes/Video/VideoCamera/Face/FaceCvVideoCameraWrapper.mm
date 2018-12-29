@@ -57,6 +57,12 @@ using namespace cv;
     return self;
 }
 
+- (void) dealloc
+{
+    [self stopCamera];
+    videoCamera = nil;
+}
+
 #ifdef __cplusplus
 
 // MARK: - CvVideoCameraDelegate protocol

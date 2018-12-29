@@ -81,6 +81,14 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
 
 extension VideoViewModel {
     
+    func startCamera() {
+        videoSpeedStrategy.startCamera()
+    }
+
+    func stopCamera() {
+        videoSpeedStrategy.stopCamera()
+    }
+    
     func willTakePhoto() {
         videoSpeedStrategy.stopCamera()
     }
@@ -95,12 +103,15 @@ extension VideoViewModel {
         OpenCVWrapper.setNeedEyesDrawing(needEyesDrawing)
     }
 
-    func didSelectedEyeItem(_ index: Int) {
-        videoSpeedStrategy.eyesIndex = index
+    func didSelectedToolbarEyeItem(tag: Int) {
+        videoSpeedStrategy.eyesIndex = tag
+        let index = tag - 1
         let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
-        let imageName = images[index]
-        OpenCVWrapper.setIrisImageName(imageName)
-        OpenCVWrapper.setNeedEyesDrawing(true)
+        if index < images.count {
+            let imageName = images[index]
+            OpenCVWrapper.setIrisImageName(imageName)
+            OpenCVWrapper.setNeedEyesDrawing(true)
+        }
     }
     
     func didSelectMaskItem(_ index: Int) {

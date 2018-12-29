@@ -8,6 +8,9 @@
 
 import UIKit
 
+// Take a photo from library or from camera and put
+// content like eyes or mask on the photo
+
 class PhotoPreviewViewController: UIViewController {
 
     var image: UIImage!

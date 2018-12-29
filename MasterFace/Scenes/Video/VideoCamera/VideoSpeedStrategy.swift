@@ -13,27 +13,35 @@ class VideoSpeedStrategy  {
     enum VideoSpeedState {
         case undefined
         case fast
-        case slow
+        case slow;
+        
+        static func defaultState() -> VideoSpeedState {
+            return .slow
+        }
     }
 
-    private var eyesVideoCameraWrapper: EyesCvVideoCameraWrapper!
-    private var faceVideoCameraWrapper: FaceCvVideoCameraWrapper!
+    private var videoCameraWrapper: VideoCameraProtocol?
+    private var eyesVideoCameraWrapper: EyesCvVideoCameraWrapper?
+    private var faceVideoCameraWrapper: FaceCvVideoCameraWrapper?
+
+    private var videoParentView: UIImageView!
+    private var drawingView: EyesDrawingView!
     private var sceneInteractor: SceneInteractor!
-    
+
     required init(videoParentView: UIImageView,
                drawingView: EyesDrawingView,
                sceneInteractor: SceneInteractor
         ) {
         self.sceneInteractor = sceneInteractor
-        self.eyesVideoCameraWrapper = EyesCvVideoCameraWrapper(videoParentView: videoParentView,
-                                                               drawing: drawingView);
-        self.faceVideoCameraWrapper = FaceCvVideoCameraWrapper(videoParentView: videoParentView,
-                                                               drawing: drawingView,
-                                                               sceneInteractor: sceneInteractor);
+        self.drawingView = drawingView
+        self.videoParentView = videoParentView
     }
     
     private var currentState: VideoSpeedState = .undefined {
         didSet {
+            if oldValue == currentState {
+                return
+            }
             switch currentState {
             case .slow:
                 setUpSlowSpeed()
@@ -73,29 +81,41 @@ class VideoSpeedStrategy  {
 extension VideoSpeedStrategy {
     
     var videoSize: CGSize {
-        let camWidth = eyesVideoCameraWrapper.camWidth();
-        let camHeight = eyesVideoCameraWrapper.camHeight();
-        return CGSize(width: CGFloat(camWidth), height: CGFloat(camHeight))
+        if let camWidth = videoCameraWrapper?.camWidth(),
+            let camHeight = videoCameraWrapper?.camHeight() {
+            return CGSize(width: CGFloat(camWidth), height: CGFloat(camHeight))
+        } else {
+            return CGSize(width: 0, height: 0)
+        }
     }
     
     func stopCamera() {
-        eyesVideoCameraWrapper.stopCamera()
+        videoCameraWrapper?.stopCamera()
     }
     
     func startCamera() {
-        eyesVideoCameraWrapper.startCamera()
+        if videoCameraWrapper == nil {
+            currentState = VideoSpeedState.defaultState()
+        }
+        videoCameraWrapper!.startCamera()
     }
     
     func showBox() {
-        eyesVideoCameraWrapper.showBox()
+        if let eyesVideoCameraWrapper = eyesVideoCameraWrapper {
+            eyesVideoCameraWrapper.showBox()
+        }
     }
     
     func setPupilPercent(_ value: Double) {
-        eyesVideoCameraWrapper.setPupilPercent(value)
+        if let eyesVideoCameraWrapper = eyesVideoCameraWrapper {
+            eyesVideoCameraWrapper.setPupilPercent(value)
+        }
     }
     
     func setLenseColorAlpha(_ value: Double) {
-        eyesVideoCameraWrapper.setLenseColorAlpha(value)
+        if let eyesVideoCameraWrapper = eyesVideoCameraWrapper {
+            eyesVideoCameraWrapper.setLenseColorAlpha(value)
+        }
     }
     
     func addScene() {
@@ -108,10 +128,18 @@ extension VideoSpeedStrategy {
 extension VideoSpeedStrategy {
     
     private func setUpSlowSpeed() {
+        self.faceVideoCameraWrapper = nil
+        self.eyesVideoCameraWrapper = EyesCvVideoCameraWrapper(videoParentView: videoParentView,
+                                                               drawing: drawingView);
+        videoCameraWrapper = self.eyesVideoCameraWrapper;
         
     }
     
     private func setUpFastSpeed() {
-        
+        self.eyesVideoCameraWrapper = nil
+        self.faceVideoCameraWrapper = FaceCvVideoCameraWrapper(videoParentView: videoParentView,
+                                                               drawing: drawingView,
+                                                               sceneInteractor: sceneInteractor);
+        videoCameraWrapper = self.faceVideoCameraWrapper;
     }
 }

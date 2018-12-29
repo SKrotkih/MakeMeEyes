@@ -95,31 +95,19 @@ import SceneKit
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         eyesDrawingView.isEnable = true
-        viewModel.didTakePhoto()
+        viewModel.startCamera()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         eyesDrawingView.isEnable = false
-        viewModel.willTakePhoto()
+        viewModel.stopCamera()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let photoShowVC = segue.destination as? PhotoPreviewViewController {
             photoShowVC.image = self.photo
         }
-    }
-    
-    @IBAction func didChangeSliderTransparetValue(_ sender: Any) {
-        let slider = sender as! UISlider
-        let value = slider.value
-        viewModel.setLenseColorAlpha(Double(value))
-    }
-    
-    @IBAction func didChangeSliderPupilPercentValue(_ sender: Any) {
-        let slider = sender as! UISlider
-        let value = slider.value
-        viewModel.setPupilPercent(Double(value))
     }
     
     @IBAction func didTabOnEyesButton(_ sender: Any) {
@@ -131,7 +119,7 @@ import SceneKit
             // needDrawEyes = !needDrawEyes
             // eyesVideoCameraWrapper.setNeedDrawEyes(needDrawEyes)
         } else {
-            viewModel.didSelectedEyeItem(button.tag)
+            viewModel.didSelectedToolbarEyeItem(tag: button.tag)
         }
     }
 
@@ -162,5 +150,19 @@ import SceneKit
                 self.performSegue(withIdentifier: "showphotosegue", sender: self)
             }
         }
+    }
+    
+    // TODO: to remove
+    
+    @IBAction func didChangeSliderTransparetValue(_ sender: Any) {
+        let slider = sender as! UISlider
+        let value = slider.value
+        viewModel.setLenseColorAlpha(Double(value))
+    }
+    
+    @IBAction func didChangeSliderPupilPercentValue(_ sender: Any) {
+        let slider = sender as! UISlider
+        let value = slider.value
+        viewModel.setPupilPercent(Double(value))
     }
 }

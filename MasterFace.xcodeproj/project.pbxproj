@@ -173,6 +173,7 @@
 		7F379E2521A78F1D00E2B63B /* CvCameraWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CvCameraWrapper.h; sourceTree = "<group>"; };
 		7F379E2621A78F1D00E2B63B /* CvCameraWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CvCameraWrapper.mm; sourceTree = "<group>"; };
 		7F379E2821A7978400E2B63B /* PhotoPreviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewModel.swift; sourceTree = "<group>"; };
+		7F3A3CBD21D6658000EF592A /* VideoCameraProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoCameraProtocol.h; sourceTree = "<group>"; };
 		7F405C102191353400068592 /* CppUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CppUtils.hpp; sourceTree = "<group>"; };
 		7F405C112191353400068592 /* CppUtils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CppUtils.mm; sourceTree = "<group>"; };
 		7F405C152191578A00068592 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
@@ -416,6 +417,7 @@
 				7F4909D021AE20E300EEA03A /* EyesVideoCamera.h */,
 				7F4909D121AE20E300EEA03A /* EyesVideoCamera.mm */,
 				7FAEE15B2196BBC600E2305E /* EyesCvVideoCameraWrapper.h */,
+				7F3A3CBD21D6658000EF592A /* VideoCameraProtocol.h */,
 				7FAEE15C2196BBC600E2305E /* EyesCvVideoCameraWrapper.mm */,
 			);
 			path = Eyes;
