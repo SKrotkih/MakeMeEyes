@@ -94,10 +94,11 @@ extension VideoSpeedStrategy {
     }
     
     func startCamera() {
-        if videoCameraWrapper == nil {
+        if let videoCameraWrapper = self.videoCameraWrapper {
+            videoCameraWrapper.startCamera()
+        } else {
             currentState = VideoSpeedState.defaultState()
         }
-        videoCameraWrapper!.startCamera()
     }
     
     func showBox() {
@@ -128,18 +129,25 @@ extension VideoSpeedStrategy {
 extension VideoSpeedStrategy {
     
     private func setUpSlowSpeed() {
-        self.faceVideoCameraWrapper = nil
-        self.eyesVideoCameraWrapper = EyesCvVideoCameraWrapper(videoParentView: videoParentView,
-                                                               drawing: drawingView);
-        videoCameraWrapper = self.eyesVideoCameraWrapper;
-        
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            self.faceVideoCameraWrapper = nil
+            self.eyesVideoCameraWrapper = EyesCvVideoCameraWrapper(videoParentView: self.videoParentView,
+                                                                   drawing: self.drawingView)
+            self.videoCameraWrapper = self.eyesVideoCameraWrapper
+            self.eyesVideoCameraWrapper!.startCamera()
+        }
     }
     
     private func setUpFastSpeed() {
-        self.eyesVideoCameraWrapper = nil
-        self.faceVideoCameraWrapper = FaceCvVideoCameraWrapper(videoParentView: videoParentView,
-                                                               drawing: drawingView,
-                                                               sceneInteractor: sceneInteractor);
-        videoCameraWrapper = self.faceVideoCameraWrapper;
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            self.eyesVideoCameraWrapper = nil
+            self.faceVideoCameraWrapper = FaceCvVideoCameraWrapper(videoParentView: self.videoParentView,
+                                                                   drawing: self.drawingView,
+                                                                   sceneInteractor: self.sceneInteractor)
+            self.videoCameraWrapper = self.faceVideoCameraWrapper
+            self.faceVideoCameraWrapper!.startCamera()
+        }
     }
 }

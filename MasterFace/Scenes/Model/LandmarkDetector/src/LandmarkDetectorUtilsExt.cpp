@@ -185,19 +185,19 @@ namespace LandmarkDetector
                   vector<cv::Point>& eyeborder, vector<cv::Point>& eyebordernext,
                   vector<cv::Point>& irisborder, vector<cv::Point>& irisbordernext,
                   vector<cv::Point>& pupil) {
-        if (needDrawEyes) {
-            if (drawWithOpenCV) {
-                drawEyeBorder(img, eyeborder, eyebordernext);
-                drawIris(img, irisborder, irisbordernext);
-                drawPupil(img, pupil, irisborder, irisbordernext);
-                drawLense(img, eyeborder, eyebordernext);
-                cutEye(img, eyeborder, eyebordernext);
-            } else {
-                Coords->saveEyeBorder(eyeborder);
-                Coords->saveIrisBorder(irisborder);
-                Coords->savePupilBorder(pupil);
-                Coords->saveSize(img.cols, img.rows);
-            }
+        if (needDrawEyes == false) {
+            printf("Don't need draw the eyes!");
+        } else if (drawWithOpenCV) {
+            drawEyeBorder(img, eyeborder, eyebordernext);
+            drawIris(img, irisborder, irisbordernext);
+            drawPupil(img, pupil, irisborder, irisbordernext);
+            drawLense(img, eyeborder, eyebordernext);
+            cutEye(img, eyeborder, eyebordernext);
+        } else {
+            Coords->saveEyeBorder(eyeborder);
+            Coords->saveIrisBorder(irisborder);
+            Coords->savePupilBorder(pupil);
+            Coords->saveSize(img.cols, img.rows);
         }
     }
 }

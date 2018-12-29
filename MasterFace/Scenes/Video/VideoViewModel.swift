@@ -37,6 +37,7 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
     }
     
     func takePhoto(_ rect: CGRect, completion: @escaping (UIImage?) -> Void) {
+        self.willTakePhoto()
         self.completion = completion
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -56,6 +57,7 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
             self.viewController.present(picker, animated: true, completion: nil)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            self.didTakePhoto()
             self.completion?(nil)
         }))
         // on iPad this is a popover
@@ -75,6 +77,14 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
         // Dismiss the picker.
         self.viewController.dismiss(animated: true, completion: nil)
     }
+    
+    private func willTakePhoto() {
+        videoSpeedStrategy.stopCamera()
+    }
+    
+    private func didTakePhoto() {
+        videoSpeedStrategy.startCamera()
+    }
 }
 
 // MARK: - 
@@ -89,14 +99,6 @@ extension VideoViewModel {
         videoSpeedStrategy.stopCamera()
     }
     
-    func willTakePhoto() {
-        videoSpeedStrategy.stopCamera()
-    }
-    
-    func didTakePhoto() {
-        videoSpeedStrategy.startCamera()
-    }
-    
     func setNeededEyesDrawing() {
         let needEyesDrawing = !OpenCVWrapper.needEyesDrawing()
         videoSpeedStrategy.eyesIndex = needEyesDrawing ? 1 : 0
@@ -107,11 +109,10 @@ extension VideoViewModel {
         videoSpeedStrategy.eyesIndex = tag
         let index = tag - 1
         let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
-        if index < images.count {
-            let imageName = images[index]
-            OpenCVWrapper.setIrisImageName(imageName)
-            OpenCVWrapper.setNeedEyesDrawing(true)
-        }
+        assert(index < images.count)
+        let imageName = images[index]
+        OpenCVWrapper.setIrisImageName(imageName)
+        OpenCVWrapper.setNeedEyesDrawing(true)
     }
     
     func didSelectMaskItem(_ index: Int) {

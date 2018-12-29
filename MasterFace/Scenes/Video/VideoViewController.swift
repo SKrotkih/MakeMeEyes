@@ -67,12 +67,15 @@ import SceneKit
 
     override func updateViewConstraints() {
         super.updateViewConstraints()
-        let camWidth = viewModel.videoSize.width
-        let camHeight = viewModel.videoSize.height
-        let h = self.view.frame.height
-        let w = h * CGFloat(camWidth) / CGFloat(camHeight);
-        videoHeightConstraint.constant = h;
-        videoWidthConstraint.constant = w;
+        let videoSize = viewModel.videoSize
+        if videoSize.width > 0 && videoSize.height > 0 {
+            let camWidth = videoSize.width
+            let camHeight = videoSize.height
+            let h = self.view.frame.height
+            let w = h * CGFloat(camWidth) / CGFloat(camHeight);
+            videoHeightConstraint.constant = h;
+            videoWidthConstraint.constant = w;
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -141,11 +144,8 @@ import SceneKit
     }
     
     @IBAction func pressOnTakePhotoButton(_ sender: Any) {
-        viewModel.willTakePhoto()
         viewModel.takePhoto(self.takePhotoView.frame) { selectedImage in
-            if selectedImage == nil {
-                self.viewModel.didTakePhoto()
-            } else {
+            if selectedImage != nil {
                 self.photo = selectedImage
                 self.performSegue(withIdentifier: "showphotosegue", sender: self)
             }
