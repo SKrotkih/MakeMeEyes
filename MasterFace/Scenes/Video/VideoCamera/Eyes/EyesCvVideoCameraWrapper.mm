@@ -32,7 +32,6 @@ using namespace cv;
 
 @implementation EyesCvVideoCameraWrapper
 {
-    UIImageView* videoParentView;
     EyesDrawingView* eyesDrawingView;
     EyesDetectWrapper* eyesDetector;
     CppUtils* utils;
@@ -44,9 +43,8 @@ using namespace cv;
 - (id) initWithVideoParentView: (UIImageView*) _videoParentView
                    drawingView: (UIView*) _eyesDrawingView
 {
-    videoParentView = _videoParentView;
     eyesDrawingView = (EyesDrawingView*)_eyesDrawingView;
-    videoCamera = [[EyesVideoCamera alloc] initWithParentView: videoParentView
+    videoCamera = [[EyesVideoCamera alloc] initWithParentView: _videoParentView
                                                      delegate: self];
     eyesDetector = [[EyesDetectWrapper alloc] initWithCamera: videoCamera];
     utils = new CppUtils();
@@ -55,11 +53,14 @@ using namespace cv;
     return self;
 }
 
-- (void) dealloc
-{
-    [self stopCamera];
-    videoCamera = nil;
-    eyesDetector = nil;
+- (void) stop {
+    [self->videoCamera stop];
+    [self->videoCamera setParentView: nil];
+    self->videoCamera = nil;
+    self->eyesDetector = nil;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self->eyesDrawingView.imageView.image = nil;
+    });
 }
 
 #ifdef __cplusplus

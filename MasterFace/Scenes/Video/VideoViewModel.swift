@@ -18,6 +18,8 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
     private var completion: photoPickerCompletion?
     private var sceneInteractor: SceneInteractor!
     
+    private var observer: AnyObject?
+    
     var videoSize: CGSize {
         return videoSpeedStrategy.videoSize
     }
@@ -34,6 +36,28 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
         self.viewController = _viewController
         self.sceneInteractor = SceneInteractor(parentView: sceneView)
         self.videoSpeedStrategy = VideoSpeedStrategy(videoParentView: videoParentView, drawingView: drawingView, sceneInteractor: self.sceneInteractor)
+        self.subscribeNotifications()
+    }
+    
+    private func subscribeNotifications() {
+        guard observer == nil else { return }
+        observer = NotificationCenter.default.addObserver(
+            forName: .didUpdateVideoSize,
+            object: nil,
+            queue: nil) { notification in
+                self.viewController.view.setNeedsLayout()
+        }
+    }
+    
+    func unsubscribeNotifications() {
+        if let observer = observer {
+            NotificationCenter.default.removeObserver(observer)
+            self.observer = nil
+        }
+    }
+    
+    deinit {
+        unsubscribeNotifications()
     }
     
     func takePhoto(_ rect: CGRect, completion: @escaping (UIImage?) -> Void) {

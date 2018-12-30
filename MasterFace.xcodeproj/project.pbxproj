@@ -71,6 +71,7 @@
 		7F405C1821915AB100068592 /* FaceExcludedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F405C1721915AB100068592 /* FaceExcludedViewController.swift */; };
 		7F405C1A21916B7F00068592 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F405C1921916B7F00068592 /* UIImage+Ext.swift */; };
 		7F4909D221AE20E300EEA03A /* EyesVideoCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F4909D121AE20E300EEA03A /* EyesVideoCamera.mm */; };
+		7F4AB50D21D89F9300F1D5B7 /* Notification+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4AB50C21D89F9300F1D5B7 /* Notification+Ext.swift */; };
 		7F4C39A821992DC600C61A7F /* shape.scn in Resources */ = {isa = PBXBuildFile; fileRef = 7F4C39A721992DC600C61A7F /* shape.scn */; };
 		7F4C39AA219932CA00C61A7F /* SceneInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C39A9219932CA00C61A7F /* SceneInteractor.swift */; };
 		7F4D02A2219AF59200B9A4EC /* EyesDetectWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F4D02A0219AF59200B9A4EC /* EyesDetectWrapper.mm */; };
@@ -181,6 +182,7 @@
 		7F405C1921916B7F00068592 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		7F4909D021AE20E300EEA03A /* EyesVideoCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EyesVideoCamera.h; sourceTree = "<group>"; };
 		7F4909D121AE20E300EEA03A /* EyesVideoCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EyesVideoCamera.mm; sourceTree = "<group>"; };
+		7F4AB50C21D89F9300F1D5B7 /* Notification+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification+Ext.swift"; sourceTree = "<group>"; };
 		7F4C39A721992DC600C61A7F /* shape.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = shape.scn; sourceTree = "<group>"; };
 		7F4C39A9219932CA00C61A7F /* SceneInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneInteractor.swift; sourceTree = "<group>"; };
 		7F4D02A0219AF59200B9A4EC /* EyesDetectWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EyesDetectWrapper.mm; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 			children = (
 				7F405C1921916B7F00068592 /* UIImage+Ext.swift */,
 				7F299A0321A83F76003E1F65 /* UIView+Ext.swift */,
+				7F4AB50C21D89F9300F1D5B7 /* Notification+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 				7F14A10121984804001A57CF /* PDM.cpp in Sources */,
 				7F15E08F21AE25670097D275 /* FaceCvVideoCameraWrapper.mm in Sources */,
 				7F14A10321984804001A57CF /* LandmarkDetectorFunc.cpp in Sources */,
+				7F4AB50D21D89F9300F1D5B7 /* Notification+Ext.swift in Sources */,
 				7F2A96532190150F0024F342 /* AppDelegate.swift in Sources */,
 				7F287D2721A2D64E006E49F7 /* VideoCamera.mm in Sources */,
 				7F2AFCE0219E54E200F8976C /* LandmarkDetectorUtilsExt.cpp in Sources */,

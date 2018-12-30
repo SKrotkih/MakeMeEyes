@@ -143,7 +143,7 @@ cv::CascadeClassifier* getCascade(NSString* model) {
 
 - (void) startCamera
 {
-    [videoCamera start];
+    [self->videoCamera start];
 }
 
 - (void) stopCamera

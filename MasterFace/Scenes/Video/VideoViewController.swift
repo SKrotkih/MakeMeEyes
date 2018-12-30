@@ -11,6 +11,7 @@ import SceneKit
 
 @objc class VideoViewController: UIViewController {
 
+    @IBOutlet weak var videoContentView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var foregroundImageView: UIImageView!
     @IBOutlet weak var videoHeightConstraint: NSLayoutConstraint!
@@ -28,12 +29,8 @@ import SceneKit
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var takePhotoView: UIView!
     
-    private var needDrawEyes: Bool = true
-
     @IBOutlet weak var contentViewWidthConstraint: NSLayoutConstraint!
-
     @IBOutlet weak var masksContentViewWidthConstraint: NSLayoutConstraint!
-    
     
     @IBOutlet weak var eyesButton: UIButton!
     @IBOutlet weak var masksButton: UIButton!
@@ -41,58 +38,26 @@ import SceneKit
     @IBOutlet weak var eyesTabBarView: UIView!
     @IBOutlet weak var masksTabBarView: UIView!
     
-    private var viewModel: VideoViewModel!
+    private lazy var viewModel: VideoViewModel = {
+        return VideoViewModel(self,
+                              sceneView: maskSceneView,
+                              videoParentView: imageView,
+                              drawingView: self.eyesDrawingView)
+    }()
+
     private var photo: UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        eyesDrawingView.imageView = foregroundImageView
-        
-        takePhotoButton.layer.cornerRadius = takePhotoButton.bounds.width / 2.0
-        takePhotoButton.layer.borderColor = UIColor.green.cgColor
-        takePhotoButton.layer.borderWidth = 1.0
-        
-        eyesButton.layer.cornerRadius = eyesButton.bounds.width / 2.0
-        masksButton.layer.cornerRadius = masksButton.bounds.width / 2.0
-
-        eyesTabBarView.isHidden = false
-        masksTabBarView.isHidden = true
-
-        viewModel = VideoViewModel(self,
-                                   sceneView: maskSceneView,
-                                   videoParentView: imageView,
-                                   drawingView: self.eyesDrawingView)
-    }
-
-    override func updateViewConstraints() {
-        super.updateViewConstraints()
-        let videoSize = viewModel.videoSize
-        if videoSize.width > 0 && videoSize.height > 0 {
-            let camWidth = videoSize.width
-            let camHeight = videoSize.height
-            let h = self.view.frame.height
-            let w = h * CGFloat(camWidth) / CGFloat(camHeight);
-            videoHeightConstraint.constant = h;
-            videoWidthConstraint.constant = w;
-        }
+        configureView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let tabBarHeight = tabEyesScrollView.frame.height
-        let tabEyesItemsCount = 10
-        let tabMasksItemsCount = 9
-        
-        let eyesContentWidth = CGFloat(tabEyesItemsCount) * tabBarHeight
-        let masksContentWidth = CGFloat(tabMasksItemsCount) * tabBarHeight
-        
-        tabEyesScrollView.contentSize = CGSize(width: eyesContentWidth, height: tabBarHeight)
-        tabMasksScrollView.contentSize = CGSize(width: masksContentWidth, height: tabBarHeight)
-
-        contentViewWidthConstraint.constant = eyesContentWidth
-        masksContentViewWidthConstraint.constant = masksContentWidth
+        updateVideoFrameSize()
+        layoutTabBarSubviews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,8 +84,6 @@ import SceneKit
         }
         if button.tag == 100 {
             viewModel.setNeededEyesDrawing()
-            // needDrawEyes = !needDrawEyes
-            // eyesVideoCameraWrapper.setNeedDrawEyes(needDrawEyes)
         } else {
             viewModel.didSelectedToolbarEyeItem(tag: button.tag)
         }
@@ -152,7 +115,7 @@ import SceneKit
         }
     }
     
-    // TODO: to remove
+    // TODO: remove
     
     @IBAction func didChangeSliderTransparetValue(_ sender: Any) {
         let slider = sender as! UISlider
@@ -164,5 +127,65 @@ import SceneKit
         let slider = sender as! UISlider
         let value = slider.value
         viewModel.setPupilPercent(Double(value))
+    }
+}
+
+// MARK: - View's private methods
+
+extension VideoViewController {
+
+    private func configureView() {
+        eyesDrawingView.imageView = foregroundImageView
+        
+        takePhotoButton.layer.cornerRadius = takePhotoButton.bounds.width / 2.0
+        takePhotoButton.layer.borderColor = UIColor.green.cgColor
+        takePhotoButton.layer.borderWidth = 1.0
+        
+        eyesButton.layer.cornerRadius = eyesButton.bounds.width / 2.0
+        masksButton.layer.cornerRadius = masksButton.bounds.width / 2.0
+        
+        eyesTabBarView.isHidden = false
+        masksTabBarView.isHidden = true
+    }
+
+    private func layoutTabBarSubviews() {
+        let tabBarHeight = tabEyesScrollView.frame.height
+        let tabEyesItemsCount = 10
+        let tabMasksItemsCount = 9
+        
+        let eyesContentWidth = CGFloat(tabEyesItemsCount) * tabBarHeight
+        let masksContentWidth = CGFloat(tabMasksItemsCount) * tabBarHeight
+        
+        tabEyesScrollView.contentSize = CGSize(width: eyesContentWidth, height: tabBarHeight)
+        tabMasksScrollView.contentSize = CGSize(width: masksContentWidth, height: tabBarHeight)
+        
+        contentViewWidthConstraint.constant = eyesContentWidth
+        masksContentViewWidthConstraint.constant = masksContentWidth
+    }
+
+    private func updateVideoFrameSize() {
+        let videoSize = viewModel.videoSize
+        let videoWidth = videoSize.width
+        let videoHeight = videoSize.height
+        if videoWidth > 0 && videoHeight > 0 {
+            let viewHeight = videoContentView.frame.height
+            let k = videoWidth / videoHeight
+            
+            let h = viewHeight
+            let w = h * k
+            
+//            let viewWidth = videoContentView.frame.width
+//            if viewWidth - w > 1.0 {
+//                w = viewWidth
+//                h = w / k
+//            }
+            
+            print("Video size: [\(videoSize)]; screen size: [\(w);\(h)]")
+
+            DispatchQueue.main.async {
+                self.videoWidthConstraint.constant = w;
+                self.videoHeightConstraint.constant = h;
+            }
+        }
     }
 }

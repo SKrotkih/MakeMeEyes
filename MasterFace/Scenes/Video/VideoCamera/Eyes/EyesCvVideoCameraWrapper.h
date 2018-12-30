@@ -15,6 +15,7 @@
 
 - (id) initWithVideoParentView: (UIImageView*) _videoParentView
                    drawingView: (UIView*) _eyesDrawingView;
+- (void) stop;
 - (void) showBox;
 - (void) setNeedDrawEyes: (BOOL) newValue;
 - (void) setLenseColorAlpha: (double) alpha;

@@ -16,7 +16,7 @@ class VideoSpeedStrategy  {
         case slow;
         
         static func defaultState() -> VideoSpeedState {
-            return .slow
+            return .fast
         }
     }
 
@@ -132,22 +132,30 @@ extension VideoSpeedStrategy {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
             self.faceVideoCameraWrapper = nil
+        }
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
             self.eyesVideoCameraWrapper = EyesCvVideoCameraWrapper(videoParentView: self.videoParentView,
                                                                    drawing: self.drawingView)
             self.videoCameraWrapper = self.eyesVideoCameraWrapper
             self.eyesVideoCameraWrapper!.startCamera()
+            
+            NotificationCenter.default.post(name: .didUpdateVideoSize, object: nil)
         }
     }
     
     private func setUpFastSpeed() {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
+            self.eyesVideoCameraWrapper?.stop()
             self.eyesVideoCameraWrapper = nil
             self.faceVideoCameraWrapper = FaceCvVideoCameraWrapper(videoParentView: self.videoParentView,
                                                                    drawing: self.drawingView,
                                                                    sceneInteractor: self.sceneInteractor)
             self.videoCameraWrapper = self.faceVideoCameraWrapper
             self.faceVideoCameraWrapper!.startCamera()
+
+            NotificationCenter.default.post(name: .didUpdateVideoSize, object: nil)
         }
     }
 }

@@ -38,7 +38,11 @@
 }
 
 - (void) setupVideoCamera {
+    //  Frontal camera
     self.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
+    //  Portrait orientation
+    self.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
+    //  Concrete resolution
     switch ([self camWidth]) {
         case lowResolution:
             self.defaultAVCaptureSessionPreset = AVCaptureSessionPreset352x288;
@@ -52,7 +56,7 @@
         default:
             break;
     }
-    self.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
+    //  Concrete speed
     self.defaultFPS = [self camFPS];
     self.grayscaleMode = NO;
     self.rotateVideo = NO;
@@ -82,13 +86,13 @@
 - (VideoResolution) camWidth
 {
     NSAssert(false, @"This method should be implemented in a concrete class!");
-    return lowResolution;  // 288 480 720
+    return lowResolution;
 }
 
 - (int) camFPS
 {
     NSAssert(false, @"This method should be implemented in a concrete class!");
-    return 25;  // 30
+    return 25;
 }
 
 - (int) takeFrame
