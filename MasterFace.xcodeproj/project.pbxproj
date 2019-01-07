@@ -76,6 +76,7 @@
 		7F4C39AA219932CA00C61A7F /* SceneInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C39A9219932CA00C61A7F /* SceneInteractor.swift */; };
 		7F4D02A2219AF59200B9A4EC /* EyesDetectWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F4D02A0219AF59200B9A4EC /* EyesDetectWrapper.mm */; };
 		7F4D02A5219B01C800B9A4EC /* FaceWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F4D02A4219B01C800B9A4EC /* FaceWrapper.mm */; };
+		7FA859AB21E2F02A0059A368 /* MasterFaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA859AA21E2F02A0059A368 /* MasterFaceTests.swift */; };
 		7FAEE1522196900E00E2305E /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEE1512196900E00E2305E /* VideoViewController.swift */; };
 		7FAEE15D2196BBC600E2305E /* EyesCvVideoCameraWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEE15C2196BBC600E2305E /* EyesCvVideoCameraWrapper.mm */; };
 		7FBC789721A33AB600E6A23E /* FaceCoords.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC789621A33AB600E6A23E /* FaceCoords.cpp */; };
@@ -85,6 +86,16 @@
 		7FECD6BC2196C94C0069CE31 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6BB2196C94C0069CE31 /* CoreVideo.framework */; };
 		7FECD6BE2196C9580069CE31 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6BD2196C9570069CE31 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7FA859AD21E2F02A0059A368 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F2A96472190150F0024F342 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F2A964E2190150F0024F342;
+			remoteInfo = MasterFace;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		5D8394689102512AA28EBADB /* Pods-MasterFace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MasterFace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MasterFace/Pods-MasterFace.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +200,9 @@
 		7F4D02A1219AF59200B9A4EC /* EyesDetectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EyesDetectWrapper.h; sourceTree = "<group>"; };
 		7F4D02A3219B01C700B9A4EC /* FaceWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceWrapper.h; sourceTree = "<group>"; };
 		7F4D02A4219B01C800B9A4EC /* FaceWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceWrapper.mm; sourceTree = "<group>"; };
+		7FA859A821E2F0290059A368 /* MasterFaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MasterFaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA859AA21E2F02A0059A368 /* MasterFaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterFaceTests.swift; sourceTree = "<group>"; };
+		7FA859AC21E2F02A0059A368 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FAEE1512196900E00E2305E /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		7FAEE15B2196BBC600E2305E /* EyesCvVideoCameraWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EyesCvVideoCameraWrapper.h; sourceTree = "<group>"; };
 		7FAEE15C2196BBC600E2305E /* EyesCvVideoCameraWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EyesCvVideoCameraWrapper.mm; sourceTree = "<group>"; };
@@ -218,6 +232,13 @@
 				7F2A966A219015C80024F342 /* CoreGraphics.framework in Frameworks */,
 				7F2A9668219015B40024F342 /* AssetsLibrary.framework in Frameworks */,
 				01A71710E12BD7DBEEFC0E72 /* Pods_MasterFace.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FA859A521E2F0290059A368 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +471,7 @@
 				7F2985A3219DD48C00875198 /* model */,
 				7F298563219DD38000875198 /* classifiers */,
 				7F2A96512190150F0024F342 /* MasterFace */,
+				7FA859A921E2F02A0059A368 /* MasterFaceTests */,
 				7F2A96502190150F0024F342 /* Products */,
 				7F2A9664219015870024F342 /* Frameworks */,
 				427380F77802A72D375FE21F /* Pods */,
@@ -460,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				7F2A964F2190150F0024F342 /* MasterFace.app */,
+				7FA859A821E2F0290059A368 /* MasterFaceTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -576,6 +599,15 @@
 			path = FaceDetailsTableView;
 			sourceTree = "<group>";
 		};
+		7FA859A921E2F02A0059A368 /* MasterFaceTests */ = {
+			isa = PBXGroup;
+			children = (
+				7FA859AA21E2F02A0059A368 /* MasterFaceTests.swift */,
+				7FA859AC21E2F02A0059A368 /* Info.plist */,
+			);
+			path = MasterFaceTests;
+			sourceTree = "<group>";
+		};
 		7FAEE14F21968FC400E2305E /* ExcludedRresearchPhoto */ = {
 			isa = PBXGroup;
 			children = (
@@ -630,6 +662,24 @@
 			productReference = 7F2A964F2190150F0024F342 /* MasterFace.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7FA859A721E2F0290059A368 /* MasterFaceTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7FA859B121E2F02A0059A368 /* Build configuration list for PBXNativeTarget "MasterFaceTests" */;
+			buildPhases = (
+				7FA859A421E2F0290059A368 /* Sources */,
+				7FA859A521E2F0290059A368 /* Frameworks */,
+				7FA859A621E2F0290059A368 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7FA859AE21E2F02A0059A368 /* PBXTargetDependency */,
+			);
+			name = MasterFaceTests;
+			productName = MasterFaceTests;
+			productReference = 7FA859A821E2F0290059A368 /* MasterFaceTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -643,6 +693,10 @@
 					7F2A964E2190150F0024F342 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
+					};
+					7FA859A721E2F0290059A368 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 7F2A964E2190150F0024F342;
 					};
 				};
 			};
@@ -660,6 +714,7 @@
 			projectRoot = "";
 			targets = (
 				7F2A964E2190150F0024F342 /* MasterFace */,
+				7FA859A721E2F0290059A368 /* MasterFaceTests */,
 			);
 		};
 /* End PBXProject section */
@@ -687,6 +742,13 @@
 				7F28EF2721A67E1C00AEAAB0 /* eye5.png in Resources */,
 				7F2985A4219DD48C00875198 /* model in Resources */,
 				7F4C39A821992DC600C61A7F /* shape.scn in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FA859A621E2F0290059A368 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -787,7 +849,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7FA859A421E2F0290059A368 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FA859AB21E2F02A0059A368 /* MasterFaceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7FA859AE21E2F02A0059A368 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7F2A964E2190150F0024F342 /* MasterFace */;
+			targetProxy = 7FA859AD21E2F02A0059A368 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		7F2A96562190150F0024F342 /* Main.storyboard */ = {
@@ -987,6 +1065,48 @@
 			};
 			name = Release;
 		};
+		7FA859AF21E2F02A0059A368 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N5B5T39W8Y;
+				INFOPLIST_FILE = MasterFaceTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.skdevappleid.MasterFaceTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MasterFace.app/MasterFace";
+			};
+			name = Debug;
+		};
+		7FA859B021E2F02A0059A368 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N5B5T39W8Y;
+				INFOPLIST_FILE = MasterFaceTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.skdevappleid.MasterFaceTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MasterFace.app/MasterFace";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1004,6 +1124,15 @@
 			buildConfigurations = (
 				7F2A9662219015110024F342 /* Debug */,
 				7F2A9663219015110024F342 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7FA859B121E2F02A0059A368 /* Build configuration list for PBXNativeTarget "MasterFaceTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FA859AF21E2F02A0059A368 /* Debug */,
+				7FA859B021E2F02A0059A368 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
