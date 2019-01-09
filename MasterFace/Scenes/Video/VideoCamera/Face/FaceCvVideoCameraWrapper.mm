@@ -50,17 +50,30 @@ using namespace cv;
     imageView = _videoParentView;
     drawingView = (EyesDrawingView*)_drawingView;
     sceneInteractor = _sceneInteractor;
-    videoCamera = [[FaceVideoCamera alloc] initWithParentView: _videoParentView
-                                                     delegate: self];
     utils = new CppUtils();
     scale = 0.0;
+    [self createVideoCamera];
+    [self configureView];
     return self;
+}
+
+- (void) createVideoCamera {
+    videoCamera = [[FaceVideoCamera alloc] initWithParentView: imageView
+                                                     delegate: self];
+}
+
+- (void) deleteVideoCamera {
+    [self stopCamera];
+    videoCamera = nil;
+}
+
+- (void) configureView {
+    drawingView.imageView = nil;
 }
 
 - (void) dealloc
 {
-    [self stopCamera];
-    videoCamera = nil;
+    [self deleteVideoCamera];
 }
 
 #ifdef __cplusplus
@@ -143,7 +156,7 @@ cv::CascadeClassifier* getCascade(NSString* model) {
 
 - (void) startCamera
 {
-    [self->videoCamera start];
+    [videoCamera start];
 }
 
 - (void) stopCamera

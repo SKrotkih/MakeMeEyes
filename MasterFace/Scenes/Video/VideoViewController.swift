@@ -53,8 +53,8 @@ import SceneKit
         configureView()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func updateViewConstraints() {
+        super.updateViewConstraints()
         
         updateVideoFrameSize()
         layoutTabBarSubviews()

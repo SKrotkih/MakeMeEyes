@@ -8,7 +8,7 @@
 
 import Foundation
 
-class VideoSpeedStrategy  {
+final class VideoSpeedStrategy  {
 
     enum VideoSpeedState {
         case undefined
@@ -16,6 +16,7 @@ class VideoSpeedStrategy  {
         case slow;
         
         static func defaultState() -> VideoSpeedState {
+            // It is the default value of the start view
             return .fast
         }
     }
@@ -24,11 +25,11 @@ class VideoSpeedStrategy  {
     private var eyesVideoCameraWrapper: EyesCvVideoCameraWrapper?
     private var faceVideoCameraWrapper: FaceCvVideoCameraWrapper?
 
-    private var videoParentView: UIImageView!
-    private var drawingView: EyesDrawingView!
-    private var sceneInteractor: SceneInteractor!
+    private var videoParentView: UIImageView
+    private var drawingView: EyesDrawingView
+    private var sceneInteractor: SceneInteractor
 
-    required init(videoParentView: UIImageView,
+    init(videoParentView: UIImageView,
                drawingView: EyesDrawingView,
                sceneInteractor: SceneInteractor
         ) {
@@ -44,9 +45,11 @@ class VideoSpeedStrategy  {
             }
             switch currentState {
             case .slow:
-                setUpSlowSpeed()
+                stopFastVideo()
+                startSloWVideo()
             case .fast:
-                setUpFastSpeed()
+                stopFastVideo()
+                startFastVideo()
             case .undefined:
                 break
             }
@@ -73,7 +76,18 @@ class VideoSpeedStrategy  {
             }
         }
     }
+
+    func setPupilPercent(_ value: Double) {
+        if currentState == .slow {
+            eyesVideoCameraWrapper!.setPupilPercent(value)
+        }
+    }
     
+    func setLenseColorAlpha(_ value: Double) {
+        if currentState == .slow {
+            eyesVideoCameraWrapper!.setLenseColorAlpha(value)
+        }
+    }
 }
 
 // MARK: - Protocol methods
@@ -97,65 +111,63 @@ extension VideoSpeedStrategy {
         if let videoCameraWrapper = self.videoCameraWrapper {
             videoCameraWrapper.startCamera()
         } else {
+            // Start default functionality
             currentState = VideoSpeedState.defaultState()
         }
     }
     
     func showBox() {
-        if let eyesVideoCameraWrapper = eyesVideoCameraWrapper {
-            eyesVideoCameraWrapper.showBox()
+        if currentState == .slow {
+            eyesVideoCameraWrapper!.showBox()
         }
     }
-    
-    func setPupilPercent(_ value: Double) {
-        if let eyesVideoCameraWrapper = eyesVideoCameraWrapper {
-            eyesVideoCameraWrapper.setPupilPercent(value)
+
+    func showMask() {
+        if currentState == .fast {
+            sceneInteractor.configurScene()
         }
-    }
-    
-    func setLenseColorAlpha(_ value: Double) {
-        if let eyesVideoCameraWrapper = eyesVideoCameraWrapper {
-            eyesVideoCameraWrapper.setLenseColorAlpha(value)
-        }
-    }
-    
-    func addScene() {
-        sceneInteractor.addScene()
     }
 }
 
-// MARK: - Private methods
+// MARK: - Fast/Slow video speed coordinator
 
 extension VideoSpeedStrategy {
     
-    private func setUpSlowSpeed() {
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            self.faceVideoCameraWrapper = nil
-        }
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+    // We use the slow video for eyes presentation
+    private func startSloWVideo() {
+        DispatchQueue.main.async { [unowned self] in
             self.eyesVideoCameraWrapper = EyesCvVideoCameraWrapper(videoParentView: self.videoParentView,
                                                                    drawing: self.drawingView)
             self.videoCameraWrapper = self.eyesVideoCameraWrapper
             self.eyesVideoCameraWrapper!.startCamera()
-            
             NotificationCenter.default.post(name: .didUpdateVideoSize, object: nil)
         }
     }
     
-    private func setUpFastSpeed() {
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            self.eyesVideoCameraWrapper?.stop()
+    private func stopSlowVideo() {
+        DispatchQueue.main.async { [unowned self] in
+            self.eyesVideoCameraWrapper?.stopCamera()
             self.eyesVideoCameraWrapper = nil
+        }
+    }
+
+    // We use the slow video for masks presentation
+    private func startFastVideo() {
+        DispatchQueue.main.async { [unowned self] in
             self.faceVideoCameraWrapper = FaceCvVideoCameraWrapper(videoParentView: self.videoParentView,
                                                                    drawing: self.drawingView,
                                                                    sceneInteractor: self.sceneInteractor)
             self.videoCameraWrapper = self.faceVideoCameraWrapper
             self.faceVideoCameraWrapper!.startCamera()
-
             NotificationCenter.default.post(name: .didUpdateVideoSize, object: nil)
+        }
+    }
+    
+    private func stopFastVideo() {
+        DispatchQueue.main.async { [unowned self] in
+            self.sceneInteractor.removeScene()
+            self.faceVideoCameraWrapper?.stopCamera()
+            self.faceVideoCameraWrapper = nil
         }
     }
 }

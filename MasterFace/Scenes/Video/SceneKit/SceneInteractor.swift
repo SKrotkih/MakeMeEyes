@@ -22,17 +22,29 @@ import SceneKit
         _parentView = parentView
     }
     
-    func addScene() {
+    func showMask() {
         if _sceneView == nil {
-            configureScene()
+            createScene()
             setupScene()
         } else {
             _sceneView?.removeFromSuperview()
             _sceneView = nil
         }
     }
+
+    func configurScene() {
+        if _sceneView == nil {
+            createScene()
+            setupScene()
+        }
+    }
+
+    func removeScene() {
+        _sceneView?.removeFromSuperview()
+        _sceneView = nil
+    }
     
-    private func configureScene() {
+    private func createScene() {
         _sceneView = SCNView(frame: _parentView.bounds)
         _sceneView!.allowsCameraControl = false
         _sceneView!.showsStatistics = true

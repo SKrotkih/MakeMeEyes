@@ -53,16 +53,6 @@ using namespace cv;
     return self;
 }
 
-- (void) stop {
-    [self->videoCamera stop];
-    [self->videoCamera setParentView: nil];
-    self->videoCamera = nil;
-    self->eyesDetector = nil;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self->eyesDrawingView.imageView.image = nil;
-    });
-}
-
 #ifdef __cplusplus
 
 // MARK: - CvVideoCameraDelegate protocol
@@ -117,7 +107,13 @@ using namespace cv;
 
 - (void) stopCamera
 {
-    [videoCamera stop];
+    [self->videoCamera stop];
+    [self->videoCamera setParentView: nil];
+    self->videoCamera = nil;
+    self->eyesDetector = nil;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self->eyesDrawingView.imageView.image = nil;
+    });
 }
 
 - (int) camWidth

@@ -12,30 +12,36 @@ typealias photoPickerCompletion = (UIImage?) -> Void
 
 class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    private var viewController: UIViewController!
-    private var videoSpeedStrategy: VideoSpeedStrategy!
+    private var viewController: UIViewController
+    
+    private lazy var videoSpeedStrategy: VideoSpeedStrategy = {
+        return VideoSpeedStrategy(videoParentView: videoParentView, drawingView: drawingView, sceneInteractor: sceneInteractor)
+    }()
 
     private var completion: photoPickerCompletion?
-    private var sceneInteractor: SceneInteractor!
+    private let sceneInteractor: SceneInteractor
     
     private var observer: AnyObject?
+
+    private let sceneView: UIView
+    private let videoParentView: UIImageView
+    private let drawingView: EyesDrawingView
     
     var videoSize: CGSize {
         return videoSpeedStrategy.videoSize
     }
     
-    override init() {
-    }
-    
-    convenience init(_ _viewController: UIViewController,
+    init(_ viewController: UIViewController,
                      sceneView: UIView,
                      videoParentView: UIImageView,
                      drawingView: EyesDrawingView
                      ) {
-        self.init()
-        self.viewController = _viewController
+        self.viewController = viewController
+        self.sceneView = sceneView
+        self.videoParentView = videoParentView
+        self.drawingView = drawingView
         self.sceneInteractor = SceneInteractor(parentView: sceneView)
-        self.videoSpeedStrategy = VideoSpeedStrategy(videoParentView: videoParentView, drawingView: drawingView, sceneInteractor: self.sceneInteractor)
+        super.init()
         self.subscribeNotifications()
     }
     
@@ -143,16 +149,21 @@ extension VideoViewModel {
         videoSpeedStrategy.maskIndex = index
         switch index {
         case 0:
-            videoSpeedStrategy.addScene()
+            videoSpeedStrategy.showMask()
         case 1:
             videoSpeedStrategy.showBox()
         default:
             break
         }
     }
+}
+
+// MARK: -
+
+extension VideoViewModel {
 
     func setPupilPercent(_ value: Double) {
-       videoSpeedStrategy.setPupilPercent(value)
+        videoSpeedStrategy.setPupilPercent(value)
     }
     
     func setLenseColorAlpha(_ value: Double) {

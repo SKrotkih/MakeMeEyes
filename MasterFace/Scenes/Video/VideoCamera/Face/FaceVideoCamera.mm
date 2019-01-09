@@ -15,7 +15,7 @@
 
 - (VideoResolution) camWidth
 {
-    return heighResolutopn;
+    return middleResolution;
 }
 
 - (int) camFPS
