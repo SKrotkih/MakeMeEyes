@@ -11,6 +11,13 @@ import SceneKit
 
 @objc class VideoViewController: UIViewController {
 
+    enum Constants {
+        static let eyesFaceSwitchButtonId = 100
+        static let takePhotoSegue = "showphotosegue"
+        static let tabEyesItemsCount = 10
+        static let tabMasksItemsCount = 9
+    }
+    
     @IBOutlet weak var videoContentView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var foregroundImageView: UIImageView!
@@ -62,12 +69,14 @@ import SceneKit
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         eyesDrawingView.isEnable = true
         viewModel.startCamera()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         eyesDrawingView.isEnable = false
         viewModel.stopCamera()
     }
@@ -82,7 +91,7 @@ import SceneKit
         guard let button = sender as? UIButton else {
             return
         }
-        if button.tag == 100 {
+        if button.tag == Constants.eyesFaceSwitchButtonId {
             viewModel.setNeededEyesDrawing()
         } else {
             viewModel.didSelectedToolbarEyeItem(tag: button.tag)
@@ -110,7 +119,7 @@ import SceneKit
         viewModel.takePhoto(self.takePhotoView.frame) { selectedImage in
             if selectedImage != nil {
                 self.photo = selectedImage
-                self.performSegue(withIdentifier: "showphotosegue", sender: self)
+                self.performSegue(withIdentifier: Constants.takePhotoSegue, sender: self)
             }
         }
     }
@@ -150,11 +159,9 @@ extension VideoViewController {
 
     private func layoutTabBarSubviews() {
         let tabBarHeight = tabEyesScrollView.frame.height
-        let tabEyesItemsCount = 10
-        let tabMasksItemsCount = 9
         
-        let eyesContentWidth = CGFloat(tabEyesItemsCount) * tabBarHeight
-        let masksContentWidth = CGFloat(tabMasksItemsCount) * tabBarHeight
+        let eyesContentWidth = CGFloat(Constants.tabEyesItemsCount) * tabBarHeight
+        let masksContentWidth = CGFloat(Constants.tabMasksItemsCount) * tabBarHeight
         
         tabEyesScrollView.contentSize = CGSize(width: eyesContentWidth, height: tabBarHeight)
         tabMasksScrollView.contentSize = CGSize(width: masksContentWidth, height: tabBarHeight)
@@ -170,15 +177,8 @@ extension VideoViewController {
         if videoWidth > 0 && videoHeight > 0 {
             let viewHeight = videoContentView.frame.height
             let k = videoWidth / videoHeight
-            
             let h = viewHeight
             let w = h * k
-            
-//            let viewWidth = videoContentView.frame.width
-//            if viewWidth - w > 1.0 {
-//                w = viewWidth
-//                h = w / k
-//            }
             
             print("Video size: [\(videoSize)]; screen size: [\(w);\(h)]")
 

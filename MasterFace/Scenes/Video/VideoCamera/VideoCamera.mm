@@ -27,7 +27,8 @@
 
 @synthesize delegate;
 
-- (id) initWithParentView: (UIView*) _parentView delegate: (id<CvVideoCameraDelegate>) _delegate
+- (id) initWithParentView: (UIView*) _parentView
+                 delegate: (id<CvVideoCameraDelegate>) _delegate
 {
     if (self = [super initWithParentView: _parentView])
     {
@@ -83,6 +84,7 @@
     }
 }
 
+// The following methods have to be inherited!
 - (VideoResolution) camWidth
 {
     NSAssert(false, @"This method should be implemented in a concrete class!");

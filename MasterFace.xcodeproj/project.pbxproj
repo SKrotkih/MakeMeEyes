@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		01A71710E12BD7DBEEFC0E72 /* Pods_MasterFace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9A032FD7918DDC05BF4A7E7 /* Pods_MasterFace.framework */; };
-		7F14A0D52197FBF7001A57CF /* ShapeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F14A0D42197FBF7001A57CF /* ShapeType.swift */; };
 		7F14A0F821984804001A57CF /* FaceARDetectIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F14A0D821984804001A57CF /* FaceARDetectIOS.mm */; };
 		7F14A0F921984804001A57CF /* LandmarkDetectorUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F14A0EA21984804001A57CF /* LandmarkDetectorUtils.cpp */; };
 		7F14A0FA21984804001A57CF /* Patch_experts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F14A0EB21984804001A57CF /* Patch_experts.cpp */; };
@@ -46,7 +45,6 @@
 		7F298564219DD38000875198 /* classifiers in Resources */ = {isa = PBXBuildFile; fileRef = 7F298563219DD38000875198 /* classifiers */; };
 		7F2985A4219DD48C00875198 /* model in Resources */ = {isa = PBXBuildFile; fileRef = 7F2985A3219DD48C00875198 /* model */; };
 		7F29976521A8F058004645E7 /* SceneConf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F29976321A8F058004645E7 /* SceneConf.cpp */; };
-		7F29978121A927B8004645E7 /* WinterHatScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F29978021A927B8004645E7 /* WinterHatScene.swift */; };
 		7F29978321A92D3C004645E7 /* SceneKit.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F29978221A92D3C004645E7 /* SceneKit.scnassets */; };
 		7F299A0421A83F76003E1F65 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F299A0321A83F76003E1F65 /* UIView+Ext.swift */; };
 		7F29BED221A3B50900A4331F /* EyesDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F29BED121A3B50900A4331F /* EyesDrawingView.swift */; };
@@ -99,7 +97,6 @@
 
 /* Begin PBXFileReference section */
 		5D8394689102512AA28EBADB /* Pods-MasterFace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MasterFace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MasterFace/Pods-MasterFace.debug.xcconfig"; sourceTree = "<group>"; };
-		7F14A0D42197FBF7001A57CF /* ShapeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeType.swift; sourceTree = "<group>"; };
 		7F14A0D821984804001A57CF /* FaceARDetectIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceARDetectIOS.mm; sourceTree = "<group>"; };
 		7F14A0D921984804001A57CF /* FaceARDetectIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceARDetectIOS.h; sourceTree = "<group>"; };
 		7F14A0DD21984804001A57CF /* LandmarkDetectorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandmarkDetectorModel.h; sourceTree = "<group>"; };
@@ -157,7 +154,6 @@
 		7F2985A3219DD48C00875198 /* model */ = {isa = PBXFileReference; lastKnownFileType = folder; name = model; path = MasterFace/model/model; sourceTree = "<group>"; };
 		7F29976321A8F058004645E7 /* SceneConf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneConf.cpp; sourceTree = "<group>"; };
 		7F29976421A8F058004645E7 /* SceneConf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneConf.h; sourceTree = "<group>"; };
-		7F29978021A927B8004645E7 /* WinterHatScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinterHatScene.swift; sourceTree = "<group>"; };
 		7F29978221A92D3C004645E7 /* SceneKit.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = SceneKit.scnassets; sourceTree = "<group>"; };
 		7F299A0321A83F76003E1F65 /* UIView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		7F29BED121A3B50900A4331F /* EyesDrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyesDrawingView.swift; sourceTree = "<group>"; };
@@ -258,8 +254,6 @@
 			isa = PBXGroup;
 			children = (
 				7F4C39A9219932CA00C61A7F /* SceneInteractor.swift */,
-				7F29978021A927B8004645E7 /* WinterHatScene.swift */,
-				7F14A0D42197FBF7001A57CF /* ShapeType.swift */,
 				7F4C39A721992DC600C61A7F /* shape.scn */,
 			);
 			path = SceneKit;
@@ -819,8 +813,6 @@
 				7F28863B21A17B4D00A05E39 /* BezierCurve.cpp in Sources */,
 				7F14A25721984E23001A57CF /* FaceDetector.swift in Sources */,
 				7F14A10221984804001A57CF /* stdafx.cpp in Sources */,
-				7F29978121A927B8004645E7 /* WinterHatScene.swift in Sources */,
-				7F14A0D52197FBF7001A57CF /* ShapeType.swift in Sources */,
 				7F21D184219211B9002AE655 /* FaceDetailImageView.swift in Sources */,
 				7F14A10121984804001A57CF /* PDM.cpp in Sources */,
 				7F15E08F21AE25670097D275 /* FaceCvVideoCameraWrapper.mm in Sources */,

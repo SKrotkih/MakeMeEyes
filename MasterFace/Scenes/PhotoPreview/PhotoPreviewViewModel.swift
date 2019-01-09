@@ -18,5 +18,4 @@ class PhotoPreviewViewModel: NSObject {
         }
         cameraWrapper?.processImage(_image)
     }
-    
 }

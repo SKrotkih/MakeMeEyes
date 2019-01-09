@@ -420,7 +420,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IW4-Vn-Cam">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Kube">
+                                                                <state key="normal" title="Hat">
                                                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </state>
                                                                 <connections>
@@ -443,7 +443,7 @@
                                                         <subviews>
                                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j0T-ge-xrC">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Face">
+                                                                <state key="normal" title="Direct">
                                                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </state>
                                                                 <connections>

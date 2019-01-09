@@ -124,7 +124,7 @@ extension VideoSpeedStrategy {
 
     func showMask() {
         if currentState == .fast {
-            sceneInteractor.configurScene()
+            sceneInteractor.showMask()
         }
     }
 }
@@ -165,7 +165,7 @@ extension VideoSpeedStrategy {
     
     private func stopFastVideo() {
         DispatchQueue.main.async { [unowned self] in
-            self.sceneInteractor.removeScene()
+            self.sceneInteractor.hideMask()
             self.faceVideoCameraWrapper?.stopCamera()
             self.faceVideoCameraWrapper = nil
         }

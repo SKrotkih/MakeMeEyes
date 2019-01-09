@@ -10,7 +10,7 @@ import UIKit
 
 typealias photoPickerCompletion = (UIImage?) -> Void
 
-class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+final class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     private var viewController: UIViewController
     
@@ -45,6 +45,7 @@ class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationCon
         self.subscribeNotifications()
     }
     
+    // Notifications observer about changing video quality
     private func subscribeNotifications() {
         guard observer == nil else { return }
         observer = NotificationCenter.default.addObserver(

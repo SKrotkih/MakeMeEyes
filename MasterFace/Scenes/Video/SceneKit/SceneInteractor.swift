@@ -9,8 +9,13 @@
 import UIKit
 import SceneKit
 
-@objc class SceneInteractor: NSObject {
+@objc final class SceneInteractor: NSObject {
 
+    enum Constants {
+        static let maskWinterHat = "SceneKit.scnassets/Winter_Hat/WinterHat.scn"
+        static let winterHatChildNodeFilter = "Fur_hat_Plane"
+    }
+    
     private var _parentView: UIView!
     private var _sceneView: SCNView?
     private var _scnScene: SCNScene!
@@ -25,21 +30,13 @@ import SceneKit
     func showMask() {
         if _sceneView == nil {
             createScene()
-            setupScene()
+            setupScene(maskName: Constants.maskWinterHat)
         } else {
-            _sceneView?.removeFromSuperview()
-            _sceneView = nil
+            hideMask()
         }
     }
 
-    func configurScene() {
-        if _sceneView == nil {
-            createScene()
-            setupScene()
-        }
-    }
-
-    func removeScene() {
+    func hideMask() {
         _sceneView?.removeFromSuperview()
         _sceneView = nil
     }
@@ -58,13 +55,13 @@ import SceneKit
         _parentView.addSubview(_sceneView!)
     }
     
-    private func setupScene() {
-        _scnScene = SCNScene(named: "SceneKit.scnassets/Winter_Hat/WinterHat.scn")
+    private func setupScene(maskName: String) {
+        _scnScene = SCNScene(named: maskName)
         _sceneView?.scene = _scnScene
         
-        _scnScene.rootNode.childNodes.forEach({ print("NAME=\(String(describing: $0.name))")  })
+        _scnScene.rootNode.childNodes.forEach({ print("NAME=\(String(describing: $0.name))") })
 
-        if let node = _scnScene.rootNode.childNodes.filter({ $0.name == "Fur_hat_Plane" }).first {
+        if let node = _scnScene.rootNode.childNodes.filter({ $0.name == Constants.winterHatChildNodeFilter }).first {
             let currScale = node.scale
             // 5.231
             let scale = SCNVector3Make(currScale.x * 0.65, currScale.y * 0.65, currScale.z * 0.65)
@@ -86,10 +83,9 @@ import SceneKit
             let maskaNode = self.maskaNode else {
             return
         }
+
         if let face = OpenCVWrapper.face()[0] as? [Int]  {
-            
             print(face)
-            
         }
         
         guard let leftPupilBorderX = OpenCVWrapper.face()[0] as? [Int],
