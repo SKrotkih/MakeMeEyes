@@ -79,9 +79,6 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nex-hV-yEQ">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <action selector="pressOnTakePhotoButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="YWf-DD-hJI"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -101,9 +98,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="E"/>
-                                        <connections>
-                                            <action selector="eyesButtonPressed:" destination="DcM-fu-vqt" eventType="touchUpInside" id="IfF-kY-36W"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -123,9 +117,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="M"/>
-                                        <connections>
-                                            <action selector="masksButtonPressed:" destination="DcM-fu-vqt" eventType="touchUpInside" id="VWR-p9-6bP"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -150,10 +141,10 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QKV-Dc-m1a">
                                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                         <subviews>
-                                                            <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2R-Ds-xzp">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2R-Ds-xzp">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                                 <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <state key="normal" title="X">
+                                                                <state key="normal" image="eye1.png">
                                                                     <color key="titleColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </state>
                                                                 <connections>
@@ -176,7 +167,7 @@
                                                         <subviews>
                                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PAm-O4-r6g">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Button" image="eye1.png"/>
+                                                                <state key="normal" title="Button" image="eye2.png"/>
                                                                 <connections>
                                                                     <action selector="didTabOnEyesButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="j5j-4a-c4j"/>
                                                                 </connections>
@@ -197,7 +188,7 @@
                                                         <subviews>
                                                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VYj-2p-frW">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Button" image="eye2.png"/>
+                                                                <state key="normal" title="Button" image="eye3.png"/>
                                                                 <connections>
                                                                     <action selector="didTabOnEyesButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="HUB-PS-r1w"/>
                                                                 </connections>
@@ -218,7 +209,7 @@
                                                         <subviews>
                                                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogS-Pc-aQW">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Button" image="eye3.png"/>
+                                                                <state key="normal" title="Button" image="eye4.png"/>
                                                                 <connections>
                                                                     <action selector="didTabOnEyesButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="cuf-eb-Isi"/>
                                                                 </connections>
@@ -239,7 +230,7 @@
                                                         <subviews>
                                                             <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMx-Tf-hck">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Button" image="eye4.png"/>
+                                                                <state key="normal" title="Button" image="eye5.png"/>
                                                                 <connections>
                                                                     <action selector="didTabOnEyesButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="FVh-M9-oKx"/>
                                                                 </connections>
@@ -260,7 +251,7 @@
                                                         <subviews>
                                                             <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUg-eX-2Hj">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Button" image="eye5.png"/>
+                                                                <state key="normal" title="Button" image="eye6.png"/>
                                                                 <connections>
                                                                     <action selector="didTabOnEyesButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="ApZ-Ub-gta"/>
                                                                 </connections>
@@ -281,7 +272,7 @@
                                                         <subviews>
                                                             <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qDr-eZ-gg8">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Button" image="eye6.png"/>
+                                                                <state key="normal" title="Button" image="eye7.png"/>
                                                                 <connections>
                                                                     <action selector="didTabOnEyesButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="Pg2-mQ-Afm"/>
                                                                 </connections>
@@ -302,7 +293,7 @@
                                                         <subviews>
                                                             <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Cx-9c-bZR">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Button" image="eye7.png"/>
+                                                                <state key="normal" title="Button" image="eye8.png"/>
                                                                 <connections>
                                                                     <action selector="didTabOnEyesButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="pQk-XG-m3j"/>
                                                                 </connections>
@@ -323,7 +314,7 @@
                                                         <subviews>
                                                             <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo9-ou-Ocg">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Button" image="eye8.png"/>
+                                                                <state key="normal" title="Button" image="eye9.png"/>
                                                                 <connections>
                                                                     <action selector="didTabOnEyesButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="8HM-Mk-12b"/>
                                                                 </connections>
@@ -342,9 +333,9 @@
                                                     <view tag="8" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ky2-6g-2Oa">
                                                         <rect key="frame" x="450" y="0.0" width="50" height="50"/>
                                                         <subviews>
-                                                            <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dh4-t6-TZy">
+                                                            <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dh4-t6-TZy">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Button" image="eye9.png"/>
+                                                                <state key="normal" title="Button" image="lena.png"/>
                                                                 <connections>
                                                                     <action selector="didTabOnEyesButton:" destination="DcM-fu-vqt" eventType="touchUpInside" id="Kp9-yL-7tO"/>
                                                                 </connections>
@@ -443,12 +434,6 @@
                                                         <subviews>
                                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j0T-ge-xrC">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <state key="normal" title="Direct">
-                                                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                </state>
-                                                                <connections>
-                                                                    <action selector="didTapOnMasksButtyon:" destination="DcM-fu-vqt" eventType="touchUpInside" id="yUb-4F-6Jq"/>
-                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -671,11 +656,13 @@
                     <connections>
                         <outlet property="contentViewWidthConstraint" destination="7Sp-p7-e8X" id="uS2-Iz-rEg"/>
                         <outlet property="eyesButton" destination="xeg-Xy-Q3I" id="cJi-WN-37Z"/>
+                        <outlet property="eyesButtonBackgroundView" destination="yGm-2y-agL" id="gxA-6j-eWi"/>
                         <outlet property="eyesContentView" destination="vSv-86-KTp" id="3BS-kb-ecW"/>
                         <outlet property="eyesDrawingView" destination="Zlk-Qk-zJn" id="904-iq-iQv"/>
                         <outlet property="eyesTabBarView" destination="ejA-LR-gte" id="Fkt-Ua-4Ow"/>
                         <outlet property="foregroundImageView" destination="KMv-EA-oEi" id="Zhn-kU-9fe"/>
                         <outlet property="imageView" destination="xQW-Ro-PYT" id="etw-l1-sjl"/>
+                        <outlet property="maskButtonBackgroundView" destination="7le-l6-VXF" id="np8-Fj-7xV"/>
                         <outlet property="maskSceneView" destination="71Z-Ne-2Tf" id="aVq-dz-QPg"/>
                         <outlet property="masksButton" destination="yaT-UY-XsC" id="EW7-U5-RfA"/>
                         <outlet property="masksContentView" destination="4JL-DG-fdQ" id="5SQ-U6-ahF"/>
@@ -1134,6 +1121,7 @@
         <image name="eye8.png" width="168" height="173"/>
         <image name="eye9.png" width="138" height="138"/>
         <image name="lena" width="444" height="493"/>
+        <image name="lena.png" width="16" height="16"/>
         <image name="mandrill" width="384" height="384"/>
     </resources>
 </document>

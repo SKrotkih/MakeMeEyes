@@ -38,7 +38,7 @@ final class VideoSpeedStrategy  {
         self.videoParentView = videoParentView
     }
     
-    private var currentState: VideoSpeedState = .undefined {
+    var currentState: VideoSpeedState = .undefined {
         didSet {
             if oldValue == currentState {
                 return
@@ -48,7 +48,7 @@ final class VideoSpeedStrategy  {
                 stopFastVideo()
                 startSloWVideo()
             case .fast:
-                stopFastVideo()
+                stopSlowVideo()
                 startFastVideo()
             case .undefined:
                 break
@@ -56,27 +56,6 @@ final class VideoSpeedStrategy  {
         }
     }
     
-    var eyesIndex: Int = 0 {
-        didSet {
-            switch eyesIndex {
-            case 0:
-                currentState = .fast
-            case 1...:
-                currentState = .slow
-            default:
-                break
-            }
-        }
-    }
-
-    var maskIndex: Int = 0 {
-        didSet {
-            if eyesIndex > 0 {
-                currentState = .fast
-            }
-        }
-    }
-
     func setPupilPercent(_ value: Double) {
         if currentState == .slow {
             eyesVideoCameraWrapper!.setPupilPercent(value)
@@ -108,12 +87,11 @@ extension VideoSpeedStrategy {
     }
     
     func startCamera() {
-        if let videoCameraWrapper = self.videoCameraWrapper {
-            videoCameraWrapper.startCamera()
-        } else {
-            // Start default functionality
-            currentState = VideoSpeedState.defaultState()
-        }
+        videoCameraWrapper?.startCamera()
+    }
+    
+    func videoIsInitialized() -> Bool {
+        return currentState == .slow || currentState == .fast
     }
     
     func showBox() {

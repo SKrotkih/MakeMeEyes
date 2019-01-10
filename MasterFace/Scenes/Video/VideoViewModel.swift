@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import RxSwift
 
 typealias photoPickerCompletion = (UIImage?) -> Void
 
 final class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    private var viewController: UIViewController
-    
+    private var viewController: VideoViewController
+    private let disposeBag = DisposeBag()
+
     private lazy var videoSpeedStrategy: VideoSpeedStrategy = {
         return VideoSpeedStrategy(videoParentView: videoParentView, drawingView: drawingView, sceneInteractor: sceneInteractor)
     }()
@@ -31,7 +33,21 @@ final class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigat
         return videoSpeedStrategy.videoSize
     }
     
-    init(_ viewController: UIViewController,
+    private var currentState: VideoSpeedStrategy.VideoSpeedState = .undefined {
+        didSet {
+            switch currentState {
+            case .undefined:
+                break
+            case .fast:
+                self.viewController.showFaceToolBar()
+            case .slow:
+                self.viewController.showEyesToolBar()
+            }
+            self.videoSpeedStrategy.currentState = currentState
+        }
+    }
+    
+    init(_ viewController: VideoViewController,
                      sceneView: UIView,
                      videoParentView: UIImageView,
                      drawingView: EyesDrawingView
@@ -47,16 +63,50 @@ final class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigat
     
     // Notifications observer about changing video quality
     private func subscribeNotifications() {
-        guard observer == nil else { return }
+        
         observer = NotificationCenter.default.addObserver(
             forName: .didUpdateVideoSize,
             object: nil,
             queue: nil) { notification in
                 self.viewController.view.setNeedsLayout()
         }
+
+        viewController.didSwitchToEyesState.subscribe(onNext: {[unowned self] _ in
+            self.setNeededEyesDrawing()
+            self.currentState = .slow
+        }).disposed(by: disposeBag)
+
+        viewController.didSwitchToMasksState.subscribe(onNext: {[unowned self] _ in
+            self.currentState = .fast
+        }).disposed(by: disposeBag)
+
+        viewController.selectedEyeItem.subscribe(onNext: {[unowned self] index in
+            if index == 100 {
+                // It is an excetion
+                self.videoSpeedStrategy.showBox()
+            } else {
+                self.didSelectedToolbarEyeItem(index)
+            }
+        }).disposed(by: disposeBag)
+
+        viewController.selectedMaskItem.subscribe(onNext: {[unowned self] index in
+            self.didSelectMaskItem(index)
+        }).disposed(by: disposeBag)
+        
+        viewController.viewWillAppear.subscribe(onNext: {[unowned self] appear in
+            if appear {
+                if self.videoSpeedStrategy.videoIsInitialized() == true {
+                    self.startCamera()
+                } else {
+                    self.currentState = VideoSpeedStrategy.VideoSpeedState.defaultState()
+                }
+            } else {
+                self.stopCamera()
+            }
+        }).disposed(by: disposeBag)
     }
     
-    func unsubscribeNotifications() {
+    private func unsubscribeNotifications() {
         if let observer = observer {
             NotificationCenter.default.removeObserver(observer)
             self.observer = nil
@@ -122,23 +172,20 @@ final class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigat
 
 extension VideoViewModel {
     
-    func startCamera() {
+    private func startCamera() {
         videoSpeedStrategy.startCamera()
     }
 
-    func stopCamera() {
+    private func stopCamera() {
         videoSpeedStrategy.stopCamera()
     }
     
-    func setNeededEyesDrawing() {
-        let needEyesDrawing = !OpenCVWrapper.needEyesDrawing()
-        videoSpeedStrategy.eyesIndex = needEyesDrawing ? 1 : 0
-        OpenCVWrapper.setNeedEyesDrawing(needEyesDrawing)
+    private func setNeededEyesDrawing() {
+        // let needEyesDrawing = !OpenCVWrapper.needEyesDrawing()
+        OpenCVWrapper.setNeedEyesDrawing(true)
     }
 
-    func didSelectedToolbarEyeItem(tag: Int) {
-        videoSpeedStrategy.eyesIndex = tag
-        let index = tag - 1
+    private func didSelectedToolbarEyeItem(_ index: Int) {
         let images = ["eye1.png", "eye2.png", "eye3.png", "eye4.png", "eye5.png", "eye6.png", "eye7.png", "eye8.png", "eye9.png"];
         assert(index < images.count)
         let imageName = images[index]
@@ -146,13 +193,10 @@ extension VideoViewModel {
         OpenCVWrapper.setNeedEyesDrawing(true)
     }
     
-    func didSelectMaskItem(_ index: Int) {
-        videoSpeedStrategy.maskIndex = index
+    private func didSelectMaskItem(_ index: Int) {
         switch index {
         case 0:
             videoSpeedStrategy.showMask()
-        case 1:
-            videoSpeedStrategy.showBox()
         default:
             break
         }

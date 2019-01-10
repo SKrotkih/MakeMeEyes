@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import SceneKit
+import RxSwift
+import RxCocoa
 
 @objc class VideoViewController: UIViewController {
 
@@ -17,6 +18,14 @@ import SceneKit
         static let tabEyesItemsCount = 10
         static let tabMasksItemsCount = 9
     }
+
+    var viewWillAppear = PublishSubject<Bool>()
+    
+    var didSwitchToEyesState = PublishSubject<Bool>()
+    var didSwitchToMasksState = PublishSubject<Bool>()
+    
+    var selectedEyeItem = PublishSubject<Int>()
+    var selectedMaskItem = PublishSubject<Int>()
     
     @IBOutlet weak var videoContentView: UIView!
     @IBOutlet weak var imageView: UIImageView!
@@ -45,18 +54,21 @@ import SceneKit
     @IBOutlet weak var eyesTabBarView: UIView!
     @IBOutlet weak var masksTabBarView: UIView!
     
-    private lazy var viewModel: VideoViewModel = {
-        return VideoViewModel(self,
-                              sceneView: maskSceneView,
-                              videoParentView: imageView,
-                              drawingView: self.eyesDrawingView)
-    }()
+    @IBOutlet weak var eyesButtonBackgroundView: UIView!
+    @IBOutlet weak var maskButtonBackgroundView: UIView!
+    
+    private var viewModel: VideoViewModel!
 
     private var photo: UIImage!
-    
+    private let disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        viewModel = VideoViewModel(self,
+                                  sceneView: maskSceneView,
+                                  videoParentView: imageView,
+                                  drawingView: self.eyesDrawingView)
         configureView()
     }
     
@@ -70,15 +82,15 @@ import SceneKit
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        viewWillAppear.onNext(true)
         eyesDrawingView.isEnable = true
-        viewModel.startCamera()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        viewWillAppear.onNext(false)
         eyesDrawingView.isEnable = false
-        viewModel.stopCamera()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -91,37 +103,14 @@ import SceneKit
         guard let button = sender as? UIButton else {
             return
         }
-        if button.tag == Constants.eyesFaceSwitchButtonId {
-            viewModel.setNeededEyesDrawing()
-        } else {
-            viewModel.didSelectedToolbarEyeItem(tag: button.tag)
-        }
+        selectedEyeItem.onNext(button.tag)
     }
-
+    
     @IBAction func didTapOnMasksButtyon(_ sender: Any) {
         guard let button = sender as? UIButton else {
             return
         }
-        viewModel.didSelectMaskItem(button.tag)
-    }
-    
-    @IBAction func eyesButtonPressed(_ sender: Any) {
-        eyesTabBarView.isHidden = false
-        masksTabBarView.isHidden = true
-    }
-    
-    @IBAction func masksButtonPressed(_ sender: Any) {
-        eyesTabBarView.isHidden = true
-        masksTabBarView.isHidden = false
-    }
-    
-    @IBAction func pressOnTakePhotoButton(_ sender: Any) {
-        viewModel.takePhoto(self.takePhotoView.frame) { selectedImage in
-            if selectedImage != nil {
-                self.photo = selectedImage
-                self.performSegue(withIdentifier: Constants.takePhotoSegue, sender: self)
-            }
-        }
+        selectedMaskItem.onNext(button.tag)
     }
     
     // TODO: remove
@@ -142,8 +131,53 @@ import SceneKit
 // MARK: - View's private methods
 
 extension VideoViewController {
-
+    
+    func showEyesToolBar() {
+        eyesButtonBackgroundView.isHidden = true
+        maskButtonBackgroundView.isHidden = false
+        eyesTabBarView.isHidden = false
+        masksTabBarView.isHidden = true
+    }
+    
+    func showFaceToolBar() {
+        eyesButtonBackgroundView.isHidden = false
+        maskButtonBackgroundView.isHidden = true
+        eyesTabBarView.isHidden = true
+        masksTabBarView.isHidden = false
+    }
+    
+    private func takePhoto() {
+        viewModel.takePhoto(self.takePhotoView.frame) { selectedImage in
+            if selectedImage != nil {
+                self.photo = selectedImage
+                self.performSegue(withIdentifier: Constants.takePhotoSegue, sender: self)
+            }
+        }
+    }
+    
     private func configureView() {
+        
+        func bindEyesButton() {
+            self.eyesButton.rx.tap.bind(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                self.didSwitchToEyesState.onNext(true)
+            }).disposed(by: disposeBag)
+        }
+
+        func bindMasksButton() {
+            self.masksButton.rx.tap.bind(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                self.didSwitchToMasksState.onNext(true)
+            }).disposed(by: disposeBag)
+        }
+        
+        func bindTakePhotoButton() {
+            self.takePhotoButton.rx.tap.bind(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                self.takePhoto()
+            }).disposed(by: disposeBag)
+        }
+        
         eyesDrawingView.imageView = foregroundImageView
         
         takePhotoButton.layer.cornerRadius = takePhotoButton.bounds.width / 2.0
@@ -153,8 +187,9 @@ extension VideoViewController {
         eyesButton.layer.cornerRadius = eyesButton.bounds.width / 2.0
         masksButton.layer.cornerRadius = masksButton.bounds.width / 2.0
         
-        eyesTabBarView.isHidden = false
-        masksTabBarView.isHidden = true
+        bindEyesButton()
+        bindMasksButton()
+        bindTakePhotoButton()
     }
 
     private func layoutTabBarSubviews() {

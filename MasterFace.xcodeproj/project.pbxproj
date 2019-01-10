@@ -78,6 +78,7 @@
 		7FAEE1522196900E00E2305E /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEE1512196900E00E2305E /* VideoViewController.swift */; };
 		7FAEE15D2196BBC600E2305E /* EyesCvVideoCameraWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7FAEE15C2196BBC600E2305E /* EyesCvVideoCameraWrapper.mm */; };
 		7FBC789721A33AB600E6A23E /* FaceCoords.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC789621A33AB600E6A23E /* FaceCoords.cpp */; };
+		7FCD856C21E6FF4800B5900C /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7FCD856B21E6FF4800B5900C /* Podfile */; };
 		7FECD6B62196C7810069CE31 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2A9665219015870024F342 /* opencv2.framework */; };
 		7FECD6B82196C92E0069CE31 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6B72196C92E0069CE31 /* AVFoundation.framework */; };
 		7FECD6BA2196C93D0069CE31 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FECD6B92196C93D0069CE31 /* CoreImage.framework */; };
@@ -204,6 +205,7 @@
 		7FAEE15C2196BBC600E2305E /* EyesCvVideoCameraWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EyesCvVideoCameraWrapper.mm; sourceTree = "<group>"; };
 		7FBC789521A33AB600E6A23E /* FaceCoords.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceCoords.h; sourceTree = "<group>"; };
 		7FBC789621A33AB600E6A23E /* FaceCoords.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FaceCoords.cpp; sourceTree = "<group>"; };
+		7FCD856B21E6FF4800B5900C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7FECD6B72196C92E0069CE31 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		7FECD6B92196C93D0069CE31 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		7FECD6BB2196C94C0069CE31 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -493,6 +495,7 @@
 				7F2A96752190178C0024F342 /* PrefixHeader.pch */,
 				7F2A965B219015110024F342 /* LaunchScreen.storyboard */,
 				7F2A965E219015110024F342 /* Info.plist */,
+				7FCD856B21E6FF4800B5900C /* Podfile */,
 				7F2A9671219016AF0024F342 /* MasterFace-Bridging-Header.h */,
 			);
 			path = MasterFace;
@@ -646,6 +649,7 @@
 				7F2A964C2190150F0024F342 /* Frameworks */,
 				7F2A964D2190150F0024F342 /* Resources */,
 				7F2985A7219DDB6000875198 /* ShellScript */,
+				4AC1E8CED6898E7EA8859A8E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -727,6 +731,7 @@
 				7F298564219DD38000875198 /* classifiers in Resources */,
 				7F28EF2521A67E1C00AEAAB0 /* eye7.png in Resources */,
 				7F28EF2621A67E1C00AEAAB0 /* eye8.png in Resources */,
+				7FCD856C21E6FF4800B5900C /* Podfile in Resources */,
 				7F2A965D219015110024F342 /* LaunchScreen.storyboard in Resources */,
 				7F2A965A219015110024F342 /* Assets.xcassets in Resources */,
 				7F28EF2321A67E1C00AEAAB0 /* eye6.png in Resources */,
@@ -749,17 +754,35 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4AC1E8CED6898E7EA8859A8E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MasterFace/Pods-MasterFace-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MasterFace/Pods-MasterFace-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7F2985A7219DDB6000875198 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
@@ -1012,10 +1035,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/MasterFace/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/MasterFace/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.skdevappleid.masterface;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1043,10 +1063,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/MasterFace/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/MasterFace/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.skdevappleid.masterface;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1065,11 +1082,7 @@
 				DEVELOPMENT_TEAM = N5B5T39W8Y;
 				INFOPLIST_FILE = MasterFaceTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.skdevappleid.MasterFaceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -1086,11 +1099,7 @@
 				DEVELOPMENT_TEAM = N5B5T39W8Y;
 				INFOPLIST_FILE = MasterFaceTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.skdevappleid.MasterFaceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
