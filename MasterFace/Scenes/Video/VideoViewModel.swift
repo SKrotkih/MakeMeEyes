@@ -72,11 +72,12 @@ final class VideoViewModel: NSObject, UIImagePickerControllerDelegate, UINavigat
         }
 
         viewController.didSwitchToEyesState.subscribe(onNext: {[unowned self] _ in
-            self.setNeededEyesDrawing()
+            self.setNeededEyesDrawing(true)
             self.currentState = .slow
         }).disposed(by: disposeBag)
 
         viewController.didSwitchToMasksState.subscribe(onNext: {[unowned self] _ in
+            self.setNeededEyesDrawing(false)
             self.currentState = .fast
         }).disposed(by: disposeBag)
 
@@ -180,9 +181,8 @@ extension VideoViewModel {
         videoSpeedStrategy.stopCamera()
     }
     
-    private func setNeededEyesDrawing() {
-        // let needEyesDrawing = !OpenCVWrapper.needEyesDrawing()
-        OpenCVWrapper.setNeedEyesDrawing(true)
+    private func setNeededEyesDrawing(_ needDrawing: Bool) {
+        OpenCVWrapper.setNeedEyesDrawing(needDrawing)
     }
 
     private func didSelectedToolbarEyeItem(_ index: Int) {
