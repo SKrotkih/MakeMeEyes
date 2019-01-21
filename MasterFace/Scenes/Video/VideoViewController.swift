@@ -180,9 +180,7 @@ extension VideoViewController {
         
         eyesDrawingView.imageView = foregroundImageView
         
-        takePhotoButton.layer.cornerRadius = takePhotoButton.bounds.width / 2.0
         takePhotoButton.layer.borderColor = UIColor.green.cgColor
-        takePhotoButton.layer.borderWidth = 1.0
         
         eyesButton.layer.cornerRadius = eyesButton.bounds.width / 2.0
         masksButton.layer.cornerRadius = masksButton.bounds.width / 2.0

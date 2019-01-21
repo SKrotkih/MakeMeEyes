@@ -1,5 +1,5 @@
 //
-//  UIImage+Ext.swift
+//  UIView+Ext.swift
 //  MasterFace
 //
 //  Created by Сергей Кротких on 06/11/2018.
@@ -8,16 +8,13 @@
 
 import UIKit
 
-extension UIImage {
+extension UIView {
     
-    func crop(area: CGRect) -> UIImage? {
-        guard let imageRef = self.cgImage?.cropping(to: area) else {
-            return nil
+    func takeScreenshot(afterScreenUpdates: Bool) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: self.bounds.size)
+        let screenshot = renderer.image { ctx in
+            self.drawHierarchy(in: self.bounds, afterScreenUpdates: afterScreenUpdates)
         }
-        return UIImage(cgImage: imageRef, scale: scale, orientation: imageOrientation)
+        return screenshot
     }
-    
-    
-    
 }
-
